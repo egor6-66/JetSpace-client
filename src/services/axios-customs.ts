@@ -1,18 +1,36 @@
 import axios, {AxiosRequestConfig} from "axios";
-import Cookies from 'universal-cookie';
 import {API_URL} from "../constants";
+import {getToken, saveToken} from "./cookies-customs";
+import {AuthResponse} from "../store/auth/models";
 
-const cookies = new Cookies();
 
-const $api = axios.create({
+const $axios = axios.create({
     withCredentials: true,
     baseURL: API_URL,
 });
 
-$api.interceptors.request.use((config: AxiosRequestConfig) => {
-    const token =  cookies.get('access_token');
+$axios.interceptors.request.use((config: AxiosRequestConfig) => {
+    const token =  getToken();
     config.headers!.Authorization = `Bearer ${token}`
     return config
 });
 
-export default $api;
+$axios.interceptors.response.use((config: AxiosRequestConfig) => {
+    return config
+}, async (error) => {
+    const originalRequest = error.config
+    if(error.response.status === 401 && error.config && !error.config._isRetry){
+        originalRequest._isRetry = true
+       try {
+           const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true})
+           saveToken(response.data.accessToken)
+           return $axios.request(originalRequest)
+       }catch (e){
+           window.location.href = '/';
+       }
+    }else {
+        throw error
+    }
+});
+
+export default $axios;

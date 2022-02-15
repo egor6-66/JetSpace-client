@@ -5,7 +5,7 @@ import Bell from "../../assets/icon/bell";
 import {Badge} from "antd";
 
 const Header = () => {
-    console.log('renderHeader')
+
     return (
         <div className='header'>
                 <div className='header__left-block'>

@@ -7,8 +7,6 @@ import {
 const initialState: AuthState = {
     isAuth: false,
     user: {},
-    successRegister: false,
-    successLogin: false,
     loading: false,
     error: null,
 }
@@ -25,7 +23,6 @@ export const AuthReducer = (state = initialState, action: AuthAction): AuthState
                 ...state,
                 isAuth: true,
                 user: action.payload,
-                successRegister: true,
                 loading: false,
             };
         case AuthActionTypes.REGISTER_USER_ERROR:
@@ -44,12 +41,30 @@ export const AuthReducer = (state = initialState, action: AuthAction): AuthState
                 ...state,
                 isAuth: true,
                 user: action.payload,
-                successLogin: true,
                 loading: false,
             };
         case AuthActionTypes.LOGIN_USER_ERROR:
             return {
                 ...state,
+                error: action.payload,
+                loading: false,
+            }
+        case AuthActionTypes.CHECK_AUTH:
+            return {
+                ...state,
+                loading: true
+            };
+        case AuthActionTypes.CHECK_AUTH_SUCCESS:
+            return {
+                ...state,
+                isAuth: true,
+                user: action.payload,
+                loading: false,
+            };
+        case AuthActionTypes.CHECK_AUTH_ERROR:
+            return {
+                ...state,
+                isAuth: false,
                 error: action.payload,
                 loading: false,
             }

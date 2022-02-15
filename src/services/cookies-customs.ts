@@ -2,7 +2,11 @@ import Cookies from 'universal-cookie';
 
 const cookies = new Cookies();
 
-export const saveToken = (token) => {
+export const getToken = () => {
+    return cookies.get('access_token')
+}
+
+export const saveToken = (token: string) => {
     cookies.set('access_token', token)
 }
 

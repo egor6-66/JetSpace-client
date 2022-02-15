@@ -6,12 +6,8 @@ import './auth.less'
 
 const Auth: React.FC = () => {
 
-    const {user, successRegister, loading, error} = useTypedSelector(state => state.auth);
+    const {user, loading, error} = useTypedSelector(state => state.auth);
     const [currentForm, setCurrentForm] = useState<string | null>(null);
-
-    useEffect(() => {
-        successRegister && setCurrentForm('register success')
-    },[successRegister])
 
     return (
         <div>

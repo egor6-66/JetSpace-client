@@ -23,8 +23,9 @@ const RegisterForm: FC<RegisterForm> = (props) => {
 
     const {registerUser} = useActions();
 
-    const onFinish = ({name, email, password, remember}: Onfinish) => {
-        registerUser({name, email, password})
+    const onFinish = async ({name, email, password, remember}: Onfinish) => {
+       const success = await registerUser({name, email, password})
+       !!success && setCurrentForm('register success')
     }
 
     return (
