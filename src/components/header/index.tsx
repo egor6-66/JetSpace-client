@@ -2,9 +2,12 @@ import React from 'react';
 import './header.less';
 import DefaultAvatar from "../../assets/icon/default-avatar";
 import Bell from "../../assets/icon/bell";
-import {Badge} from "antd";
+import {Badge, Button} from "antd";
+import {useActions} from "../../assets/hooks/useActions";
 
 const Header = () => {
+
+    const {logout} = useActions();
 
     return (
         <div className='header'>
@@ -15,6 +18,11 @@ const Header = () => {
                     <Badge count={20}>
                         <Bell/>
                     </Badge>
+                    <Button
+                    onClick={() => logout()}
+                    >
+                        Выйти
+                    </Button>
                     <DefaultAvatar size={50}/>
                 </div>
         </div>

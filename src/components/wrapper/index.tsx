@@ -19,11 +19,11 @@ const Wrapper = () => {
                     <Outlet/>
                 </div>
             </div>
-            <div className='wrapper__footer'>
-                <div className='wrapper__footer_container'>
-                    <Footer/>
-                </div>
-            </div>
+            {/*<div className='wrapper__footer'>*/}
+            {/*    <div className='wrapper__footer_container'>*/}
+            {/*        <Footer/>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     );
 };

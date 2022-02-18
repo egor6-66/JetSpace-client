@@ -1,15 +1,11 @@
-import Cookies from 'universal-cookie';
-
-const cookies = new Cookies();
-
 export const getToken = () => {
-    return cookies.get('access_token')
+   return  localStorage.getItem('access_token')
 }
 
 export const saveToken = (token: string) => {
-    cookies.set('access_token', token)
+    localStorage.setItem('access_token',token)
 }
 
-export const removeToken = () => {
-    cookies.remove('access_token');
+export const  removeToken = async () => {
+    localStorage.removeItem('access_token')
 }

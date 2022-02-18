@@ -4,6 +4,7 @@ import {useTypedSelector} from "../../assets/hooks/useTypedSelector";
 import {Button} from "antd";
 import './auth.less'
 
+
 const Auth: React.FC = () => {
 
     const {user, loading, error} = useTypedSelector(state => state.auth);

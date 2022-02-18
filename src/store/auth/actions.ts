@@ -23,7 +23,7 @@ export const loginUser = (data: loginUserProps) => async (dispatch: Dispatch<Aut
     try {
         const response = await $axios.post<AuthResponse>(`${API_URL}/login`, data)
         saveToken(response.data.accessToken)
-        dispatch({type: AuthActionTypes.LOGIN_USER_SUCCESS, payload: response.data})
+        dispatch({type: AuthActionTypes.LOGIN_USER_SUCCESS, payload: response.data.user})
         return response.data.user.id
     } catch (e) {
         dispatch({type: AuthActionTypes.LOGIN_USER_ERROR, payload: 'Ошибка при входе'})
@@ -32,9 +32,10 @@ export const loginUser = (data: loginUserProps) => async (dispatch: Dispatch<Aut
 
 export const logout = () => async (dispatch: Dispatch<AuthAction>) => {
     try {
-        await $axios.post<AuthResponse>(`${API_URL}/logout`)
-        removeToken()
+        await $axios.post(`${API_URL}/logout`)
         dispatch({type: AuthActionTypes.LOGOUT})
+        await removeToken()
+        window.location.href = '/'
     } catch (e) {
         console.log(e)
     }
@@ -44,18 +45,10 @@ export const checkAuth = () => async (dispatch: Dispatch<AuthAction>) => {
     dispatch({type: AuthActionTypes.CHECK_AUTH})
     try {
         const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true})
+        dispatch({type: AuthActionTypes.CHECK_AUTH_SUCCESS, payload: response.data.user})
         saveToken(response.data.accessToken)
-        dispatch({type: AuthActionTypes.CHECK_AUTH_SUCCESS, payload: response.data})
     } catch (e) {
         dispatch({type: AuthActionTypes.CHECK_AUTH_ERROR, payload: 'Вы не авторизованы'})
-    }
-};
-
-export const getUser = () => async (dispatch: Dispatch) => {
-    try {
-        const response = await $axios.get(`${API_URL}/users`)
-    } catch (e) {
-        console.log(e)
     }
 };
 
