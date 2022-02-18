@@ -1,0 +1,25 @@
+@import '../../core-less/variables';
+
+.nav-bar{
+  width: 170px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  gap: 5px;
+  background-color: @PINK;
+
+  &__item{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    &:first-child{
+      margin-top: 30px;
+    }
+
+    .active{
+      color: @BLUE;
+    }
+  }
+}
