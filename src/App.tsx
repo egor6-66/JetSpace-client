@@ -26,7 +26,7 @@ const App = () => {
         isAuth && user.isActivated ?
             <Routes>
                 <Route path="*" element={<Navigate to={`/user/${user.id}/profile`}/>}/>
-                <Route path='user/:id' element={<Wrapper/>}>
+                <Route path='user/:id' element={<Wrapper myId={user.id}/>}>
                     <Route path='profile' element={<Profile myId={user.id}/>}/>
                     <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>
                     <Route path='myFriends' element={<MyFriends/>}/>

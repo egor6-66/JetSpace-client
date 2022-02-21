@@ -3,8 +3,9 @@ import { AuthReducer } from "./auth/reducer";
 import { composeWithDevTools } from "redux-devtools-extension";
 import thunk from "redux-thunk";
 
+
 const rootReducer = combineReducers({
-    auth: AuthReducer
+    auth: AuthReducer,
 });
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));

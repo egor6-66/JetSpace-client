@@ -17,7 +17,7 @@ const EditProfile:FC<EditProfileProps> = ({myId}) => {
     const {data, refetch, loading, error} = useQuery(GET_USER, {variables: {id: currentId}});
     const [editUser] = useMutation(EDIT_USER)
 
-
+    console.log(data)
     const submitEditUser =  (newName: string, newLastName:string) => {
         editUser({
             variables: {
@@ -28,6 +28,7 @@ const EditProfile:FC<EditProfileProps> = ({myId}) => {
                 }
             },
         }).then(async(data) =>{
+
             await refetch()
             navigate(`/user/${myId}/profile`)
         })

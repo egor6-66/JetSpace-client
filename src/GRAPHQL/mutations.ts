@@ -9,18 +9,21 @@ export const EDIT_USER = gql`
     }
 `
 
-export const EDIT_USER_AVATAR = gql`
-    mutation editUserAvatar($input: UserInput){
-        editUserAvatar(input: $input){
-            avatar
-        }
-    }
-`
 
-export const EDIT_USER_STATUS = gql`
-    mutation editUserStatus($input: UserInput){
-        editUserStatus(input: $input){
+export const EDIT_STATUS = gql`
+    mutation editStatus($id: ID, $status: String){
+        editStatus(id: $id, status: $status){
+            name
+            lastName
             status
+            isOnline
+            images {
+                userName
+                userLastName
+                images {
+                    path
+                }
+            }
         }
     }
 `
