@@ -1,47 +1,70 @@
 import React, {FC, useState} from 'react';
-import ImgCrop from "antd-img-crop";
-import {Upload} from "antd";
-import {useMutation} from "react-apollo";
-import {EDIT_USER_AVATAR} from "../../../GRAPHQL/mutations";
+import {Input, Upload} from "antd";
+import $axios from "../../../services/axios-customs";
+import {API_URL} from "../../../constants";
+import {getBase64} from "../../../assets/functions/getBase64";
+import AllPhotos from "./all-photos";
+import {useQuery, useLazyQuery} from "react-apollo";
+import {GET_USER} from "../../../GRAPHQL/queries";
+
 
 interface UserAvatarProps {
-    myId: string | undefined,
+    currentId: string | undefined,
+    images: any,
 }
 
-const UserAvatar: FC<UserAvatarProps> = ({myId}) => {
+const UserAvatar: FC<UserAvatarProps> = ({currentId, images}) => {
 
-    const [editUserAvatar] = useMutation(EDIT_USER_AVATAR)
+    const [avatar, setAvatar] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [error, setError] = useState<string>('');
+    const [isVisibleImgMenu, setIsVisibleImgMenu] = useState<boolean>(false);
+    const [isVisibleAllPhotos, setIsVisibleAllPhotos] = useState<boolean>(false);
 
-
-
-    const onChange = async ({file}: any) => {
-
-
-        // await newAvatar && editUserAvatar({
-        //     variables: {
-        //         input:{
-        //             id: myId,
-        //             avatar: file.originFileObj
-        //         }
-        //     },
-        // }).then(async(data) =>{
-        //     // console.log(data)
-        // })
+    const customRequest = async ({file}: any) => {
+        try {
+            setIsLoading(true)
+            const imgUrl = await getBase64(file)
+            const bodyFormData = new FormData();
+            bodyFormData.append('image', file);
+            await $axios.post(`${API_URL}/imgUpload`, bodyFormData)
+            setAvatar(imgUrl)
+        } catch (e) {
+            setError('Не удалось загрузить аватар')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     return (
-        <div className='left-block__avatar'>
-            <ImgCrop  rotate>
+        <>
+            {isVisibleAllPhotos &&
+            <AllPhotos
+                isVisibleAllPhotos={isVisibleAllPhotos}
+                setIsVisibleAllPhotos={setIsVisibleAllPhotos}
+                allImages={images}
+            />}
+
+            <div className='left-block__avatar'
+                 onMouseEnter={() => setIsVisibleImgMenu(true)}
+                 onMouseLeave={() => setIsVisibleImgMenu(false)}
+            >
+                {isLoading ?
+                    <div>loading...</div>
+                    :
+                    <img onClick={(e) => setIsVisibleAllPhotos(true)}
+                    style={{width: '150px'}} src={avatar ? avatar :  images?.images[0].path} alt=""/>
+                }
                 <Upload
-                    onChange={onChange}
-                    customRequest={()=>{}}
-                    // beforeUpload={()=>{ return false}}
+                    name="avatar"
+                    headers={{"content-type": "multipart/form-data"}}
+                    showUploadList={false}
+                    customRequest={customRequest}
                 >
-                    UserAvatar
+                    {isVisibleImgMenu && <div>Выбрать фото</div>}
                 </Upload>
-            </ImgCrop>
-            {/*<img src={img} alt=""/>*/}
-        </div>
+            </div>
+        </>
     );
 };
 

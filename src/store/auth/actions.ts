@@ -30,9 +30,9 @@ export const loginUser = (data: loginUserProps) => async (dispatch: Dispatch<Aut
     }
 };
 
-export const logout = () => async (dispatch: Dispatch<AuthAction>) => {
+export const logout = (id: string) => async (dispatch: Dispatch<AuthAction>) => {
     try {
-        await $axios.post(`${API_URL}/logout`)
+        await $axios.post(`${API_URL}/logout`, {userId: id})
         dispatch({type: AuthActionTypes.LOGOUT})
         await removeToken()
         window.location.href = '/'

@@ -3,15 +3,17 @@ import ReactDOM from 'react-dom';
 import {Provider} from "react-redux";
 import {BrowserRouter} from "react-router-dom";
 import {ApolloProvider} from "react-apollo";
-import ApolloClient, {InMemoryCache} from "apollo-boost";
+import ApolloClient,{InMemoryCache} from "apollo-boost";
+import {GRAPH_QL_URL} from "./constants";
 import {store} from "./store";
 import {getToken} from "./services/cookies-customs";
 import App from './App';
 import './index.less';
 
 
+
 const client = new ApolloClient({
-    uri: 'http://localhost:5000/graphql',
+    uri: GRAPH_QL_URL,
     cache: new InMemoryCache(),
     headers: {
         authorization: `Bearer ${getToken()}`

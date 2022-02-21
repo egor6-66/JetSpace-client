@@ -1,11 +1,15 @@
-import React from 'react';
+import React, {FC} from 'react';
 import './header.less';
 import DefaultAvatar from "../../assets/icon/default-avatar";
 import Bell from "../../assets/icon/bell";
 import {Badge, Button} from "antd";
 import {useActions} from "../../assets/hooks/useActions";
 
-const Header = () => {
+interface HeaderProps {
+    myId: string,
+}
+
+const Header:FC<HeaderProps> = ({myId}) => {
 
     const {logout} = useActions();
 
@@ -19,7 +23,7 @@ const Header = () => {
                         <Bell/>
                     </Badge>
                     <Button
-                    onClick={() => logout()}
+                    onClick={() => logout(myId)}
                     >
                         Выйти
                     </Button>

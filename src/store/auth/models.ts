@@ -1,4 +1,16 @@
-import {IUser} from "../../models/IUser";
+interface IUserAuth{
+    id: string,
+    email: string,
+    name: string,
+    isActivated: boolean,
+}
+
+export interface AuthState {
+    isAuth: boolean,
+    user: IUserAuth | any,
+    loading: boolean,
+    error: string | null,
+}
 
 export enum AuthActionTypes {
     REGISTER_USER = 'GET_USER',
@@ -11,13 +23,6 @@ export enum AuthActionTypes {
     CHECK_AUTH_SUCCESS = 'CHECK_AUTH_SUCCESS',
     CHECK_AUTH_ERROR = 'CHECK_AUTH_ERROR',
     LOGOUT = 'LOGOUT'
-}
-
-export interface AuthState {
-    isAuth: boolean,
-    user: IUser | any,
-    loading: boolean,
-    error: string | null,
 }
 
 export interface registerUserProps {
@@ -34,7 +39,7 @@ export interface loginUserProps {
 export interface AuthResponse {
     accessToken: string,
     refreshToken: string,
-    user: IUser,
+    user: IUserAuth,
 }
 
 interface registerAction {type: AuthActionTypes.REGISTER_USER,}
