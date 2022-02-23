@@ -1,8 +1,8 @@
-import React, {FC, Dispatch, SetStateAction} from 'react';
+import React, { FC, Dispatch, SetStateAction } from 'react';
+import Logo from '../../../../assets/icon/logo';
 import LoginForm from './login-form';
 import RegisterForm from './register-form';
 import ConfirmAccountForm from "./confirm-account-form";
-import Logo from '../../../../assets/icon/logo';
 import { Modal } from 'antd';
 import './auth-modal.less';
 

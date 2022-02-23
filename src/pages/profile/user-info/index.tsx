@@ -1,12 +1,9 @@
-import React, {FC, useState} from 'react';
-import {EditOutlined} from "@ant-design/icons";
-import {Button, Input, Modal} from "antd";
-import {useApolloClient, useMutation, useQuery} from "react-apollo";
-import {EDIT_STATUS} from "../../../GRAPHQL/mutations";
+import React, { FC, useState } from 'react';
+import { useMutation } from "@apollo/client";
+import { EDIT_STATUS } from "../../../GRAPHQL/mutations/user-mutations";
+import { EditOutlined } from "@ant-design/icons";
+import { Button, Input, Modal } from "antd";
 import './user-info.less';
-import {GET_USER} from "../../../GRAPHQL/queries";
-import {cache} from "browserslist";
-import {gql} from "apollo-boost";
 
 
 interface UserInfoProps {
@@ -19,44 +16,29 @@ interface UserInfoProps {
 }
 
 const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName, status}) => {
-    const client = useApolloClient()
 
-    const [editStatus, {data, loading, error}] = useMutation(EDIT_STATUS)
-
+    const [editStatus, {loading, error}] = useMutation(EDIT_STATUS)
 
     const [isVisibleEditStatus, setIsVisibleEditStatus] = useState<boolean>(false);
     const [newStatus, setNewStatus] = useState<string>('');
 
-    const submitNewStatus = () => {
-        editStatus({
+    const submitNewStatus = async () => {
+        await editStatus({
             variables: {
                 id: myId,
                 status: newStatus,
             },
-        }).then((data) => {
-            client.writeFragment({
-                id: `User:${currentId}`,
-                fragment: gql`
-                    fragment user on User {
-                        status
-                    }
-                `,
-                data: {
-                    __typename: 'User',
-                    status: data?.data.editStatus.status
-                }
-            })
-            setIsVisibleEditStatus(false)
-            setNewStatus(data?.data.editStatus.status)
         })
-    }
+        setIsVisibleEditStatus(false)
+        setNewStatus('')
+    };
 
     return (
         <div className='user-info'>
             <div>{isOnline ? 'Online' : 'Offline'}</div>
             <div>{name} </div>
             <div>{lastName}</div>
-            <div>{status  ? status : myId === currentId && 'Установить статус'}
+            <div>{status ? status : myId === currentId && 'Установить статус'}
                 {myId === currentId && <EditOutlined style={{cursor: "pointer"}}
                                                      onClick={() => setIsVisibleEditStatus(true)}/>}
             </div>

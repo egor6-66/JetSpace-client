@@ -1,11 +1,11 @@
-import React, {FC, useEffect, useState,} from 'react';
-import {useParams, Link} from "react-router-dom";
+import React, { FC } from 'react';
+import { useParams, Link } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { GET_USER } from "../../GRAPHQL/queries/user-queries";
 import UserInfo from "./user-info";
 import UserAvatar from "./user-avatar";
-import {useQuery, useApolloClient} from "react-apollo";
-import {GET_USER} from "../../GRAPHQL/queries";
+import UserPosts from "./user-posts";
 import './profile.less';
-
 
 
 interface ProfileProps {
@@ -16,18 +16,23 @@ const Profile: FC<ProfileProps> = ({myId}) => {
 
     const {id: currentId} = useParams();
 
-    const {data, refetch, loading, error} = useQuery(GET_USER, {variables: {id: currentId}});
+    const {data, refetch, loading, error} = useQuery(GET_USER, {
+        fetchPolicy: `${myId === currentId? 'cache-first' : 'network-only'}`,
+        nextFetchPolicy: 'cache-only',
+        variables: {id: currentId}
+    });
 
-    useEffect(() => {
-        myId !== currentId && refetch()
-    }, [currentId]);
+    //
+    // useEffect(() => {
+    //     userRefetch()
+    // },[currentId])
 
     return (
         <div className='profile'>
             <div className='left-block'>
                 <UserAvatar
+                    avatar={data?.getUser.avatar}
                     currentId={currentId}
-                    images={data?.getUser.images}
                 />
                 {myId === currentId &&
                 <div className='edit-profile'>
@@ -42,6 +47,10 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                     name={data?.getUser.name}
                     lastName={data?.getUser.lastName}
                     status={data?.getUser.status}
+                />
+                <UserPosts
+                    myId={myId}
+                    currentId={currentId}
                 />
             </div>
         </div>

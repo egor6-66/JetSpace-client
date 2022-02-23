@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useTypedSelector} from "./assets/hooks/useTypedSelector";
 import {Routes, Route, Navigate} from "react-router-dom";
-import {getToken} from "./services/cookies-customs";
+import {getToken} from "./services/localStorage";
 import {useActions} from "./assets/hooks/useActions";
 
 import Wrapper from "./components/wrapper";
@@ -9,7 +9,7 @@ import Profile from "./pages/profile";
 import Auth from "./pages/auth";
 import MyFriends from "./pages/my-friends";
 import AllUsers from "./pages/all-users";
-import EditProfile from "./pages/profile/edit-profile";
+import EditProfile from "./pages/edit-profile";
 
 
 const App = () => {

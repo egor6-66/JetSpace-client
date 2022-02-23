@@ -1,16 +1,13 @@
-import React, {useEffect} from 'react';
-import {Link} from "react-router-dom";
-import {useQuery} from 'react-apollo';
-import {GET_ALL_USERS} from "../../GRAPHQL/queries";
+import React from 'react';
+import { Link } from "react-router-dom";
+import { useQuery } from '@apollo/client';
+import { GET_ALL_USERS } from "../../GRAPHQL/queries/user-queries";
 import './all-users.less';
+
 
 const AllUsers = () => {
 
     const {data, refetch, loading, error} = useQuery(GET_ALL_USERS);
-
-    useEffect(() => {
-        refetch()
-    }, [])
 
     return (
         <div className='all-users'>

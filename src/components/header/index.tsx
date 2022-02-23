@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
-import './header.less';
-import DefaultAvatar from "../../assets/icon/default-avatar";
+import { useActions } from "../../assets/hooks/useActions";
 import Bell from "../../assets/icon/bell";
-import {Badge, Button} from "antd";
-import {useActions} from "../../assets/hooks/useActions";
+import { Badge, Button } from "antd";
+import './header.less';
+
 
 interface HeaderProps {
     myId: string,
@@ -27,7 +27,7 @@ const Header:FC<HeaderProps> = ({myId}) => {
                     >
                         Выйти
                     </Button>
-                    <DefaultAvatar size={50}/>
+
                 </div>
         </div>
     );

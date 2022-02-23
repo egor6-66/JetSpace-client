@@ -1,9 +1,10 @@
-import React, {FC} from 'react';
-import {Outlet} from "react-router-dom";
+import React, { FC } from 'react';
+import { Outlet } from "react-router-dom";
 import Header from "../header";
 import NavBar from "../nav-bar";
 import Footer from "../footer";
 import './wrapper.less'
+
 
 interface WrapperProps {
     myId: string,

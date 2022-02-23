@@ -1,7 +1,7 @@
-import axios, {AxiosRequestConfig} from "axios";
-import {API_URL} from "../constants";
-import {getToken, saveToken} from "./cookies-customs";
-import {AuthResponse} from "../store/auth/models";
+import axios, { AxiosRequestConfig } from "axios";
+import { API_URL } from "../assets/constants";
+import { getToken, saveToken } from "./localStorage";
+import { AuthResponse } from "../store/auth/models";
 
 
 const $axios = axios.create({

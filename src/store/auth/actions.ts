@@ -1,8 +1,8 @@
-import {API_URL} from '../../constants';
+import {API_URL} from '../../assets/constants';
 import {AuthAction, AuthActionTypes, AuthResponse, loginUserProps, registerUserProps} from "./models";
 import {Dispatch} from "redux";
 import axios from "axios";
-import {removeToken, saveToken} from "../../services/cookies-customs";
+import {removeToken, saveToken} from "../../services/localStorage";
 import $axios from "../../services/axios-customs";
 
 

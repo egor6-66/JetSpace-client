@@ -1,21 +1,29 @@
-import React, {FC, useState} from 'react';
-import {Input, Upload} from "antd";
+import React, { FC, useState } from 'react';
 import $axios from "../../../services/axios-customs";
-import {API_URL} from "../../../constants";
-import {getBase64} from "../../../assets/functions/getBase64";
+import { useLazyQuery } from "@apollo/client";
+import { UserWriteFragment } from "../../../GRAPHQL/customs-fragments/user-fragments";
+import { GET_ALL_USER_IMG } from "../../../GRAPHQL/queries/img-queries";
+import { API_URL } from "../../../assets/constants";
+import { getBase64 } from "../../../assets/functions/getBase64";
 import AllPhotos from "./all-photos";
-import {useQuery, useLazyQuery} from "react-apollo";
-import {GET_USER} from "../../../GRAPHQL/queries";
+import { Upload } from "antd";
 
 
 interface UserAvatarProps {
+    avatar: string | undefined | null,
     currentId: string | undefined,
-    images: any,
 }
 
-const UserAvatar: FC<UserAvatarProps> = ({currentId, images}) => {
+const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
 
-    const [avatar, setAvatar] = useState<any>(null);
+    const [getAllUserImg, {loading, data}] = useLazyQuery(GET_ALL_USER_IMG, {
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            id: currentId,
+        }
+    });
+
+    const [newAvatar, setNewAvatar] = useState<any>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const [isVisibleImgMenu, setIsVisibleImgMenu] = useState<boolean>(false);
@@ -27,22 +35,29 @@ const UserAvatar: FC<UserAvatarProps> = ({currentId, images}) => {
             const imgUrl = await getBase64(file)
             const bodyFormData = new FormData();
             bodyFormData.append('image', file);
-            await $axios.post(`${API_URL}/imgUpload`, bodyFormData)
-            setAvatar(imgUrl)
+            const response = await $axios.post(`${API_URL}/imgUpload`, bodyFormData)
+            console.log(response)
+            UserWriteFragment({
+                id: currentId,
+                args: {
+                    avatar: response?.data.path
+                }
+            })
+            setNewAvatar(imgUrl)
         } catch (e) {
             setError('Не удалось загрузить аватар')
         } finally {
             setIsLoading(false)
         }
-    }
+    };
 
     return (
         <>
             {isVisibleAllPhotos &&
             <AllPhotos
+                allUserImg={data?.getAllUserImg?.images}
                 isVisibleAllPhotos={isVisibleAllPhotos}
                 setIsVisibleAllPhotos={setIsVisibleAllPhotos}
-                allImages={images}
             />}
 
             <div className='left-block__avatar'
@@ -52,8 +67,11 @@ const UserAvatar: FC<UserAvatarProps> = ({currentId, images}) => {
                 {isLoading ?
                     <div>loading...</div>
                     :
-                    <img onClick={(e) => setIsVisibleAllPhotos(true)}
-                    style={{width: '150px'}} src={avatar ? avatar :  images?.images[0].path} alt=""/>
+                    <img onClick={(e) => {
+                        getAllUserImg()
+                        setIsVisibleAllPhotos(true)
+                    }}
+                         style={{width: '150px'}} src={newAvatar ? newAvatar : avatar} alt=""/>
                 }
                 <Upload
                     name="avatar"
