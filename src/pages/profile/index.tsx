@@ -51,6 +51,9 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                 <UserPosts
                     myId={myId}
                     currentId={currentId}
+                    name={data?.getUser.name}
+                    lastName={data?.getUser.lastName}
+                    avatar={data?.getUser.avatar}
                 />
             </div>
         </div>

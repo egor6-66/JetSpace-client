@@ -13,6 +13,11 @@ export const GET_USER_POSTS = gql`
                 date
                 time
                 content
+                likes{
+                    id
+                    name
+                    lastName
+                }
             }
         }
     }

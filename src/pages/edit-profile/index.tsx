@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { EDIT_PROFILE } from "../../GRAPHQL/mutations/user-mutations";
+import { EDIT_PROFILE } from "../../GRAPHQL/mutations/user/user-mutations";
 import { UserReadFragment } from "../../GRAPHQL/customs-fragments/user-fragments";
 import { Button, Form, Input } from "antd";
 
