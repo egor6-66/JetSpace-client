@@ -1,8 +1,9 @@
-import React, {Dispatch, FC, SetStateAction} from 'react';
-import {useActions} from '../../../../assets/hooks/useActions'
-import {formRules, validateMessages} from "../../../../assets/rules/form";
-import {Button, Checkbox, Form, Input, Modal} from "antd";
-import {UserOutlined} from '@ant-design/icons';
+import React, { Dispatch, FC, SetStateAction } from 'react';
+import { useActions } from '../../../../assets/hooks/useActions'
+import { formRules, validateMessages } from "../../../../assets/rules/form";
+import { Button, Checkbox, Form, Input } from "antd";
+import { UserOutlined } from '@ant-design/icons';
+
 
 interface RegisterForm {
     setCurrentForm: Dispatch<SetStateAction<string | null>>,

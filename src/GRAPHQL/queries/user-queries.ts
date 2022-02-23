@@ -1,4 +1,5 @@
-import {gql} from 'apollo-boost';
+import {gql} from "@apollo/client";
+
 
 export const GET_ALL_USERS = gql`
     query {
@@ -17,14 +18,8 @@ export const GET_USER = gql`
             name
             lastName
             status
+            avatar
             isOnline
-            images {
-                userName
-                userLastName
-                images {
-                    path
-                }
-            }
         }
     }
 `

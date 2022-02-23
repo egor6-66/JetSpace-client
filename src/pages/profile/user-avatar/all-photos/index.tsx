@@ -1,26 +1,23 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import Modal from "antd/es/modal/Modal";
-import {useLazyQuery} from "react-apollo";
-import {GET_USER} from "../../../../GRAPHQL/queries";
 
 
 interface AllPhotosProps {
+    allUserImg: any[],
     isVisibleAllPhotos: boolean,
     setIsVisibleAllPhotos: any,
-    allImages: any,
 }
 
+const AllPhotos: FC<AllPhotosProps> = ({allUserImg, isVisibleAllPhotos, setIsVisibleAllPhotos}) => {
 
-const AllPhotos: FC<AllPhotosProps> = ({isVisibleAllPhotos, setIsVisibleAllPhotos, allImages}) => {
-    // const [getPhoto, { loading, error, data }] = useLazyQuery(GET_USER, {variables: {id: currentId}});
     return (
         <Modal
             visible={isVisibleAllPhotos}
             footer={null}
             onCancel={() => setIsVisibleAllPhotos(false)}
         >
-            {allImages.images.map(({path}: any, index: number) =>
-                <img key={index}  style={{width: '100px'}} src={path} alt=""/>
+            {allUserImg && allUserImg.map(({id, path}: any) =>
+                <img key={id}  style={{width: '100px'}} src={path} alt=""/>
             )}
         </Modal>
     );

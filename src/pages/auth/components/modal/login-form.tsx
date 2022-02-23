@@ -1,10 +1,11 @@
-import React, {FC, Dispatch, SetStateAction} from 'react';
-import {Button, Checkbox, Form, Input} from "antd";
-import {formRules} from "../../../../assets/rules/form";
-import {UserOutlined} from "@ant-design/icons";
-import {useActions} from "../../../../assets/hooks/useActions";
-import {loginUser} from "../../../../store/auth/actions";
-import {useNavigate} from "react-router-dom";
+import React, { FC, Dispatch, SetStateAction } from 'react';
+import { useNavigate } from "react-router-dom";
+import { formRules } from "../../../../assets/rules/form";
+import { useActions } from "../../../../assets/hooks/useActions";
+import { loginUser } from "../../../../store/auth/actions";
+import { Button, Checkbox, Form, Input } from "antd";
+import { UserOutlined } from "@ant-design/icons";
+
 
 interface LoginForm {
     setCurrentForm: Dispatch<SetStateAction<string | null>>
