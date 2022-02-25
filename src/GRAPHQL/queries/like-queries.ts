@@ -1,22 +1,17 @@
 import {gql} from "@apollo/client";
+import {userType} from '../types/user-type';
+import {postType} from "../types/post-type";
+import {likeType} from "../types/like-type";
 
 
 export const GET_LIKE_POST = gql`
     query getUserPosts($id: ID){
         getUserPosts(userId: $id){
-            id
-            userName
-            userLastName
-            userAvatar
+           ${userType}
             posts{
-                id
-                date
-                time
-                content
+               ${postType}
                 likes{
-                    id
-                    name
-                    lastName
+                 ${likeType}
                 }
             }
         }

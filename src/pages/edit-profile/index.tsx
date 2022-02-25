@@ -1,8 +1,7 @@
 import React, { FC } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
-import { EDIT_PROFILE } from "../../GRAPHQL/mutations/user/user-mutations";
-import { UserReadFragment } from "../../GRAPHQL/customs-fragments/user-fragments";
+import { EDIT_PROFILE } from "../../GRAPHQL/mutations/user-mutations";
 import { Button, Form, Input } from "antd";
 
 
@@ -16,11 +15,6 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
     const navigate = useNavigate();
 
     const [editUserParams] = useMutation(EDIT_PROFILE);
-
-    const data = UserReadFragment({
-        id: currentId,
-        args: ['name', 'lastName']
-    });
 
     const submitNewUserParams = async (newName: string, newLastName: string) => {
         await editUserParams({
@@ -52,13 +46,13 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
                     label="Имя"
                     name="newName"
                 >
-                    <Input placeholder={data ? data.name : ''}/>
+                    <Input/>
                 </Form.Item>
                 <Form.Item
                     label="Фамилия"
                     name="newLastName"
                 >
-                    <Input placeholder={data ? data.lastName : ''}/>
+                    <Input/>
                 </Form.Item>
                 <Form.Item wrapperCol={{offset: 8, span: 16}}>
                     <Button type="primary" htmlType="submit">

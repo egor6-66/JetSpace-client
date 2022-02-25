@@ -3,14 +3,14 @@ import {postType} from "../types/post-type";
 import {likeType} from "../types/like-type";
 
 
-export const ADD_POST = gql`
-    mutation addPost($userId: ID, $content: String){
-        addPost(userId: $userId,  content: $content){
+export const SEND_LIKE_POST = gql`
+    mutation addLikePost($ownerId: ID, $postId: ID, $userId: ID){
+        addLikePost(ownerId: $ownerId, postId: $postId, userId: $userId){
             id
             posts {
-              ${postType}
+             ${postType}
                 likes{
-                   ${likeType}
+                    ${likeType}
                 }
             }
         }

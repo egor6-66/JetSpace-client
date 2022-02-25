@@ -2,11 +2,15 @@ import React, {FC, useEffect, useState} from 'react';
 import {useMutation, useQuery} from "@apollo/client";
 import {GET_USER_POSTS} from "../../../GRAPHQL/queries/post-queries";
 import {ADD_POST} from "../../../GRAPHQL/mutations/post-mutations";
-import {SEND_LIKE_POST} from "../../../GRAPHQL/mutations/like";
+import {SEND_LIKE_POST} from "../../../GRAPHQL/mutations/like-post-mutations";
 import {POST_SUB} from "../../../GRAPHQL/subscriptions/post-subscriptions";
+import {LIKE_POST_SUB} from "../../../GRAPHQL/subscriptions/like-post-subscriptons";
 import {Input, Button} from "antd";
 import {HeartOutlined} from "@ant-design/icons";
 import './user-posts.less';
+import {useDispatch} from "react-redux";
+import {getNotification} from "../../../store/other/action";
+import {useActions} from "../../../assets/hooks/useActions";
 
 
 interface UserPostsProps {
@@ -19,31 +23,39 @@ interface UserPostsProps {
 
 const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}) => {
 
+    const {getNotification} = useActions();
+
     const [addPost] = useMutation(ADD_POST);
     const [sendLikePost] = useMutation(SEND_LIKE_POST);
 
-    const {data, refetch, loading, error, subscribeToMore: subToMoreGetUserPost} = useQuery(GET_USER_POSTS, {
+    const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_USER_POSTS, {
         fetchPolicy: `${myId === currentId ? 'cache-first' : 'network-only'}`,
         nextFetchPolicy: 'cache-only',
         variables: {id: currentId}
     });
 
-    // const {data: likeData, subscribeToMore: subMoreLike} = useQuery(GET_LIKE_POST, {
-    //     fetchPolicy: `${myId === currentId ? 'cache-and-network' : 'network-only'}`,
-    //     nextFetchPolicy: 'cache-only',
-    //     variables: {id: currentId}
-    // });
-
 
     const [newPost, setNewPost] = useState<string>('')
 
     useEffect(() => {
-        subToMoreGetUserPost({
+        subscribeToMore({
             document: POST_SUB, updateQuery: (prev, {subscriptionData}) => {
                 const prevData = prev.getUserPosts
                 const newPost = subscriptionData.data.newPost
-                const posts = [ newPost, ...prevData.posts]
-                return {getUserPosts: {...prevData, posts}}
+                getNotification(newPost)
+                const updatePosts = [newPost, ...prevData.posts]
+                return {getUserPosts: {...prevData, updatePosts}}
+            }
+        })
+        subscribeToMore({
+            document: LIKE_POST_SUB, updateQuery: (prev, {subscriptionData}) => {
+                const prevPostsData = prev.getUserPosts.posts
+                const newLike = subscriptionData.data.newLike
+                const updatePosts = prevPostsData.map((post: any) =>
+                    post.id == newLike.postId ?
+                        Object.assign({}, post, {likes: [newLike, ...post.likes]}) : post)
+                const newData = Object.assign({}, prev.getUserPosts, {posts: updatePosts})
+                return {getUserPosts: newData}
             }
         })
     }, [])
@@ -60,15 +72,11 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
     }
 
     const sendLike = async (postId: string) => {
-        console.log(postId)
-        const response = await sendLikePost({
+        await sendLikePost({
             variables: {
                 ownerId: currentId,
                 postId: postId,
                 userId: myId,
-                name: name,
-                lastName: lastName,
-                // avatar: avatar,
             }
         })
     }
@@ -84,7 +92,7 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
                 {data && data?.getUserPosts?.posts.map(({id, date, time, content, likes}: any) =>
                     <div key={id}>
                         {content}-----{date}-----{time}-----
-                        <HeartOutlined onClick={() => sendLike(id)}/>----{likes.length}
+                        <HeartOutlined onClick={() => sendLike(id)}/>----{likes && likes.length}
                     </div>
                 )}
             </div>

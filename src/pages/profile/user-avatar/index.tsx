@@ -1,7 +1,6 @@
 import React, { FC, useState } from 'react';
 import $axios from "../../../services/axios-customs";
 import { useLazyQuery } from "@apollo/client";
-import { UserWriteFragment } from "../../../GRAPHQL/customs-fragments/user-fragments";
 import { GET_ALL_USER_IMG } from "../../../GRAPHQL/queries/img-queries";
 import { API_URL } from "../../../assets/constants";
 import { getBase64 } from "../../../assets/functions/getBase64";
@@ -36,13 +35,6 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
             const bodyFormData = new FormData();
             bodyFormData.append('image', file);
             const response = await $axios.post(`${API_URL}/imgUpload`, bodyFormData)
-            console.log(response)
-            UserWriteFragment({
-                id: currentId,
-                args: {
-                    avatar: response?.data.path
-                }
-            })
             setNewAvatar(imgUrl)
         } catch (e) {
             setError('Не удалось загрузить аватар')

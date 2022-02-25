@@ -3,6 +3,7 @@ import { useActions } from "../../assets/hooks/useActions";
 import Bell from "../../assets/icon/bell";
 import { Badge, Button } from "antd";
 import './header.less';
+import {useTypedSelector} from "../../assets/hooks/useTypedSelector";
 
 
 interface HeaderProps {
@@ -12,6 +13,7 @@ interface HeaderProps {
 const Header:FC<HeaderProps> = ({myId}) => {
 
     const {logout} = useActions();
+    const {notifications} = useTypedSelector(state => state.other)
 
     return (
         <div className='header'>
@@ -19,7 +21,7 @@ const Header:FC<HeaderProps> = ({myId}) => {
                     left-block
                 </div>
                 <div className='header__right-block'>
-                    <Badge count={20}>
+                    <Badge count={notifications.length}>
                         <Bell/>
                     </Badge>
                     <Button
