@@ -12,8 +12,8 @@ export const GET_ALL_USERS = gql`
 `
 
 export const GET_USER = gql`
-    query getUser($id: ID){
-        getUser(id: $id){
+    query getUser($userId: ID){
+        getUser(userId: $userId){
             id
             name
             lastName

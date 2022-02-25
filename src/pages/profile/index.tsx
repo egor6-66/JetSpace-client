@@ -16,16 +16,12 @@ const Profile: FC<ProfileProps> = ({myId}) => {
 
     const {id: currentId} = useParams();
 
-    const {data, refetch, loading, error} = useQuery(GET_USER, {
-        fetchPolicy: `${myId === currentId? 'cache-first' : 'network-only'}`,
+    const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_USER, {
+        fetchPolicy: `${myId === currentId? 'cache-and-network' : 'network-only'}`,
         nextFetchPolicy: 'cache-only',
-        variables: {id: currentId}
+        variables: {userId: currentId}
     });
 
-    //
-    // useEffect(() => {
-    //     userRefetch()
-    // },[currentId])
 
     return (
         <div className='profile'>
