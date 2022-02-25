@@ -1,11 +1,14 @@
 import {gql} from "@apollo/client";
 
 
-export const ADD_POST = gql`
-    mutation addPost($userId: ID, $content: String){
-        addPost(userId: $userId,  content: $content){
+export const GET_LIKE_POST = gql`
+    query getUserPosts($id: ID){
+        getUserPosts(userId: $id){
             id
-            posts {
+            userName
+            userLastName
+            userAvatar
+            posts{
                 id
                 date
                 time
@@ -19,4 +22,3 @@ export const ADD_POST = gql`
         }
     }
 `
-

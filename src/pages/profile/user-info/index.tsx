@@ -1,6 +1,6 @@
 import React, { FC, useState } from 'react';
 import { useMutation } from "@apollo/client";
-import { EDIT_STATUS } from "../../../GRAPHQL/mutations/user-mutations";
+import { EDIT_STATUS } from "../../../GRAPHQL/mutations/user/user-mutations";
 import { EditOutlined } from "@ant-design/icons";
 import { Button, Input, Modal } from "antd";
 import './user-info.less';
