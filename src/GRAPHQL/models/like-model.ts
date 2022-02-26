@@ -1,4 +1,4 @@
-export const likeType = `
+export const likeModel = `
 id
 postId
 userId

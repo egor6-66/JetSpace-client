@@ -1,6 +1,6 @@
 import {gql} from "@apollo/client";
-import {postType} from "../types/post-type";
-import {likeType} from "../types/like-type";
+import {postModel} from "../models/post-model";
+import {likeModel} from "../models/like-model";
 
 
 export const SEND_LIKE_POST = gql`
@@ -8,9 +8,9 @@ export const SEND_LIKE_POST = gql`
         addLikePost(ownerId: $ownerId, postId: $postId, userId: $userId){
             id
             posts {
-             ${postType}
+             ${postModel}
                 likes{
-                    ${likeType}
+                    ${likeModel}
                 }
             }
         }

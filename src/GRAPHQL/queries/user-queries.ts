@@ -1,5 +1,5 @@
 import {gql} from "@apollo/client";
-import {userType} from "../types/user-type";
+import {userModel} from "../models/user-model";
 
 export const GET_ALL_USERS = gql`
     query {
@@ -14,7 +14,7 @@ export const GET_ALL_USERS = gql`
 export const GET_USER = gql`
     query getUser($userId: ID){
         getUser(userId: $userId){
-           ${userType}
+           ${userModel}
         }
     }
 `

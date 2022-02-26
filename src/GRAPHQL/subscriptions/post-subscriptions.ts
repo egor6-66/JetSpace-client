@@ -1,13 +1,13 @@
 import {gql} from "@apollo/client";
-import {postType} from "../types/post-type";
-import {likeType} from "../types/like-type";
+import {postModel} from "../models/post-model";
+import {likeModel} from "../models/like-model";
 
 export const POST_SUB = gql`
     subscription {
         newPost{
-            ${postType}
+            ${postModel}
             likes{
-                ${likeType}
+                ${likeModel}
             }
         }
     }

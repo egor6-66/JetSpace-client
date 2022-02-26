@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 import { useParams, Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_USER } from "../../GRAPHQL/queries/user-queries";
@@ -16,7 +16,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
 
     const {id: currentId} = useParams();
 
-    const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_USER, {
+    const {data, loading, error, subscribeToMore} = useQuery(GET_USER, {
         fetchPolicy: `${myId === currentId? 'cache-and-network' : 'network-only'}`,
         nextFetchPolicy: 'cache-only',
         variables: {userId: currentId}

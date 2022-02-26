@@ -8,9 +8,7 @@ import {LIKE_POST_SUB} from "../../../GRAPHQL/subscriptions/like-post-subscripto
 import {Input, Button} from "antd";
 import {HeartOutlined} from "@ant-design/icons";
 import './user-posts.less';
-import {useDispatch} from "react-redux";
-import {getNotification} from "../../../store/other/action";
-import {useActions} from "../../../assets/hooks/useActions";
+
 
 
 interface UserPostsProps {
@@ -23,7 +21,8 @@ interface UserPostsProps {
 
 const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}) => {
 
-    const {getNotification} = useActions();
+    const [newPost, setNewPost] = useState<string>('')
+
 
     const [addPost] = useMutation(ADD_POST);
     const [sendLikePost] = useMutation(SEND_LIKE_POST);
@@ -35,16 +34,13 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
     });
 
 
-    const [newPost, setNewPost] = useState<string>('')
-
     useEffect(() => {
         subscribeToMore({
             document: POST_SUB, updateQuery: (prev, {subscriptionData}) => {
                 const prevData = prev.getUserPosts
                 const newPost = subscriptionData.data.newPost
-                getNotification(newPost)
-                const updatePosts = [newPost, ...prevData.posts]
-                return {getUserPosts: {...prevData, updatePosts}}
+                const updatePosts = Object.assign({}, prevData, {posts: [newPost, ...prevData.posts]})
+                return {getUserPosts: updatePosts}
             }
         })
         subscribeToMore({
@@ -53,8 +49,8 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
                 const newLike = subscriptionData.data.newLike
                 const updatePosts = prevPostsData.map((post: any) =>
                     post.id == newLike.postId ?
-                        Object.assign({}, post, {likes: [newLike, ...post.likes]}) : post)
-                const newData = Object.assign({}, prev.getUserPosts, {posts: updatePosts})
+                    Object.assign({}, post, {likes: [newLike, ...post.likes]}) : post)
+                const newData =  Object.assign({}, prev.getUserPosts, {posts: updatePosts})
                 return {getUserPosts: newData}
             }
         })
