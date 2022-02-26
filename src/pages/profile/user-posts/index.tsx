@@ -3,12 +3,10 @@ import {useMutation, useQuery} from "@apollo/client";
 import {GET_USER_POSTS} from "../../../GRAPHQL/queries/post-queries";
 import {ADD_POST} from "../../../GRAPHQL/mutations/post-mutations";
 import {SEND_LIKE_POST} from "../../../GRAPHQL/mutations/like-post-mutations";
-import {POST_SUB} from "../../../GRAPHQL/subscriptions/post-subscriptions";
-import {LIKE_POST_SUB} from "../../../GRAPHQL/subscriptions/like-post-subscriptons";
+import postSubscriptions from "./post-subscriptions";
 import {Input, Button} from "antd";
 import {HeartOutlined} from "@ant-design/icons";
 import './user-posts.less';
-
 
 
 interface UserPostsProps {
@@ -23,7 +21,6 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
 
     const [newPost, setNewPost] = useState<string>('')
 
-
     const [addPost] = useMutation(ADD_POST);
     const [sendLikePost] = useMutation(SEND_LIKE_POST);
 
@@ -33,27 +30,8 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
         variables: {id: currentId}
     });
 
-
     useEffect(() => {
-        subscribeToMore({
-            document: POST_SUB, updateQuery: (prev, {subscriptionData}) => {
-                const prevData = prev.getUserPosts
-                const newPost = subscriptionData.data.newPost
-                const updatePosts = Object.assign({}, prevData, {posts: [newPost, ...prevData.posts]})
-                return {getUserPosts: updatePosts}
-            }
-        })
-        subscribeToMore({
-            document: LIKE_POST_SUB, updateQuery: (prev, {subscriptionData}) => {
-                const prevPostsData = prev.getUserPosts.posts
-                const newLike = subscriptionData.data.newLike
-                const updatePosts = prevPostsData.map((post: any) =>
-                    post.id == newLike.postId ?
-                    Object.assign({}, post, {likes: [newLike, ...post.likes]}) : post)
-                const newData =  Object.assign({}, prev.getUserPosts, {posts: updatePosts})
-                return {getUserPosts: newData}
-            }
-        })
+        postSubscriptions(subscribeToMore)
     }, [])
 
     const sendNewPost = async () => {
@@ -78,12 +56,14 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
     }
     return (
         <div className='posts'>
+            {myId === currentId &&
             <div className='posts__post-form'>
                 <Input allowClear={true} value={newPost} onChange={(e) => setNewPost(e.target.value)}/>
                 <Button onClick={sendNewPost}>
                     Submit
                 </Button>
             </div>
+            }
             <div className='posts_posts-list'>
                 {data && data?.getUserPosts?.posts.map(({id, date, time, content, likes}: any) =>
                     <div key={id}>

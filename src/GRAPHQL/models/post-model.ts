@@ -1,6 +1,7 @@
 export const postModel = `
- id
- date
- time
- content
+parentId
+id
+date
+time
+content
 `
