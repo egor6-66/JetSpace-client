@@ -8,6 +8,7 @@ import './nav-bar.less';
 
 const NavBar = () => {
 
+
     const {user} = useTypedSelector(state => state.auth);
 
     return (

@@ -1,8 +1,8 @@
-import React, { FC, useState } from 'react';
-import { useMutation } from "@apollo/client";
-import { EDIT_STATUS } from "../../../GRAPHQL/mutations/user-mutations";
-import { EditOutlined } from "@ant-design/icons";
-import { Button, Input, Modal } from "antd";
+import React, {FC, useState} from 'react';
+import {useMutation} from "@apollo/client";
+import {EDIT_STATUS} from "../../../GRAPHQL/mutations/user-mutations";
+import UserAvatar from "./user-avatar";
+import {Button, Input, Modal, Typography} from "antd";
 import './user-info.less';
 
 
@@ -13,9 +13,12 @@ interface UserInfoProps {
     name: string,
     lastName: string,
     status: string,
+    avatar: string
 }
 
-const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName, status}) => {
+const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName, status, avatar}) => {
+
+    const {Title,} = Typography;
 
     const [editStatus, {loading, error}] = useMutation(EDIT_STATUS)
 
@@ -33,15 +36,29 @@ const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName,
         setNewStatus('')
     };
 
+    const clickStatus = () => {
+        myId === currentId && setIsVisibleEditStatus(true)
+    }
+
     return (
-        <div className='user-info'>
-            <div>{isOnline ? 'Online' : 'Offline'}</div>
-            <div>{name} </div>
-            <div>{lastName}</div>
-            <div>{status ? status : myId === currentId && 'Установить статус'}
-                {myId === currentId && <EditOutlined style={{cursor: "pointer"}}
-                                                     onClick={() => setIsVisibleEditStatus(true)}/>}
+        <div className='user-info' style={{backgroundImage: `url(${avatar})`}}>
+            <UserAvatar
+                avatar={avatar}
+                currentId={currentId}
+            />
+            <div className='user-info__params'>
+                <Title level={1}>
+                    {name} {lastName}
+                </Title>
+                <div className='user-info__params_status'>
+                    <Title level={2} onClick={clickStatus}>
+                        {status ? status : myId === currentId && 'Установить статус'}
+                    </Title>
+                </div>
             </div>
+            <Title level={3} className='user-info__isOnline'>
+                {isOnline ? 'Online' : 'Offline'}
+            </Title>
             <Modal
                 visible={isVisibleEditStatus}
                 onCancel={() => setIsVisibleEditStatus(false)}

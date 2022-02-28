@@ -2,7 +2,9 @@ import React, { FC } from 'react';
 import { useParams, useNavigate } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { EDIT_PROFILE } from "../../GRAPHQL/mutations/user-mutations";
-import { Button, Form, Input } from "antd";
+import {useTypedSelector} from "../../assets/hooks/useTypedSelector";
+import { Button, Form, Input, Select} from "antd";
+import {useActions} from "../../assets/hooks/useActions";
 
 
 interface EditProfileProps {
@@ -13,24 +15,28 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
 
     const {id: currentId} = useParams();
     const navigate = useNavigate();
+    const {setTheme} = useActions();
+
+    const { Option } = Select;
+
+    const {isAuth, user} = useTypedSelector(state => state.auth);
 
     const [editUserParams] = useMutation(EDIT_PROFILE);
 
-    const submitNewUserParams = async (newName: string, newLastName: string) => {
+    function handleChange(theme: string) {
+        setTheme(theme)
+    }
+
+    const onFinish = async ({newName, newLastName, theme}: any) => {
         await editUserParams({
             variables: {
                 id: myId,
                 name: newName,
                 lastName: newLastName,
+                theme: theme,
             },
         });
-        navigate(`/user/${myId}/profile`)
-    };
-
-    const onFinish = async ({newName, newLastName}: any) => {
-        if (newName || newLastName) {
-            await submitNewUserParams(newName, newLastName)
-        }
+        navigate(-1)
     };
 
     return (
@@ -46,13 +52,19 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
                     label="Имя"
                     name="newName"
                 >
-                    <Input/>
+                    <Input placeholder={user.name}/>
                 </Form.Item>
                 <Form.Item
                     label="Фамилия"
                     name="newLastName"
                 >
-                    <Input/>
+                    <Input placeholder={user.lastName}/>
+                </Form.Item>
+                <Form.Item name="theme" label="Тема сайта">
+                    <Select placeholder={user.theme} style={{ width: 120 , color: "red"}} onChange={handleChange}>
+                        <Option value="light">light</Option>
+                        <Option value="dark">dark</Option>
+                    </Select>
                 </Form.Item>
                 <Form.Item wrapperCol={{offset: 8, span: 16}}>
                     <Button type="primary" htmlType="submit">

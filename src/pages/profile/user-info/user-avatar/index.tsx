@@ -1,11 +1,12 @@
-import React, { FC, useState } from 'react';
-import $axios from "../../../services/axios-customs";
-import { useLazyQuery } from "@apollo/client";
-import { GET_ALL_USER_IMG } from "../../../GRAPHQL/queries/img-queries";
-import { API_URL } from "../../../assets/constants";
-import { getBase64 } from "../../../assets/functions/getBase64";
+import React, {FC, useState} from 'react';
+import $axios from "../../../../services/axios-customs";
+import {useLazyQuery} from "@apollo/client";
+import {GET_ALL_USER_IMG} from "../../../../GRAPHQL/queries/img-queries";
+import {API_URL} from "../../../../assets/constants";
+import {getBase64} from "../../../../assets/functions/getBase64";
 import AllPhotos from "./all-photos";
-import {Input, Upload} from "antd";
+import {Input, Upload, Typography} from "antd";
+import './user-avatar.less';
 
 
 interface UserAvatarProps {
@@ -14,6 +15,8 @@ interface UserAvatarProps {
 }
 
 const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
+
+    const {Text} = Typography;
 
     const [getAllUserImg, {loading, data}] = useLazyQuery(GET_ALL_USER_IMG, {
         fetchPolicy: 'cache-and-network',
@@ -43,27 +46,25 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
         }
     };
 
+    const clickToAvatar = (e: any) => {
+        e.stopPropagation()
+        getAllUserImg()
+        setIsVisibleAllPhotos(true)
+    }
+
     return (
         <>
-            {isVisibleAllPhotos &&
-            <AllPhotos
-                allUserImg={data?.getAllUserImg?.images}
-                isVisibleAllPhotos={isVisibleAllPhotos}
-                setIsVisibleAllPhotos={setIsVisibleAllPhotos}
-            />}
-
-            <div className='left-block__avatar'
+            <div className='user-avatar'
                  onMouseEnter={() => setIsVisibleImgMenu(true)}
                  onMouseLeave={() => setIsVisibleImgMenu(false)}
             >
                 {isLoading ?
                     <div>loading...</div>
                     :
-                    <img onClick={(e) => {
-                        getAllUserImg()
-                        setIsVisibleAllPhotos(true)
-                    }}
-                         style={{width: '150px'}} src={newAvatar ? newAvatar : avatar} alt=""/>
+                    <img onClick={(e) => clickToAvatar(e)}
+                         className='user-avatar__img'
+                         src={newAvatar ? newAvatar : avatar}
+                    />
                 }
                 <Upload
                     name="avatar"
@@ -71,8 +72,14 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
                     showUploadList={false}
                     customRequest={customRequest}
                 >
-                    {isVisibleImgMenu && <div>Выбрать фото</div>}
+                    {isVisibleImgMenu && <Text className='user-avatar__upload'>Изменить фото</Text>}
                 </Upload>
+                {isVisibleAllPhotos &&
+                <AllPhotos
+                    allUserImg={data?.getAllUserImg?.images}
+                    isVisibleAllPhotos={isVisibleAllPhotos}
+                    setIsVisibleAllPhotos={setIsVisibleAllPhotos}
+                />}
             </div>
         </>
     );

@@ -22,7 +22,7 @@ const Wrapper:FC<WrapperProps> = ({myId}) => {
             </div>
             <div className='wrapper__main'>
                 <div className='wrapper__main_container'>
-                    <NavBar/>
+                    {/*<NavBar/>*/}
                     <Outlet/>
                 </div>
             </div>

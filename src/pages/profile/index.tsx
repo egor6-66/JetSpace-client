@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
-import { useParams, Link } from "react-router-dom";
-import { useQuery } from "@apollo/client";
-import { GET_USER } from "../../GRAPHQL/queries/user-queries";
+import {Outlet, useParams, useLocation} from "react-router-dom";
+import {useQuery} from "@apollo/client";
+import {GET_USER} from "../../GRAPHQL/queries/user-queries";
 import UserInfo from "./user-info";
-import UserAvatar from "./user-avatar";
 import UserPosts from "./user-posts";
 import './profile.less';
+import NavMenu from "./nav-menu";
 
 
 interface ProfileProps {
@@ -15,42 +15,40 @@ interface ProfileProps {
 const Profile: FC<ProfileProps> = ({myId}) => {
 
     const {id: currentId} = useParams();
+    const location = useLocation().pathname.split('/');
 
     const {data, loading, error, subscribeToMore} = useQuery(GET_USER, {
-        fetchPolicy: `${myId === currentId? 'cache-and-network' : 'network-only'}`,
+        fetchPolicy: `${myId === currentId ? 'cache-and-network' : 'network-only'}`,
         nextFetchPolicy: 'cache-only',
         variables: {userId: currentId}
     });
-
-
+    console.log(location[location.length -1])
     return (
         <div className='profile'>
-            <div className='left-block'>
-                <UserAvatar
-                    avatar={data?.getUser.avatar}
-                    currentId={currentId}
-                />
-                {myId === currentId &&
-                <div className='edit-profile'>
-                    <Link to={`/user/${myId}/editProfile`}>Редактировать профиль</Link>
-                </div>}
-            </div>
-            <div className='right-block'>
-                <UserInfo
-                    myId={myId}
-                    currentId={currentId}
-                    isOnline={data?.getUser.isOnline}
-                    name={data?.getUser.name}
-                    lastName={data?.getUser.lastName}
-                    status={data?.getUser.status}
-                />
-                <UserPosts
-                    myId={myId}
-                    currentId={currentId}
-                    name={data?.getUser.name}
-                    lastName={data?.getUser.lastName}
-                    avatar={data?.getUser.avatar}
-                />
+            <UserInfo
+                myId={myId}
+                currentId={currentId}
+                isOnline={data?.getUser.isOnline}
+                name={data?.getUser.name}
+                lastName={data?.getUser.lastName}
+                status={data?.getUser.status}
+                avatar={data?.getUser.avatar}
+            />
+            <div className='profile__content-wrapper'>
+                <NavMenu myId={myId} currentId={currentId}/>
+                <div className='profile__content'>
+                    <div className='profile__content_left-block'>
+                        {location[location.length -1] === 'profile' &&
+                        <UserPosts
+                            myId={myId}
+                            currentId={currentId}
+                        />}
+                        <Outlet/>
+                    </div>
+                    <div className='profile__content_right-block'>
+                        left block
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -2,8 +2,8 @@ import {gql} from "@apollo/client";
 import {userModel} from "../models/user-model";
 
 export const EDIT_PROFILE = gql`
-    mutation editProfile($id: ID, $name: String, $lastName: String){
-        editProfile(id: $id, name: $name, lastName: $lastName){
+    mutation editProfile($id: ID, $name: String, $lastName: String, $theme: String){
+        editProfile(id: $id, name: $name, lastName: $lastName, theme: $theme){
             ${userModel}
         }
     }

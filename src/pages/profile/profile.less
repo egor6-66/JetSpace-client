@@ -2,24 +2,25 @@
   width: 100%;
   height: calc(100vh - 80px);
   display: flex;
-  justify-content: space-between;
-  background-color: #2f54eb;
+  flex-direction: column;
+  align-items: center;
 
-  .left-block {
-    width: 30%;
-    height: 100%;
+  &__content-wrapper {
+    width: 95%;
 
-    &__avatar {
-      width: 100%;
-      height: 200px;
-      background-color: #4E4E50;
-      img {
+    .profile__content {
+      display: flex;
+      gap: 20px;
 
+      &_left-block {
+        min-width: 70%;
+        flex: 1;
+      }
+
+      &_right-block {
+        min-width: 30%;
+        flex: 1;
       }
     }
-  }
-
-  .right-block{
-    width: 68%;
   }
 }

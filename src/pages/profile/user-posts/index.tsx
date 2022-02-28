@@ -12,12 +12,9 @@ import './user-posts.less';
 interface UserPostsProps {
     myId: string | undefined,
     currentId: string | undefined,
-    name: string | undefined,
-    lastName: string | undefined,
-    avatar: string | undefined,
 }
 
-const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}) => {
+const UserPosts: FC<UserPostsProps> = ({myId, currentId}) => {
 
     const [newPost, setNewPost] = useState<string>('')
 

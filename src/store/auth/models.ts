@@ -2,6 +2,7 @@ interface IUserAuth{
     id: string,
     email: string,
     name: string,
+    theme: string,
     isActivated: boolean,
 }
 

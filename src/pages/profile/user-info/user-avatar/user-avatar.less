@@ -1,0 +1,25 @@
+@import "./src/core-less/variables/colors";
+
+.user-avatar {
+  position: relative;
+  max-width: 200px;
+  height: 200px;
+
+  &__img {
+    min-width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: center no-repeat;
+    background-size: 100%;
+    cursor: pointer;
+  }
+
+  &__upload {
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    cursor: pointer;
+  }
+}

@@ -4,5 +4,6 @@ name
 lastName
 status
 avatar
+theme
 isOnline
 `

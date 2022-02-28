@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MyFriends = () => {
+const UserFriends = () => {
     return (
         <div className='my-friends'>
             <div className='left-block'>
@@ -11,4 +11,4 @@ const MyFriends = () => {
     );
 };
 
-export default MyFriends;
+export default UserFriends;
