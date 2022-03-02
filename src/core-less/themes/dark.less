@@ -5,31 +5,57 @@
 
   background-color: #434343;
   @primary-color: #d5b50b;
-
+  @boxShadow: 0 0 20px 10px rgba(@orange-9);
+  @textShadow: 1px 1px 2px black, 0 0 1em red;
 
   .header, .wrapper__header {
     background-color: #141414;
+    box-shadow:  0 0 20px 10px #141414;
+    z-index: 5;
   }
 
-  .profile {
+
+  .profile,.edit-profile {
     background-color: #262626;
-    .user-info{
-      text-shadow: 1px 1px 2px black, 0 0 1em red;
+    box-shadow:  0 0 20px 10px #262626;
+
+    .user-info {
+      text-shadow: @textShadow
     }
 
     .user-avatar__img {
-      box-shadow: 0px 0px 20px 10px rgba(@orange-9);
+      box-shadow: @boxShadow;
     }
 
-
     .posts__list_item {
-      background: @gold-5;
+      border: 2px solid @border-color-base;
+    }
+
+    .socials-networks{
+      //box-shadow: @boxShadow;
+      border: 2px solid @border-color-base;
+    }
+
+    .all-likes{
+      border-bottom: 2px solid @border-color-base;
+    }
+
+    .all-dislikes{
+      border-bottom: 2px solid @border-color-base;
     }
 
   }
+  .all-likes-modal__item {
+    border-bottom: 2px solid @border-color-base;
+  }
 
+  .all-users {
+    .users-list__item_avatar {
+      box-shadow: @boxShadow;
+    }
 
-
-
-
+    .users-list__item_name {
+      text-shadow: @textShadow
+    }
+  }
 }

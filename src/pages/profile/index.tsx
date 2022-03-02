@@ -4,8 +4,13 @@ import {useQuery} from "@apollo/client";
 import {GET_USER} from "../../GRAPHQL/queries/user-queries";
 import UserInfo from "./user-info";
 import UserPosts from "./user-posts";
-import './profile.less';
 import NavMenu from "./nav-menu";
+import SocialsNetworks from "./socials-networts";
+import AllLikes from "./all-likes";
+import AllDislikes from "./all-dislikes";
+import './profile.less';
+
+
 
 
 interface ProfileProps {
@@ -22,7 +27,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
         nextFetchPolicy: 'cache-only',
         variables: {userId: currentId}
     });
-    console.log(data)
+
     return (
         <div className='profile'>
             <UserInfo
@@ -50,7 +55,12 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                         <Outlet/>
                     </div>
                     <div className='profile__content_right-block'>
-                        left block
+                        <SocialsNetworks/>
+                        <AllLikes
+                            likeCounter={+data?.getUser.likeCounter}
+                            currentId={currentId}
+                        />
+                        <AllDislikes/>
                     </div>
                 </div>
             </div>

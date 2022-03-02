@@ -8,7 +8,7 @@ import {API_URL, themes} from "../../assets/constants";
 import $axios from "../../services/axios-customs";
 import ImgCrop from 'antd-img-crop';
 import {Button, Form, Input, Select, Typography, Upload} from "antd";
-
+import './edit-profile.less';
 
 
 interface EditProfileProps {
@@ -17,14 +17,17 @@ interface EditProfileProps {
 
 const EditProfile: FC<EditProfileProps> = ({myId}) => {
 
-    const {Text} = Typography;
+    const {Text, Title} = Typography;
     const {Option} = Select;
 
     const {id: currentId} = useParams();
     const navigate = useNavigate();
     const {setTheme} = useActions();
 
-    const {isAuth, user} = useTypedSelector(state => state.auth);
+    const [img, setImg] = useState<any>(null)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
+    const {user} = useTypedSelector(state => state.auth);
     const [editUserParams] = useMutation(EDIT_PROFILE);
 
 
@@ -42,68 +45,69 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
                 theme: theme,
             },
         });
-        navigate(-1)
+        img && await $axios.post(`${API_URL}/imgUpload`, img, {
+            headers: {"content-type": "multipart/form-data"}
+        })
+        setIsLoading(true)
+        setTimeout(() => {
+            setIsLoading(false)
+            navigate(-1,)
+        }, 2000)
     };
 
     const customRequest = async (file: any) => {
-        try {
-            const bodyFormData = new FormData();
-            bodyFormData.append('headerAvatar', file);
-
-            await $axios.post(`${API_URL}/imgUpload`, bodyFormData, {
-                headers:{"content-type": "multipart/form-data"}
-            })
-        } catch (e) {
-            console.log(e)
-        }
+        const bodyFormData = new FormData();
+        bodyFormData.append('headerAvatar', file);
+        setImg(bodyFormData)
     };
 
 
     return (
-        <div>
-            <Form
-                name="basic"
-                labelCol={{span: 8}}
-                wrapperCol={{span: 16}}
-                onFinish={onFinish}
-                autoComplete="off"
-            >
-                <Form.Item
-                    label="Имя"
-                    name="newName"
+        <div className='edit-profile'>
+            {isLoading ?
+                <div>loading</div>
+                :
+                <Form
+                    className='edit-profile__form'
+                    name="basic"
+                    onFinish={onFinish}
                 >
-                    <Input placeholder={user.name}/>
-                </Form.Item>
-                <Form.Item
-                    label="Фамилия"
-                    name="newLastName"
-                >
-                    <Input placeholder={user.lastName}/>
-                </Form.Item>
-                <Form.Item name="theme" label="Тема сайта">
-                    <Select placeholder={user.theme} style={{width: 120, color: "red"}} onChange={handleChange}>
-                        {themes.map(theme =>
-                            <Option key={theme} value={theme}>{theme}</Option>
-                        )}
-                    </Select>
-                </Form.Item>
-                <Form.Item>
-                    <ImgCrop rotate={true} aspect={2/1} onModalOk={(file) =>customRequest(file)}>
-                        <Upload
-                            name="avatar"
-                            showUploadList={false}
-                            customRequest={() => false}
-                        >
-                            <Text className='user-avatar__upload'>Изменить фото</Text>
-                        </Upload>
-                    </ImgCrop>
-                </Form.Item>
-                <Form.Item wrapperCol={{offset: 8, span: 16}}>
-                    <Button type="primary" htmlType="submit">
-                        Сохранить
-                    </Button>
-                </Form.Item>
-            </Form>
+                    <Form.Item
+                        label="Имя"
+                        name="newName"
+                    >
+                        <Input placeholder={user.name}/>
+                    </Form.Item>
+                    <Form.Item
+                        label="Фамилия"
+                        name="newLastName"
+                    >
+                        <Input placeholder={user.lastName}/>
+                    </Form.Item>
+                    <Form.Item name="theme" label="Тема сайта">
+                        <Select placeholder={user.theme} onChange={handleChange}>
+                            {themes.map(theme =>
+                                <Option key={theme} value={theme}>{theme}</Option>
+                            )}
+                        </Select>
+                    </Form.Item>
+                    <Form.Item className='edit-profile__form_header-avatar'>
+                        <ImgCrop rotate={true} aspect={2 / 1} onModalOk={(file) => customRequest(file)}>
+                            <Upload
+                                name="avatar"
+                                showUploadList={false}
+                                customRequest={() => false}
+                            >
+                                <Title level={3}>изменить фото шапки</Title>
+                            </Upload>
+                        </ImgCrop>
+                    </Form.Item>
+                    <Form.Item wrapperCol={{offset: 8, span: 16}}>
+                        <Button type="primary" htmlType="submit">
+                            Сохранить
+                        </Button>
+                    </Form.Item>
+                </Form>}
         </div>
     );
 };

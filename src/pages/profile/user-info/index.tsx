@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {useMutation} from "@apollo/client";
 import {EDIT_STATUS} from "../../../GRAPHQL/mutations/user-mutations";
-import UserAvatar from "./user-avatar";
+import UserAvatar from "../user-avatar";
 import {Button, Input, Modal, Typography} from "antd";
 import './user-info.less';
 
