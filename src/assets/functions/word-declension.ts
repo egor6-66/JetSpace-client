@@ -1,5 +1,5 @@
 interface wordDeclension {
-    length: number,
+    length: number ,
     word: string,
     suffix: [string, string],
 }

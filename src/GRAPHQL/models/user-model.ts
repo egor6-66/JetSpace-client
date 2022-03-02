@@ -5,6 +5,7 @@ lastName
 status
 avatar
 headerAvatar
+likeCounter
 theme
 isOnline
 `

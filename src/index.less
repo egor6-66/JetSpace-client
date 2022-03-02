@@ -1,3 +1,4 @@
+@import '~antd/lib/style/themes/default.less';
 @import "./core-less/null-default-style";
 @import "./core-less/fonts";
 @import "core-less/antCustoms";
@@ -5,4 +6,18 @@
 html, body {
   font-size: 14px;
   font-family: @ROBOTO;
+}
+body{
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #262626;
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #f3faf7;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background-color: #d9d9d9;
 }

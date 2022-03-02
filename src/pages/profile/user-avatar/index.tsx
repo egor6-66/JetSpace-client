@@ -1,9 +1,9 @@
 import React, {FC, useState} from 'react';
-import $axios from "../../../../services/axios-customs";
+import $axios from "../../../services/axios-customs";
 import {useLazyQuery} from "@apollo/client";
-import {GET_ALL_USER_IMG} from "../../../../GRAPHQL/queries/img-queries";
-import {API_URL} from "../../../../assets/constants";
-import {getBase64} from "../../../../assets/functions/getBase64";
+import {GET_ALL_USER_IMG} from "../../../GRAPHQL/queries/img-queries";
+import {API_URL} from "../../../assets/constants";
+import {getBase64} from "../../../assets/functions/getBase64";
 import AllPhotos from "./all-photos";
 import {Input, Upload, Typography} from "antd";
 import './user-avatar.less';
