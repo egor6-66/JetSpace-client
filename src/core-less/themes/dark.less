@@ -1,22 +1,35 @@
-@import "../variables/colors";
-
-
-.darkTheme {
+.dark {
   @import '~antd/lib/style/themes/default.less';
   @import '~antd/dist/antd.dark.less';
   @import "../antCustoms";
 
-
-  .header, .wrapper__header{
-    background-color: @gray-12;
-  }
-
-  .profile{
-    background-color: @gray-10;
-  }
-
-  background-color: @gray-11;
+  background-color: #434343;
   @primary-color: #d5b50b;
+
+
+  .header, .wrapper__header {
+    background-color: #141414;
+  }
+
+  .profile {
+    background-color: #262626;
+    .user-info{
+      text-shadow: 1px 1px 2px black, 0 0 1em red;
+    }
+
+    .user-avatar__img {
+      box-shadow: 0px 0px 20px 10px rgba(@orange-9);
+    }
+
+
+    .posts__list_item {
+      background: @gold-5;
+    }
+
+  }
+
+
+
 
 
 }

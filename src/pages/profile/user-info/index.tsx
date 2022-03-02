@@ -10,13 +10,14 @@ interface UserInfoProps {
     myId: string | undefined,
     currentId: string | undefined,
     isOnline: boolean | undefined,
-    name: string,
-    lastName: string,
-    status: string,
-    avatar: string
+    name: string | undefined,
+    lastName: string | undefined,
+    status: string | undefined,
+    avatar: string | undefined,
+    headerAvatar: string | undefined,
 }
 
-const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName, status, avatar}) => {
+const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName, status, avatar, headerAvatar}) => {
 
     const {Title,} = Typography;
 
@@ -41,7 +42,7 @@ const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName,
     }
 
     return (
-        <div className='user-info' style={{backgroundImage: `url(${avatar})`}}>
+        <div className='user-info' style={{backgroundImage: `url(${headerAvatar})`}}>
             <UserAvatar
                 avatar={avatar}
                 currentId={currentId}

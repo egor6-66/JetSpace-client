@@ -36,7 +36,7 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
             setIsLoading(true)
             const imgUrl = await getBase64(file)
             const bodyFormData = new FormData();
-            bodyFormData.append('image', file);
+            bodyFormData.append('avatar', file);
             const response = await $axios.post(`${API_URL}/imgUpload`, bodyFormData)
             setNewAvatar(imgUrl)
         } catch (e) {

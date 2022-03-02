@@ -12,6 +12,10 @@ import App from './App';
 
 import './index.less';
 
+import moment from 'moment';
+import 'moment/locale/ru';
+
+moment().locale('ru');
 
 const wsLink = new WebSocketLink({uri: GRAPH_QL_WS_URL, options: {reconnect: true}})
 const httpLink = new HttpLink({uri: GRAPH_QL_URL})
