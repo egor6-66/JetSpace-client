@@ -22,7 +22,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
         nextFetchPolicy: 'cache-only',
         variables: {userId: currentId}
     });
-    console.log(location[location.length -1])
+    console.log(data)
     return (
         <div className='profile'>
             <UserInfo
@@ -33,6 +33,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                 lastName={data?.getUser.lastName}
                 status={data?.getUser.status}
                 avatar={data?.getUser.avatar}
+                headerAvatar={data?.getUser.headerAvatar}
             />
             <div className='profile__content-wrapper'>
                 <NavMenu myId={myId} currentId={currentId}/>
@@ -42,6 +43,9 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                         <UserPosts
                             myId={myId}
                             currentId={currentId}
+                            name={data?.getUser.name}
+                            lastName={data?.getUser.lastName}
+                            avatar={data?.getUser.avatar}
                         />}
                         <Outlet/>
                     </div>

@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import {Routes, Route, Navigate} from "react-router-dom";
 import {useTypedSelector} from "./assets/hooks/useTypedSelector";
 import {useActions} from "./assets/hooks/useActions";
+import {choiceTheme} from "./assets/functions/choiceTheme";
 import {getToken} from "./services/localStorage";
 
 import Auth from "./pages/auth";
@@ -15,6 +16,7 @@ import EditProfile from "./pages/edit-profile";
 
 import './core-less/themes/light.less';
 import './core-less/themes/dark.less';
+import './core-less/themes/purple.less';
 
 
 const App = () => {
@@ -29,14 +31,7 @@ const App = () => {
 
 
   useEffect(() => {
-      if (user.theme === 'light') {
-          document.body.classList.remove('darkTheme');
-          document.body.classList.add('lightTheme');
-      }
-      if (user.theme === 'dark') {
-          document.body.classList.remove('lightTheme');
-          document.body.classList.add('darkTheme');
-      }
+      choiceTheme(user.theme)
   },[user.theme])
 
 
