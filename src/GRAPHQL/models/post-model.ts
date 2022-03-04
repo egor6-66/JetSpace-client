@@ -1,6 +1,12 @@
+import {likeModel} from "./like-model";
+import {dislikeModel} from "./dislike-model";
+
+
 export const postModel = `
-parentId
 id
+userId
 date
 content
+likes { ${likeModel} }          
+dislikes { ${dislikeModel} }               
 `
