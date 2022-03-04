@@ -33,7 +33,11 @@ const splitLink = split(
 export const client = new ApolloClient({
     uri: GRAPH_QL_URL,
     link: splitLink,
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+        typePolicies:{
+            Posts: {keyFields: ['userId']},
+        }
+    }),
     headers: {
         authorization: `Bearer ${getToken()}`
     }

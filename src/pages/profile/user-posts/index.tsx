@@ -1,12 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
 import {useMutation, useQuery} from "@apollo/client";
 import {GET_USER_POSTS} from "../../../GRAPHQL/queries/post-queries";
-import {ADD_POST} from "../../../GRAPHQL/mutations/post-mutations";
-import {SEND_LIKE_POST} from "../../../GRAPHQL/mutations/like-post-mutations";
+import {ADD_POST, SEND_DISLIKE_POST} from "../../../GRAPHQL/mutations/post-mutations";
+import {SEND_LIKE_POST} from "../../../GRAPHQL/mutations/post-mutations";
 import postSubscriptions from "./post-subscriptions";
+import {sendDislike, sendLike} from '../../../assets/functions/likeAndDislike'
 import {Input, Button, Typography} from "antd";
 import {HeartOutlined} from "@ant-design/icons";
-import moment from 'moment'
 
 import './user-posts.less';
 
@@ -27,6 +27,7 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
 
     const [addPost] = useMutation(ADD_POST);
     const [sendLikePost] = useMutation(SEND_LIKE_POST);
+    const [sendDislikePost] = useMutation(SEND_DISLIKE_POST);
 
     const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_USER_POSTS, {
         fetchPolicy: `${myId === currentId ? 'cache-first' : 'network-only'}`,
@@ -39,26 +40,23 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
     }, [])
 
     const sendNewPost = async () => {
-        const response = await addPost({
+        await addPost({
             variables: {
                 userId: myId,
                 content: newPost
             }
         });
-        !data.getUserPosts && refetch()
         setNewPost('')
     }
 
-    const sendLike = async (postId: string) => {
-        await sendLikePost({
-            variables: {
-                ownerId: currentId,
-                postId: postId,
-                userId: myId,
-            }
-        })
+    const likeClick = async (id: string, likes: any[]) => {
+        await sendLike({action: sendLikePost, postId: id, currentId, myId})
     }
-    console.log(data)
+
+    const dislikeClick = async (id: string, dislikes: any[]) => {
+        await sendDislike({action: sendDislikePost, postId: id, currentId, myId})
+    }
+    console.log('data',data)
     return (
         <div className='posts'>
             {myId === currentId &&
@@ -70,7 +68,7 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
             </div>
             }
             <div className='posts__list'>
-                {data && data?.getUserPosts?.posts.map(({id, date, content, likes}: any) =>
+                {data?.getUserPosts?.posts?.map(({id, date, content, likes, dislikes}: any) =>
                     <div key={id} className='posts__list_item post-item'>
                         <div className='post-item__top-block'>
                             <img className='post-item__top-block_avatar' src={avatar} alt=""/>
@@ -83,7 +81,10 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
                             <Title level={5}>{content}</Title>
                         </div>
                         <div className='post-item__bottom-block'>
-                            <HeartOutlined onClick={() => sendLike(id)}/>----{likes && likes.length}
+                            <HeartOutlined onClick={() => likeClick(id, likes)}/>
+                            ----{likes && likes.length}
+                            <HeartOutlined onClick={() => dislikeClick(id, dislikes)}/>-
+                            ---{dislikes && dislikes.length}
                         </div>
                     </div>
                 )}
