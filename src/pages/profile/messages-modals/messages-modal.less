@@ -1,0 +1,33 @@
+.messages-modal{
+position: relative;
+
+  &__content{
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__input{
+    display: flex;
+    position: relative;
+
+    input{
+      border-radius: 8px 0 0 8px!important;
+    }
+    button {
+      border-radius: 0 8px 8px 0!important;
+    }
+
+    svg{
+      cursor: pointer;
+      position: absolute;
+      top: 2px;
+      right: 110px;
+    }
+  }
+}
+
+.picker{
+  position: absolute;
+  bottom: 60px;
+  right: 100px;
+}

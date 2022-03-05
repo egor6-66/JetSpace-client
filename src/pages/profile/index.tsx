@@ -25,7 +25,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
         nextFetchPolicy: 'cache-only',
         variables: {userId: currentId}
     });
-
+    console.log(location)
     return (
         <div className='profile'>
             <UserInfo
@@ -42,7 +42,8 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                 <NavMenu myId={myId} currentId={currentId}/>
                 <div className='profile__content'>
                     <div className='profile__content_left-block'>
-                        {location[location.length - 1] === 'profile' &&
+                        {location.length !== 5
+                        &&
                         <UserPosts
                             myId={myId}
                             currentId={currentId}
