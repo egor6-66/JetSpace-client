@@ -24,7 +24,7 @@ const SocialsNetworksIcons = ({id, size}: any) => {
                     </g>
                 </svg>
             )
-        case 'faceBook':
+        case 'facebook':
             return (
                 <svg xmlns="http://www.w3.org/2000/svg" width={size} height={size} version="1" viewBox="0 0 32 32"
                      xmlSpace="preserve">

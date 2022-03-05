@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Outlet, useParams, useLocation} from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import {GET_USER} from "../../GRAPHQL/queries/user-queries";
@@ -9,8 +9,6 @@ import SocialsNetworks from "./socials-networts";
 import AllLikes from "./all-likes";
 import AllDislikes from "./all-dislikes";
 import './profile.less';
-
-
 
 
 interface ProfileProps {
@@ -44,7 +42,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                 <NavMenu myId={myId} currentId={currentId}/>
                 <div className='profile__content'>
                     <div className='profile__content_left-block'>
-                        {location[location.length -1] === 'profile' &&
+                        {location[location.length - 1] === 'profile' &&
                         <UserPosts
                             myId={myId}
                             currentId={currentId}
@@ -55,7 +53,16 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                         <Outlet/>
                     </div>
                     <div className='profile__content_right-block'>
-                        <SocialsNetworks/>
+                        <SocialsNetworks
+                            instagram={data?.getUser.instagram}
+                            facebook={data?.getUser.facebook}
+                            twitter={data?.getUser.twitter}
+                            spotify={data?.getUser.spotify}
+                            telegram={data?.getUser.telegram}
+                            github={data?.getUser.github}
+                            soundCloud={data?.getUser.soundCloud}
+                            youTube={data?.getUser.youTube}
+                        />
                         <AllLikes
                             likeCounter={+data?.getUser.likeCounter}
                             currentId={currentId}

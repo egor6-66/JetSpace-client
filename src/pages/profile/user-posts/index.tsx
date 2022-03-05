@@ -56,7 +56,7 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
     const dislikeClick = async (id: string, dislikes: any[]) => {
         await sendDislike({action: sendDislikePost, postId: id, currentId, myId})
     }
-    console.log('data',data)
+
     return (
         <div className='posts'>
             {myId === currentId &&

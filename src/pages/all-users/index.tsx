@@ -20,7 +20,7 @@ const AllUsers = () => {
                 :
                 <div className='users-list'>
                     {data?.getAllUsers.map((user: any, index: number) =>
-                        <Link className='users-list__item' to={`/user/${user.id}/profile`}>
+                        <Link key={user.id} className='users-list__item' to={`/user/${user.id}/profile`}>
                             <img className='users-list__item_avatar' src={user.avatar} alt=""/>
                             <Title level={2} className='users-list__item_name'>{user.name} {user.lastName}</Title>
                         </Link>

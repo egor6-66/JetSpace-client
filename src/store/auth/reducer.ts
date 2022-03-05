@@ -71,6 +71,7 @@ export const AuthReducer = (state = initialState, action: AuthAction | OtherActi
                 isAuth: false,
                 user: {},
             }
+
         case OtherActionTypes.SET_THEME:
             return {
                 ...state,
