@@ -7,5 +7,13 @@ avatar
 headerAvatar
 likeCounter
 theme
+instagram
+facebook
+twitter
+spotify
+telegram
+github
+soundCloud
+youTube
 isOnline
 `

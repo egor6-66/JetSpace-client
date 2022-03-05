@@ -28,7 +28,7 @@ const LoginForm: FC<LoginForm> = (props) => {
 
     const onFinish = async ({email, password, remember}: Onfinish) => {
         const userId = await loginUser({email, password})
-        // !!userId && navigate(`/user:${userId}`)
+        // !!userId && navigate(`/other:${userId}`)
     };
 
     return (

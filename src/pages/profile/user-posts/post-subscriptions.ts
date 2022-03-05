@@ -44,7 +44,7 @@ const postSubscriptions = (subscribeToMore: any) => {
         document: DISLIKE_POST_SUB,
         updateQuery: (prev: PostsModel | null, {subscriptionData}: DislikeSubscriptionModel): PostsModel => {
             console.log('nooooo')
-            const prevPostsData = prev?.getUserPosts.posts
+            const prevPostsData = prev?.getUserPosts?.posts
             const newDislike = subscriptionData?.data?.newDislike
             const updatePosts = prevPostsData?.map((post: any) =>
                 post.id == newDislike.postId ?

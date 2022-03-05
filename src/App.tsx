@@ -8,6 +8,8 @@ import {getToken} from "./services/localStorage";
 import Auth from "./pages/auth";
 import Wrapper from "./components/wrapper";
 import Profile from "./pages/profile";
+import MessagesList from "./pages/profile/messages-list";
+import MessagesModal from "./pages/profile/messages-modals";
 import UserFriends from "./pages/profile/user-friends";
 import UserMusic from "./pages/profile/user-musiс";
 import UserReposts from "./pages/profile/user-reposts";
@@ -25,25 +27,26 @@ const App = () => {
 
     const {isAuth, user} = useTypedSelector(state => state.auth);
 
+
     useEffect(() => {
-        !!getToken() && checkAuth()
+       !!getToken() &&  checkAuth()
     }, [])
 
-
-  useEffect(() => {
-      choiceTheme(user.theme)
-  },[user.theme])
-
+    useEffect(() => {
+        choiceTheme(user.theme)
+    },[user.theme])
 
     return (
         isAuth && user.isActivated ?
                 <Routes>
                     <Route path="*" element={<Navigate to={`/user/${user.id}/profile`}/>}/>
                     <Route path='user/:id' element={<Wrapper myId={user.id}/>}>
-                        <Route path='profile' element={<Profile myId={user.id}/>}>
+                        <Route path='profile' element={<Profile myId={user.id} />}>
+                            <Route path='messages' element={<MessagesList/>}/>
+                            <Route path='message/:id' element={<MessagesModal/>}/>
+                            <Route path='friends' element={<UserFriends/>}/>
                             <Route path='music' element={<UserMusic/>}/>
                             <Route path='reposts' element={<UserReposts/>}/>
-                            <Route path='friends' element={<UserFriends/>}/>
                         </Route>
                         <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>
                         <Route path='allUsers' element={<AllUsers/>}/>

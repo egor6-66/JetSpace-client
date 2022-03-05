@@ -1,6 +1,6 @@
 @import "src/core-less/antCustoms";
 
-.socials-networks{
+.socials-networks {
   padding: 12px 0;
   width: 90%;
   height: auto;
@@ -10,4 +10,16 @@
   flex-wrap: wrap;
   gap: 12px;
   border-radius: @border-radius-base;
+
+  &__link {
+    height: 44px;
+
+    &_present{
+      cursor: pointer;
+      border-radius: 50%;
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+  }
 }

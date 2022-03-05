@@ -1,14 +1,16 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {useParams, useNavigate} from "react-router-dom";
-import {useMutation} from "@apollo/client";
+import {useMutation, useQuery} from "@apollo/client";
 import {EDIT_PROFILE} from "../../GRAPHQL/mutations/user-mutations";
 import {useTypedSelector} from "../../assets/hooks/useTypedSelector";
 import {useActions} from "../../assets/hooks/useActions";
 import {API_URL, themes} from "../../assets/constants";
 import $axios from "../../services/axios-customs";
+import {userParams, socialNetworksInputs, allObjs} from './nputs';
 import ImgCrop from 'antd-img-crop';
 import {Button, Form, Input, Select, Typography, Upload} from "antd";
 import './edit-profile.less';
+import {GET_USER} from "../../GRAPHQL/queries/user-queries";
 
 
 interface EditProfileProps {
@@ -17,32 +19,27 @@ interface EditProfileProps {
 
 const EditProfile: FC<EditProfileProps> = ({myId}) => {
 
-    const {Text, Title} = Typography;
+    const {Title} = Typography;
     const {Option} = Select;
 
     const {id: currentId} = useParams();
     const navigate = useNavigate();
     const {setTheme} = useActions();
 
-    const [img, setImg] = useState<any>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-
     const {user} = useTypedSelector(state => state.auth);
+    const [img, setImg] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
+
     const [editUserParams] = useMutation(EDIT_PROFILE);
+    console.log(user)
 
+    const handleChange = (theme: string) => setTheme(theme);
 
-    function handleChange(theme: string) {
-        setTheme(theme)
-    }
-
-
-    const onFinish = async ({newName, newLastName, theme}: any) => {
+    const onFinish = async (allObjs: any) => {
         await editUserParams({
             variables: {
                 id: myId,
-                name: newName,
-                lastName: newLastName,
-                theme: theme,
+                ...allObjs
             },
         });
         img && await $axios.post(`${API_URL}/imgUpload`, img, {
@@ -72,20 +69,11 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
                     name="basic"
                     onFinish={onFinish}
                 >
-                    <Form.Item
-                        label="Имя"
-                        name="newName"
-                    >
-                        <Input placeholder={user.name}/>
-                    </Form.Item>
-                    <Form.Item
-                        label="Фамилия"
-                        name="newLastName"
-                    >
-                        <Input placeholder={user.lastName}/>
-                    </Form.Item>
+                    {userParams.map(({name, obj}) =>
+                        <Form.Item key={name} label={name} name={obj}><Input placeholder={user[obj]? user[obj]:name}/></Form.Item>
+                    )}
                     <Form.Item name="theme" label="Тема сайта">
-                        <Select placeholder={user.theme} onChange={handleChange}>
+                        <Select placeholder={'theme'} onChange={handleChange}>
                             {themes.map(theme =>
                                 <Option key={theme} value={theme}>{theme}</Option>
                             )}
@@ -102,6 +90,12 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
                             </Upload>
                         </ImgCrop>
                     </Form.Item>
+                    {socialNetworksInputs.map(({obj}) =>
+                        <Form.Item key={obj} label={obj} name={obj}
+                                   rules={[{type: "url", message: "This field must be a valid url."}]}>
+                            <Input placeholder={ user[obj]? user[obj] :`вставьте ссылку на ваш ${obj}`}/>
+                        </Form.Item>
+                    )}
                     <Form.Item wrapperCol={{offset: 8, span: 16}}>
                         <Button type="primary" htmlType="submit">
                             Сохранить
