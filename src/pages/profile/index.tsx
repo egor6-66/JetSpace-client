@@ -25,7 +25,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
         nextFetchPolicy: 'cache-only',
         variables: {userId: currentId}
     });
-    console.log(location)
+
     return (
         <div className='profile'>
             <UserInfo

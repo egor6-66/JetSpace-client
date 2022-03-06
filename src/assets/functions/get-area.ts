@@ -1,5 +1,5 @@
 export const getHeight = (value: number) => {
-    return window.innerHeight - value
+    return window.screen.height - value
 }
 
 export const getWidth = (value: number) => {
