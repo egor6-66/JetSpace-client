@@ -34,8 +34,9 @@ export const client = new ApolloClient({
     uri: GRAPH_QL_URL,
     link: splitLink,
     cache: new InMemoryCache({
-        typePolicies:{
+        typePolicies: {
             Posts: {keyFields: ['userId']},
+            Messages: {keyFields: ['userId']},
         }
     }),
     headers: {
@@ -46,9 +47,9 @@ export const client = new ApolloClient({
 ReactDOM.render(
     <Provider store={store}>
         <ApolloProvider client={client}>
-                <BrowserRouter>
-                    <App/>
-                </BrowserRouter>
+            <BrowserRouter>
+                <App/>
+            </BrowserRouter>
         </ApolloProvider>
     </Provider>,
     document.getElementById('root')

@@ -29,29 +29,29 @@ const App = () => {
 
 
     useEffect(() => {
-       !!getToken() &&  checkAuth()
+        !!getToken() && checkAuth()
     }, [])
 
     useEffect(() => {
         choiceTheme(user.theme)
-    },[user.theme])
+    }, [user.theme])
 
     return (
         isAuth && user.isActivated ?
-                <Routes>
-                    <Route path="*" element={<Navigate to={`/user/${user.id}/profile`}/>}/>
-                    <Route path='user/:id' element={<Wrapper myId={user.id}/>}>
-                        <Route path='profile' element={<Profile myId={user.id} />}>
-                            <Route path='messages' element={<MessagesList/>}/>
-                            <Route path='message/:id' element={<MessagesModal/>}/>
-                            <Route path='friends' element={<UserFriends/>}/>
-                            <Route path='music' element={<UserMusic/>}/>
-                            <Route path='reposts' element={<UserReposts/>}/>
-                        </Route>
-                        <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>
-                        <Route path='allUsers' element={<AllUsers/>}/>
+            <Routes>
+                <Route path="*" element={<Navigate to={`/user/${user.id}/profile`}/>}/>
+                <Route path='user/:id' element={<Wrapper myId={user.id}/>}>
+                    <Route path='profile' element={<Profile myId={user.id}/>}>
+                        <Route path='messages' element={<MessagesList/>}/>
+                        <Route path='message/:id' element={<MessagesModal myId={user.id}/>}/>
+                        <Route path='friends' element={<UserFriends/>}/>
+                        <Route path='music' element={<UserMusic/>}/>
+                        <Route path='reposts' element={<UserReposts/>}/>
                     </Route>
-                </Routes>
+                    <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>
+                    <Route path='allUsers' element={<AllUsers/>}/>
+                </Route>
+            </Routes>
             :
             <Routes>
                 <Route path='/' element={<Auth/>}/>

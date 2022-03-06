@@ -31,7 +31,6 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const [editUserParams] = useMutation(EDIT_PROFILE);
-    console.log(user)
 
     const handleChange = (theme: string) => setTheme(theme);
 
