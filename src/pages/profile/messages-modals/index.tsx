@@ -6,11 +6,13 @@ import {GET_MESSAGES} from "../../../GRAPHQL/queries/message-queries";
 import {ADD_MESSAGE} from "../../../GRAPHQL/mutations/message-mutations";
 import {getWidth, getHeight} from "../../../assets/functions/get-area";
 import Smile from "../../../assets/icon/smile";
-import {Modal, Input, Button, Typography} from "antd";
+import {Modal, Dropdown, Button, Typography} from "antd";
 import './messages-modal.less'
 import {getAvatar, getName} from "./helpers";
 import {useTypedSelector} from "../../../assets/hooks/useTypedSelector";
 import TextArea from "antd/es/input/TextArea";
+import messageSubscriptions from "./message-subscriptions";
+import EmojiPicker from "../../../components/emoji-picker";
 
 
 interface MessagesModalProps {
@@ -21,31 +23,36 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
 
     const {Title, Text} = Typography;
     const navigate = useNavigate();
-    const {id: currentId} = useParams();
+    const {id: currentId, userId} = useParams();
     const message: any = useRef(null)
 
-    const [isVisiblePicker, setIsVisiblePicker] = useState<boolean>(false)
+
     const [newMessage, setNewMessage] = useState<string>('')
     const {user} = useTypedSelector(state => state.auth);
 
     const onEmojiClick = (event: any, emojiObject: any) => {
         setNewMessage(newMessage + emojiObject.emoji)
     };
-
+    console.log('currentId',currentId)
+    console.log('userId',userId)
     const [addMessage] = useMutation(ADD_MESSAGE);
 
-    const {data, loading, error, subscribeToMore} = useQuery(GET_MESSAGES, {
+    const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_MESSAGES, {
         fetchPolicy: `${myId === currentId ? 'cache-and-network' : 'network-only'}`,
         nextFetchPolicy: 'cache-only',
-        variables: {myId: myId, userId: currentId}
+        variables: {myId: myId, userId: userId}
     });
-
+    console.log(data?.getMessages)
     useEffect(() => {
         setTimeout(() => message?.current?.scrollIntoView({block: "end"}), 200)
     }, [data])
 
+    useEffect(() => {
+        messageSubscriptions(subscribeToMore, refetch)
+    }, [])
+
     const submit = async () => {
-        await addMessage({
+         await addMessage({
             variables: {
                 myId: myId,
                 userId: currentId,
@@ -73,7 +80,13 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
                                  onChange={(e) => setNewMessage(e.target.value)}
                                  onPressEnter={e => e.code === 'Enter' && !e.ctrlKey && !e.altKey && submit()}
                        />
-                       <div onMouseEnter={() => setIsVisiblePicker(true)}><Smile/></div>
+                       <Dropdown trigger={["hover"]}
+                                 placement={"topLeft"}
+                                 overlay={<EmojiPicker onEmojiClick={onEmojiClick}/>}>
+                           <div className='messages-modal__footer_svg'>
+                               <Smile/>
+                           </div>
+                       </Dropdown>
                        <Button onClick={submit}>отправить</Button>
                    </div>}
         >
@@ -101,14 +114,6 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
                     </div>
                 )}
             </div>
-            {isVisiblePicker &&
-            <div className='picker' onMouseLeave={() => setIsVisiblePicker(false)}>
-                <Picker
-                    onEmojiClick={onEmojiClick}
-                    disableSkinTonePicker={true}
-                    disableSearchBar={true}
-                />
-            </div>}
         </Modal>
     );
 };

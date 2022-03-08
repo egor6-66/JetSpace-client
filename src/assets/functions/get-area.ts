@@ -3,5 +3,7 @@ export const getHeight = (value: number) => {
 }
 
 export const getWidth = (value: number) => {
-    return window.innerWidth - value
+    if (window.innerWidth > 1600) return 1500 - value
+    if (window.innerWidth < 1000) return window.innerWidth - 30
+    else return window.innerWidth - value
 }
