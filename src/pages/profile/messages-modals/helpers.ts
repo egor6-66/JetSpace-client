@@ -5,7 +5,7 @@ interface getNameProps {
         name: string | undefined,
         lastName: string | undefined,
     }
-    userName:{
+    userName: {
         name: string | undefined,
         lastName: string | undefined,
     }
@@ -18,7 +18,7 @@ export const getName = ({myId, userId, myName, userName}: getNameProps): string 
 interface getAvatarProps {
     myId: string | undefined,
     userId: string | undefined,
-   myAvatar: string | undefined,
+    myAvatar: string | undefined,
     userAvatar: string | undefined,
 }
 

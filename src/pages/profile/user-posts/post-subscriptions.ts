@@ -30,12 +30,10 @@ const postSubscriptions = (subscribeToMore: any) => {
         document: LIKE_POST_SUB,
         updateQuery: (prev: any | null, {subscriptionData}: LikeSubscriptionModel): any => {
             const prevPostsData = prev?.getUserPosts?.posts
+            console.log('ok')
             const newLike = subscriptionData?.data?.newLike
-            console.log('prev' ,prev)
-            console.log('subscriptionData' ,subscriptionData)
             const updatePosts = prevPostsData?.map((post: any) =>
-                post.id == newLike.postId ?
-                    Object.assign({}, post, {likes: [newLike, ...post.likes]}) : post)
+                post.id == newLike.postId ? Object.assign({}, post, {likes: [newLike, ...post.likes]}) : post)
             const newData = Object.assign({}, prev?.getUserPosts, {posts: updatePosts})
             return {getUserPosts: newData}
         }
@@ -43,12 +41,10 @@ const postSubscriptions = (subscribeToMore: any) => {
     subscribeToMore({
         document: DISLIKE_POST_SUB,
         updateQuery: (prev: PostsModel | null, {subscriptionData}: DislikeSubscriptionModel): PostsModel => {
-            console.log('nooooo')
             const prevPostsData = prev?.getUserPosts?.posts
             const newDislike = subscriptionData?.data?.newDislike
             const updatePosts = prevPostsData?.map((post: any) =>
-                post.id == newDislike.postId ?
-                    Object.assign({}, post, {dislikes: [newDislike, ...post.dislikes]}) : post)
+                post.id == newDislike.postId ? Object.assign({}, post, {dislikes: [newDislike, ...post.dislikes]}) : post)
             const newData = Object.assign({}, prev?.getUserPosts, {posts: updatePosts})
             return {getUserPosts: newData}
         }

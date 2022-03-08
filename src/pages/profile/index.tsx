@@ -42,7 +42,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                 <NavMenu myId={myId} currentId={currentId}/>
                 <div className='profile__content'>
                     <div className='profile__content_left-block'>
-                        {location.length !== 5
+                        {location.length === 4
                         &&
                         <UserPosts
                             myId={myId}

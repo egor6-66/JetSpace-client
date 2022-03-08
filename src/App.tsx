@@ -8,13 +8,14 @@ import {getToken} from "./services/localStorage";
 import Auth from "./pages/auth";
 import Wrapper from "./components/wrapper";
 import Profile from "./pages/profile";
-import MessagesList from "./pages/profile/messages-list";
+import DialogsList from "./pages/profile/dialogs-list";
 import MessagesModal from "./pages/profile/messages-modals";
 import UserFriends from "./pages/profile/user-friends";
 import UserMusic from "./pages/profile/user-musiс";
 import UserReposts from "./pages/profile/user-reposts";
 import AllUsers from "./pages/all-users";
 import EditProfile from "./pages/edit-profile";
+import AllPhotos from "./pages/profile/all-photos";
 
 import './core-less/themes/light.less';
 import './core-less/themes/dark.less';
@@ -42,11 +43,12 @@ const App = () => {
                 <Route path="*" element={<Navigate to={`/user/${user.id}/profile`}/>}/>
                 <Route path='user/:id' element={<Wrapper myId={user.id}/>}>
                     <Route path='profile' element={<Profile myId={user.id}/>}>
-                        <Route path='messages' element={<MessagesList/>}/>
-                        <Route path='message/:id' element={<MessagesModal myId={user.id}/>}/>
+                        <Route path='messages' element={<DialogsList myId={user.id}/>}/>
+                        <Route path='message/:userId' element={<MessagesModal myId={user.id}/>}/>
                         <Route path='friends' element={<UserFriends/>}/>
                         <Route path='music' element={<UserMusic/>}/>
                         <Route path='reposts' element={<UserReposts/>}/>
+                        <Route path='allPhotos/:userId' element={<AllPhotos/>}/>
                     </Route>
                     <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>
                     <Route path='allUsers' element={<AllUsers/>}/>
