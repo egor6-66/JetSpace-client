@@ -29,7 +29,7 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
             const imgUrl = await getBase64(file)
             const bodyFormData = new FormData();
             bodyFormData.append('avatar', file);
-            const response = await $axios.post(`${API_URL}/imgUpload`, bodyFormData)
+            const response = await $axios.post(`${API_URL}/fileUpload`, bodyFormData)
             setNewAvatar(imgUrl)
         } catch (e) {
             setError('Не удалось загрузить аватар')
@@ -58,6 +58,7 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
                     />
                 }
                 <Upload
+                    accept={'image/*'}
                     name="avatar"
                     headers={{"content-type": "multipart/form-data"}}
                     showUploadList={false}

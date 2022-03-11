@@ -9,7 +9,7 @@ import Smile from "../../../assets/icon/smile";
 import {Modal, Dropdown, Button, Typography} from "antd";
 import './messages-modal.less'
 import {getAvatar, getName} from "./helpers";
-import {useTypedSelector} from "../../../assets/hooks/useTypedSelector";
+import {useTypedSelector} from "../../../store";
 import TextArea from "antd/es/input/TextArea";
 import messageSubscriptions from "./message-subscriptions";
 import EmojiPicker from "../../../components/emoji-picker";

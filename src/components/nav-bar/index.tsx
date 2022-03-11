@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import NavBarIcons from "../../assets/icon/nav-bar-icons";
-import { useTypedSelector } from "../../assets/hooks/useTypedSelector";
+import { useTypedSelector } from "../../store";
 import { navBarList } from "./list";
 import './nav-bar.less';
 

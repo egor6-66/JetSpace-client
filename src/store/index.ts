@@ -1,7 +1,8 @@
 import {applyMiddleware, combineReducers, createStore} from "redux";
-import {AuthReducer} from "./auth/reducer";
+import { TypedUseSelectorHook, useSelector} from "react-redux";
 import {composeWithDevTools} from "redux-devtools-extension";
 import thunk from "redux-thunk";
+import {AuthReducer} from "./auth/reducer";
 
 
 const rootReducer = combineReducers({
@@ -9,5 +10,6 @@ const rootReducer = combineReducers({
 });
 
 export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)));
-
 export type RootState = ReturnType<typeof rootReducer>
+export const useTypedSelector: TypedUseSelectorHook<RootState> = useSelector;
+

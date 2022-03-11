@@ -1,5 +1,5 @@
 import {AuthAction, AuthActionTypes, AuthState,} from "./models";
-import {OtherAction, OtherActionTypes} from "../other/models";
+import {ThemeAction, ThemeActionTypes} from "../theme/models";
 
 const initialState: AuthState = {
     isAuth: false,
@@ -8,7 +8,7 @@ const initialState: AuthState = {
     error: null,
 }
 
-export const AuthReducer = (state = initialState, action: AuthAction | OtherAction): AuthState => {
+export const AuthReducer = (state = initialState, action: AuthAction | ThemeAction): AuthState => {
     switch (action.type) {
         case AuthActionTypes.REGISTER_USER:
             return {
@@ -72,7 +72,7 @@ export const AuthReducer = (state = initialState, action: AuthAction | OtherActi
                 user: {},
             }
 
-        case OtherActionTypes.SET_THEME:
+        case ThemeActionTypes.SET_THEME:
             return {
                 ...state,
                 user: {

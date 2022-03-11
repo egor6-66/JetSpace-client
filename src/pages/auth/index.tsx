@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTypedSelector } from "../../assets/hooks/useTypedSelector";
+import { useTypedSelector } from "../../store";
 import AuthModal from "./components/modal";
 import { Button } from "antd";
 import './auth.less'

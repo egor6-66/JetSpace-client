@@ -1,5 +1,5 @@
-import {likeModel} from "./like-model";
-import {dislikeModel} from "./dislike-model";
+import {likeModel} from "../like/like-model";
+import {dislikeModel} from "../dislike/dislike-model";
 
 
 export const postModel = `

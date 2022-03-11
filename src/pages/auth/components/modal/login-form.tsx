@@ -1,7 +1,7 @@
 import React, { FC, Dispatch, SetStateAction } from 'react';
 import { useNavigate } from "react-router-dom";
 import { formRules } from "../../../../assets/rules/form";
-import { useActions } from "../../../../assets/hooks/useActions";
+import { useActions } from "../../../../store/actions";
 import { loginUser } from "../../../../store/auth/actions";
 import { Button, Checkbox, Form, Input } from "antd";
 import { UserOutlined } from "@ant-design/icons";
@@ -28,7 +28,7 @@ const LoginForm: FC<LoginForm> = (props) => {
 
     const onFinish = async ({email, password, remember}: Onfinish) => {
         const userId = await loginUser({email, password})
-        // !!userId && navigate(`/other:${userId}`)
+        // !!userId && navigate(`/theme:${userId}`)
     };
 
     return (

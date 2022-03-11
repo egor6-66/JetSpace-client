@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import {Routes, Route, Navigate} from "react-router-dom";
-import {useTypedSelector} from "./assets/hooks/useTypedSelector";
-import {useActions} from "./assets/hooks/useActions";
+import {useTypedSelector} from "./store";
+import {useActions} from "./store/actions";
 import {choiceTheme} from "./assets/functions/choiceTheme";
 import {getToken} from "./services/localStorage";
 
@@ -12,6 +12,7 @@ import DialogsList from "./pages/profile/dialogs-list";
 import MessagesModal from "./pages/profile/messages-modals";
 import UserFriends from "./pages/profile/user-friends";
 import UserMusic from "./pages/profile/user-musiс";
+import UserVideos from "./pages/profile/user-videos";
 import UserReposts from "./pages/profile/user-reposts";
 import AllUsers from "./pages/all-users";
 import EditProfile from "./pages/edit-profile";
@@ -46,7 +47,8 @@ const App = () => {
                         <Route path='messages' element={<DialogsList myId={user.id}/>}/>
                         <Route path='message/:userId' element={<MessagesModal myId={user.id}/>}/>
                         <Route path='friends' element={<UserFriends/>}/>
-                        <Route path='music' element={<UserMusic/>}/>
+                        <Route path='music' element={<UserMusic myId={user.id}/>}/>
+                        <Route path='videos' element={<UserVideos myId={user.id}/>}/>
                         <Route path='reposts' element={<UserReposts/>}/>
                         <Route path='allPhotos/:userId' element={<AllPhotos/>}/>
                     </Route>

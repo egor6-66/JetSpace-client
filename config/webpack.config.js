@@ -562,7 +562,7 @@ module.exports = function (webpackEnv) {
             // When you `import` an asset, you get its (virtual) filename.
             // In production, they would get copied to the `build` folder.
             // This loader doesn't use a "test" so it will catch all modules
-            // that fall through the other loaders.
+            // that fall through the theme loaders.
             {
               // Exclude `js` files to keep "css" loader working as it injects
               // its runtime that would otherwise be processed through "file" loader.
@@ -669,7 +669,7 @@ module.exports = function (webpackEnv) {
       }),
       // Moment.js is an extremely popular library that bundles large locale files
       // by default due to how webpack interprets its code. This is a practical
-      // solution that requires the other to opt into importing specific locales.
+      // solution that requires the theme to opt into importing specific locales.
       // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
       // You can remove this if you don't use Moment.js:
       new webpack.IgnorePlugin({

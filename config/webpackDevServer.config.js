@@ -87,7 +87,7 @@ module.exports = function (proxy, allowedHost) {
       // It is important to tell WebpackDevServer to use the same "publicPath" path as
       // we specified in the webpack config. When homepage is '.', default to serving
       // from the root.
-      // remove last slash so other can land on `/test` instead of `/test/`
+      // remove last slash so theme can land on `/test` instead of `/test/`
       publicPath: paths.publicUrlOrPath.slice(0, -1),
     },
 
@@ -108,7 +108,7 @@ module.exports = function (proxy, allowedHost) {
       devServer.app.use(evalSourceMapMiddleware(devServer));
 
       if (fs.existsSync(paths.proxySetup)) {
-        // This registers other provided middleware for proxy reasons
+        // This registers theme provided middleware for proxy reasons
         require(paths.proxySetup)(devServer.app);
       }
     },

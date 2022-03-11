@@ -1,8 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Link, useParams} from "react-router-dom";
 import {useQuery} from "@apollo/client";
-import {useActions} from "../../assets/hooks/useActions";
-import useSound from 'use-sound';
+import {useActions} from "../../store/actions";
 import Bell from "../../assets/icon/bell";
 import {GET_NOTIFICATIONS} from "../../GRAPHQL/queries/notification-queries";
 import notificationsSubscriptions from "./notifications-subscriptions";
@@ -23,7 +22,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
 
     const {logout} = useActions();
     const {id: currentId} = useParams();
-    const [play, {stop}] = useSound(soundNotification);
+
 
     const {data, loading, subscribeToMore} = useQuery(GET_NOTIFICATIONS, {
         fetchPolicy: `${myId === currentId ? 'cache-first' : 'network-only'}`,
@@ -33,7 +32,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
 
     useEffect(() => {
         notificationsSubscriptions(subscribeToMore, myId)
-        // play()
+
     }, [])
 
     const onSearch = (payload: String) => {
