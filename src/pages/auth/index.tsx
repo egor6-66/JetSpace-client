@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTypedSelector } from "../../assets/hooks/useTypedSelector";
+import { useTypedSelector } from "../../store";
 import AuthModal from "./components/modal";
 import { Button } from "antd";
 import './auth.less'
@@ -7,7 +7,7 @@ import './auth.less'
 
 const Auth: React.FC = () => {
 
-    const {user, loading, error} = useTypedSelector(state => state.auth);
+    const user = useTypedSelector(state => state.user);
     const [currentForm, setCurrentForm] = useState<string | null>(null);
 
     return (

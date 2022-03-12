@@ -1,7 +1,7 @@
 import {gql} from "@apollo/client";
-import {postModel} from "../models/post-model";
-import {likeModel} from "../models/like-model";
-import {dislikeModel} from "../models/dislike-model";
+import {postModel} from "../models/post/post-model";
+import {likeModel} from "../models/like/like-model";
+import {dislikeModel} from "../models/dislike/dislike-model";
 
 
 export const POST_SUB = gql`

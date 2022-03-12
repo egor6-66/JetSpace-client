@@ -1,7 +1,8 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useRef} from 'react';
 import {Outlet, useParams, useLocation} from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import {GET_USER} from "../../GRAPHQL/queries/user-queries";
+import {UseScroll} from '../../assets/hooks'
 import UserInfo from "./user-info";
 import UserPosts from "./user-posts";
 import NavMenu from "./nav-menu";
@@ -19,6 +20,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
 
     const {id: currentId} = useParams();
     const location = useLocation().pathname.split('/');
+
 
     const {data, loading, error, subscribeToMore} = useQuery(GET_USER, {
         fetchPolicy: `${myId === currentId ? 'cache-and-network' : 'network-only'}`,

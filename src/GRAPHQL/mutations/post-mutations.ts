@@ -1,5 +1,5 @@
 import {gql} from "@apollo/client";
-import {postsModel} from "../models/posts-model";
+import {postsModel} from "../models/post/posts-model";
 
 
 export const ADD_POST = gql`

@@ -1,5 +1,5 @@
 import {gql} from "@apollo/client";
-import {userModel} from "../models/user-model";
+import {userModel} from "../models/user/user-model";
 
 
 export const EDIT_PROFILE = gql`

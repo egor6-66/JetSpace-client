@@ -11,7 +11,7 @@ interface getNameProps {
     }
 }
 
-export const getName = ({myId, userId, myName, userName}: getNameProps): string | undefined => {
+export const getName = ({myId, userId, myName, userName}: getNameProps): string  | undefined => {
     return myId === userId ? `${myName.name} ${myName.lastName}` : `${userName.name} ${userName.lastName}`
 }
 

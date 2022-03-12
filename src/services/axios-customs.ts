@@ -1,7 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { API_URL } from "../assets/constants";
 import { getToken, saveToken } from "./localStorage";
-import { AuthResponse } from "../store/auth/models";
 
 
 const $axios = axios.create({
@@ -22,7 +21,7 @@ $axios.interceptors.response.use((config: AxiosRequestConfig) => {
     if(error.response.status === 401 && error.config && !error.config._isRetry){
         originalRequest._isRetry = true
        try {
-           const response = await axios.get<AuthResponse>(`${API_URL}/refresh`, {withCredentials: true})
+           const response = await axios.get<any>(`${API_URL}/refresh`, {withCredentials: true})
            saveToken(response.data.accessToken)
            return $axios.request(originalRequest)
        }catch (e){

@@ -1,16 +1,16 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {useParams, useNavigate} from "react-router-dom";
-import {useMutation, useQuery} from "@apollo/client";
+import {useMutation} from "@apollo/client";
 import {EDIT_PROFILE} from "../../GRAPHQL/mutations/user-mutations";
-import {useTypedSelector} from "../../assets/hooks/useTypedSelector";
-import {useActions} from "../../assets/hooks/useActions";
+import {useTypedSelector} from "../../store";
+import {useActions} from "../../store/actions";
 import {API_URL, themes} from "../../assets/constants";
 import $axios from "../../services/axios-customs";
-import {userParams, socialNetworksInputs, allObjs} from './nputs';
+import {userParams, socialNetworksInputs} from './nputs';
 import ImgCrop from 'antd-img-crop';
 import {Button, Form, Input, Select, Typography, Upload} from "antd";
 import './edit-profile.less';
-import {GET_USER} from "../../GRAPHQL/queries/user-queries";
+
 
 
 interface EditProfileProps {
@@ -26,7 +26,7 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
     const navigate = useNavigate();
     const {setTheme} = useActions();
 
-    const {user} = useTypedSelector(state => state.auth);
+    const user: {[index: string]: any} = useTypedSelector(state => state.user);
     const [img, setImg] = useState<any>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
@@ -41,7 +41,7 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
                 ...allObjs
             },
         });
-        img && await $axios.post(`${API_URL}/imgUpload`, img, {
+        img && await $axios.post(`${API_URL}/fileUpload`, img, {
             headers: {"content-type": "multipart/form-data"}
         })
         setIsLoading(true)
@@ -81,6 +81,7 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
                     <Form.Item className='edit-profile__form_header-avatar'>
                         <ImgCrop rotate={true} aspect={2 / 1} onModalOk={(file) => customRequest(file)}>
                             <Upload
+                                accept={'image/*'}
                                 name="avatar"
                                 showUploadList={false}
                                 customRequest={() => false}
@@ -91,7 +92,7 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
                     </Form.Item>
                     {socialNetworksInputs.map(({obj}) =>
                         <Form.Item key={obj} label={obj} name={obj}
-                                   rules={[{type: "url", message: "This field must be a valid url."}]}>
+                                   rules={[{type: "url", message: "Не корректная ссылка"}]}>
                             <Input placeholder={ user[obj]? user[obj] :`вставьте ссылку на ваш ${obj}`}/>
                         </Form.Item>
                     )}

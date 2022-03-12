@@ -1,0 +1,17 @@
+export interface IUser {
+    id: string | undefined,
+    email: string | undefined,
+    name: string | undefined,
+    lastName: string | undefined,
+    avatar: string | undefined,
+    theme: string | undefined,
+    instagram: string | undefined,
+    facebook: string | undefined,
+    twitter: string | undefined,
+    spotify: string | undefined,
+    telegram: string | undefined,
+    github: string | undefined,
+    soundCloud: string | undefined,
+    youTube: string | undefined,
+    isActivated: boolean,
+}

@@ -1,5 +1,5 @@
 import {gql} from "@apollo/client";
-import {messageModel} from "../models/message-model";
+import {messageModel} from "../models/message/message-model";
 
 
 export const MESSAGE_SUB = gql`

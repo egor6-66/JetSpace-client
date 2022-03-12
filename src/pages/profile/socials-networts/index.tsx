@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {Link, NavLink, useNavigate} from "react-router-dom";
-import SocialsNetworksIcons from '../../../assets/icon/socials-networks-icons';
+import SocialsNetworksIcons from '../../../assets/icons/socials-networks-icons';
 import './socials-networks.less';
 
 
