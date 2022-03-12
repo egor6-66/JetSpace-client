@@ -1,16 +1,16 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {useParams, useNavigate} from "react-router-dom";
-import {useMutation, useQuery} from "@apollo/client";
+import {useMutation} from "@apollo/client";
 import {EDIT_PROFILE} from "../../GRAPHQL/mutations/user-mutations";
 import {useTypedSelector} from "../../store";
 import {useActions} from "../../store/actions";
 import {API_URL, themes} from "../../assets/constants";
 import $axios from "../../services/axios-customs";
-import {userParams, socialNetworksInputs, allObjs} from './nputs';
+import {userParams, socialNetworksInputs} from './nputs';
 import ImgCrop from 'antd-img-crop';
 import {Button, Form, Input, Select, Typography, Upload} from "antd";
 import './edit-profile.less';
-import {GET_USER} from "../../GRAPHQL/queries/user-queries";
+
 
 
 interface EditProfileProps {
@@ -26,7 +26,7 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
     const navigate = useNavigate();
     const {setTheme} = useActions();
 
-    const {user} = useTypedSelector(state => state.auth);
+    const user: {[index: string]: any} = useTypedSelector(state => state.user);
     const [img, setImg] = useState<any>(null);
     const [isLoading, setIsLoading] = useState<boolean>(false);
 

@@ -1,5 +1,5 @@
 import React, { FC, Dispatch, SetStateAction } from 'react';
-import Logo from '../../../../assets/icon/logo';
+import Logo from '../../../../assets/icons/logo';
 import LoginForm from './login-form';
 import RegisterForm from './register-form';
 import ConfirmAccountForm from "./confirm-account-form";

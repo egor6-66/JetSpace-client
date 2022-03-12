@@ -1,5 +1,5 @@
 export const soundModel = `
 id
-parentId
-path     
+path  
+type   
 `

@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {useLazyQuery} from "@apollo/client";
 import {GET_ALL_USER_IMG} from "../../../GRAPHQL/queries/img-queries";
+import {UseGetContainerWidth, UseGetContainerHeight} from '../../../assets/hooks'
 import {Swiper, SwiperSlide} from "swiper/react";
 import {FreeMode, Navigation, Thumbs} from "swiper";
 import {Modal, Typography} from "antd";
@@ -10,7 +11,6 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import './all-photos.less';
-import {getHeight, getWidth} from "../../../assets/functions/get-area";
 
 
 const AllPhotos = () => {
@@ -32,9 +32,10 @@ const AllPhotos = () => {
         getAllUserImg()
     }, [])
 
-    const getSlidesPerView = () => {
-      return   getWidth(450) / 220
-    }
+    const width = UseGetContainerWidth(120, 1280, 900)
+    const height = UseGetContainerHeight(360, 990, 600)
+
+    const getSlidesPerView = () => width / 220
 
     return (
         <Modal
@@ -42,8 +43,8 @@ const AllPhotos = () => {
             title={<Title>фото</Title>}
             visible={true}
             onCancel={() => navigate(-1,)}
-            width={getWidth(450)}
-            bodyStyle={{height: getHeight(450)}}
+            width={width}
+            bodyStyle={{height: height}}
             footer={
                 <Swiper
                     onSwiper={setThumbsSwiper}
@@ -56,7 +57,7 @@ const AllPhotos = () => {
                 >
                     {data && data?.getAllUserImg?.images.map(({id, path}: any) =>
                         <SwiperSlide key={id}>
-                            <img style={{width:'200px'}} src={path} alt=""/>
+                            <img style={{width: '200px'}} src={path} alt=""/>
                         </SwiperSlide>
                     )}
                 </Swiper>
@@ -71,11 +72,10 @@ const AllPhotos = () => {
             >
                 {data && data?.getAllUserImg?.images.map(({id, path}: any) =>
                     <SwiperSlide key={id}>
-                        <img style={{height: getHeight(500)}} src={path} alt=""/>
+                        <img style={{height: height - 12}} src={path} alt=""/>
                     </SwiperSlide>
                 )}
             </Swiper>
-
         </Modal>
     );
 };

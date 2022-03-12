@@ -9,10 +9,8 @@ interface ModalAddVideoProps {
     form: any,
     onFinish: any
 }
-// https://www.youtube.com/results?search_query=crystal+castles+empathy
-// crystal castles-empathy
-const ModalAddVideo: FC<ModalAddVideoProps> = ({isVisibleModalAddVideo,closedModal,onFinish, form}) => {
 
+const ModalAddVideo: FC<ModalAddVideoProps> = ({isVisibleModalAddVideo,closedModal,onFinish, form}) => {
 
     return (
         <Modal
@@ -20,19 +18,20 @@ const ModalAddVideo: FC<ModalAddVideoProps> = ({isVisibleModalAddVideo,closedMod
             visible={isVisibleModalAddVideo}
             footer={false}
             onCancel={closedModal}
+            centered={true}
         >
             <Form name="basic" onFinish={onFinish} form={form}>
                 <Form.Item
                     name="path"
                     rules={[{pattern: patterns.youTube, message: "Не корректная ссылка"}]}
                 >
-                    <Input/>
+                    <Input  allowClear={true}/>
                 </Form.Item>
                 <Form.Item
                     name="name"
-                    rules={[{required: true, max: 40, message: 'Укажите название ролика'}]}
+                    rules={[{required: true, max: 40, message: 'Укажите название'}]}
                 >
-                    <Input/>
+                    <Input  allowClear={true}/>
                 </Form.Item>
                 <div style={{display: "flex", justifyContent: "center", gap: 15}}>
                     <Form.Item>
@@ -41,7 +40,7 @@ const ModalAddVideo: FC<ModalAddVideoProps> = ({isVisibleModalAddVideo,closedMod
                         </Button>
                     </Form.Item>
                     <Form.Item>
-                        <Button type="primary" htmlType="submit">
+                        <Button  htmlType="submit">
                             сохранить
                         </Button>
                     </Form.Item>

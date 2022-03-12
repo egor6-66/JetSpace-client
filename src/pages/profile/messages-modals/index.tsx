@@ -1,18 +1,17 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
-import Picker from 'emoji-picker-react';
 import {useMutation, useQuery} from "@apollo/client";
 import {GET_MESSAGES} from "../../../GRAPHQL/queries/message-queries";
 import {ADD_MESSAGE} from "../../../GRAPHQL/mutations/message-mutations";
-import {getWidth, getHeight} from "../../../assets/functions/get-area";
-import Smile from "../../../assets/icon/smile";
-import {Modal, Dropdown, Button, Typography} from "antd";
-import './messages-modal.less'
+import {UseGetContainerHeight, UseGetContainerWidth} from "../../../assets/hooks";
 import {getAvatar, getName} from "./helpers";
+import Smile from "../../../assets/icons/smile";
 import {useTypedSelector} from "../../../store";
-import TextArea from "antd/es/input/TextArea";
 import messageSubscriptions from "./message-subscriptions";
 import EmojiPicker from "../../../components/emoji-picker";
+import {Modal, Dropdown, Button, Typography} from "antd";
+import TextArea from "antd/es/input/TextArea";
+import './messages-modal.less'
 
 
 interface MessagesModalProps {
@@ -25,16 +24,14 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
     const navigate = useNavigate();
     const {id: currentId, userId} = useParams();
     const message: any = useRef(null)
-
+    const width = UseGetContainerWidth(120, 1280, 900)
+    const height = UseGetContainerHeight(360, 990, 600)
 
     const [newMessage, setNewMessage] = useState<string>('')
-    const {user} = useTypedSelector(state => state.auth);
+    const user = useTypedSelector(state => state.user);
 
-    const onEmojiClick = (event: any, emojiObject: any) => {
-        setNewMessage(newMessage + emojiObject.emoji)
-    };
-    console.log('currentId',currentId)
-    console.log('userId',userId)
+    const onEmojiClick = (event: any, emojiObject: any) => setNewMessage(newMessage + emojiObject.emoji)
+
     const [addMessage] = useMutation(ADD_MESSAGE);
 
     const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_MESSAGES, {
@@ -42,7 +39,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
         nextFetchPolicy: 'cache-only',
         variables: {myId: myId, userId: userId}
     });
-    console.log(data?.getMessages)
+
     useEffect(() => {
         setTimeout(() => message?.current?.scrollIntoView({block: "end"}), 200)
     }, [data])
@@ -67,12 +64,12 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
         <Modal className='messages-modal'
                visible={true}
                onCancel={() => navigate(-1,)}
-               width={getWidth(400)}
+               width={width}
                title="Basic Modal"
                bodyStyle={{
                    padding: '24px 24px 0 24px',
                    overflowY: "scroll",
-                   height: getHeight(400),
+                   height: height,
                }}
                footer={
                    <div className='messages-modal__footer'>

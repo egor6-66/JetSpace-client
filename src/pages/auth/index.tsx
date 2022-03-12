@@ -7,7 +7,7 @@ import './auth.less'
 
 const Auth: React.FC = () => {
 
-    const {user, loading, error} = useTypedSelector(state => state.auth);
+    const user = useTypedSelector(state => state.user);
     const [currentForm, setCurrentForm] = useState<string | null>(null);
 
     return (

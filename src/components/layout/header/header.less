@@ -1,0 +1,36 @@
+@import '../../../core-less/media-breakpoints';
+
+.header {
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  &__left-block {
+    color: white;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+  }
+
+  &__center-block {
+    display: flex;
+    align-items: center;
+  }
+
+  &__right-block {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    gap: 15px;
+    flex: 1;
+
+    &_upd {
+      text-align: center;
+      cursor: pointer;
+    }
+  }
+}

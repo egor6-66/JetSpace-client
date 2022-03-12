@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 
 import {Button} from "antd";
 import './react-player-customs.less';
-import MenuIcon from "../../assets/icon/menu-icon";
+import MenuIcon from "../../assets/icons/menu-icon";
 
 
 interface ReactPlayerCustomsProps {
@@ -32,6 +32,7 @@ export const ReactPlayerCustoms: FC<ReactPlayerCustomsProps> = ({width, height, 
             width={width}
             height={height}
             // controls={true}
+            pip={true}
             url={url}
             config={config}
         />

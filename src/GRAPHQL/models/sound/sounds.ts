@@ -4,5 +4,6 @@ import {soundModel} from "./sound";
 export const soundsModel = `
 id
 userId
-sounds { ${soundModel} }                 
+soundTracks { ${soundModel} }   
+playLists { ${soundModel} }                  
 `

@@ -2,7 +2,7 @@ import React, { FC, Dispatch, SetStateAction } from 'react';
 import { useNavigate } from "react-router-dom";
 import { formRules } from "../../../../assets/rules/form";
 import { useActions } from "../../../../store/actions";
-import { loginUser } from "../../../../store/auth/actions";
+import { loginUser } from "../../../../store/actions/auth";
 import { Button, Checkbox, Form, Input } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 

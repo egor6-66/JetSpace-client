@@ -21,7 +21,7 @@ const NavMenu: FC<NavMenuProps> = ({myId, currentId}) => {
                 <Title level={4}><Link to={`/user/${currentId}/profile/message/${currentId}`}>написать</Link></Title>
             }
             <Title level={4}><Link to={`/user/${currentId}/profile/friends`}>друзья</Link></Title>
-            <Title level={4}><Link to={`/user/${currentId}/profile/music`}>музыка</Link></Title>
+            <Title level={4}><Link to={`/user/${currentId}/profile/sounds`}>музыка</Link></Title>
             <Title level={4}><Link to={`/user/${currentId}/profile/videos`}>видео</Link></Title>
             <Title level={4}><Link to={`/user/${currentId}/profile/reposts`}>репосты</Link></Title>
         </div>

@@ -1,15 +1,12 @@
 import {DISLIKE_POST_SUB, POST_SUB} from "../../../GRAPHQL/subscriptions/post-subscriptions";
 import {LIKE_POST_SUB} from "../../../GRAPHQL/subscriptions/post-subscriptions";
-import {PostsModel} from "../../../models/post/posts-model";
-import {PostSubscriptionModel} from "../../../models/post/post-subscription-model";
-import {LikeSubscriptionModel} from "../../../models/like/like-subscription-model";
-import {DislikeSubscriptionModel} from '../../../models/dislike/dislike-subscription-model'
+import {PostModels, LikeModels, DislikeModels} from '../../../models'
 
 
 const postSubscriptions = (subscribeToMore: any) => {
     subscribeToMore({
         document: POST_SUB,
-        updateQuery: (prev: PostsModel | null, {subscriptionData}: PostSubscriptionModel): PostsModel => {
+        updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: PostModels.IPostSubscription): PostModels.IPosts => {
             const newPost = subscriptionData.data.newPost
             if (!prev?.getUserPosts) {
                 return {
@@ -28,7 +25,7 @@ const postSubscriptions = (subscribeToMore: any) => {
     })
     subscribeToMore({
         document: LIKE_POST_SUB,
-        updateQuery: (prev: any | null, {subscriptionData}: LikeSubscriptionModel): any => {
+        updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: LikeModels.ILikeSubscription): PostModels.IPosts => {
             const prevPostsData = prev?.getUserPosts?.posts
             console.log('ok')
             const newLike = subscriptionData?.data?.newLike
@@ -40,7 +37,7 @@ const postSubscriptions = (subscribeToMore: any) => {
     })
     subscribeToMore({
         document: DISLIKE_POST_SUB,
-        updateQuery: (prev: PostsModel | null, {subscriptionData}: DislikeSubscriptionModel): PostsModel => {
+        updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: DislikeModels.IDislikeSubscription): PostModels.IPosts => {
             const prevPostsData = prev?.getUserPosts?.posts
             const newDislike = subscriptionData?.data?.newDislike
             const updatePosts = prevPostsData?.map((post: any) =>

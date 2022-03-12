@@ -3,13 +3,15 @@
 @import "./core-less/fonts";
 @import "core-less/antCustoms";
 
+
 html, body {
   font-size: 14px;
   font-family: @ROBOTO;
 }
 
 body {
-  overflow-y: scroll;
+  //overflow-y: scroll;
+  overflow: hidden;
 }
 
 ::-webkit-scrollbar-thumb {
@@ -22,18 +24,4 @@ body {
   width: 8px;
   height: 8px;
   background-color: #d9d9d9;
-}
-.ytp-title-channel-logo{
-  display: none!important;
-  background-image:none;
-}
-.ytp-title-text{
-  //display: none !important;
-  opacity: 0 !important;
-}
-.ytp-chrome-top, .ytp-chrome-bottom{
-  opacity: 0 !important;
-}
-.ytp-title{
-  display: none!important;
 }

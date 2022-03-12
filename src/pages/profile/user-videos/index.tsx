@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {useParams} from "react-router-dom";
 import {useLazyQuery, useMutation} from "@apollo/client";
 import {ADD_VIDEO} from "../../../GRAPHQL/mutations/video-mutations";
@@ -7,7 +7,6 @@ import {ReactPlayerCustoms} from "../../../components/react-player-customs";
 import ModalAddVideo from "./modal-add-video";
 import {Button, Form, Typography} from "antd";
 import './user-videos.less';
-
 
 
 interface UserVideosProps {
@@ -20,7 +19,7 @@ const UserVideos: FC<UserVideosProps> = ({myId}) => {
     const {Title} = Typography;
     const [form] = Form.useForm();
 
-    const [isVisibleModalAddVideo, setIsVisibleModalAddVideo] = useState(false)
+    const [isVisibleModalAddVideo, setIsVisibleModalAddVideo] = useState<boolean>(false)
 
     const [addVideo] = useMutation(ADD_VIDEO);
 
@@ -48,8 +47,7 @@ const UserVideos: FC<UserVideosProps> = ({myId}) => {
                 name,
             },
         });
-        if(!data?.getAllUserVideos) {
-            console.log('wdwdwd')
+        if (!data?.getAllUserVideos) {
             getAllUserVideo()
         }
         closedModal()
@@ -67,15 +65,15 @@ const UserVideos: FC<UserVideosProps> = ({myId}) => {
                 <Button onClick={() => setIsVisibleModalAddVideo(true)}>добавить видео</Button>
                 <div className='user-videos__list'>
                     {data && data?.getAllUserVideos?.videos.map((video: any) =>
-                        <div key={video.id} className='video'>
-                            <div className='video__player'>
+                        <div key={video.id} className='item'>
+                            <div className='item__player'>
                                 <ReactPlayerCustoms
                                     width={300}
                                     height={200}
                                     url={video.path}
                                 />
                             </div>
-                            <Title level={4} className='video__name'>
+                            <Title level={4} className='item__name'>
                                 {video.name}
                             </Title>
                         </div>
