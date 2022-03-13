@@ -35,7 +35,7 @@ const [v, setv] = useState<number>(0.2)
     console.log()
 
 
-
+    https://soundcloud.com/maybezawtra/frdif?utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing
     return (
         <div className='audio-player'>
             <div className='audio-player__header'/>
@@ -48,7 +48,7 @@ const [v, setv] = useState<number>(0.2)
                 controls={true}
                 onPlay={() => setPlay(true)}
                 onPause={() => setPlay(false)}
-                playing={playing}
+                playing={true}
                 volume={v}
                 url={url}
                 // url={'https://soundcloud.com/in3briant/blk-pn3l-skrp-x-in3brin-v-o-i-d?in=maybezawtra/sets/ta4ka&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing'}
