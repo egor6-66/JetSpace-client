@@ -54,11 +54,11 @@ const Header: FC<HeaderProps> = ({myId}) => {
             <div className='header__center-block'>
                 <Search placeholder="поиск" onSearch={onSearch} style={{width: 230}}/>
             </div>
-            <div style={{marginTop:560}}>
-                <AudioPlayer
-                    url='https://soundcloud.com/in3briant/blk-pn3l-skrp-x-in3brin-v-o-i-d?in=maybezawtra/sets/ta4ka&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing'
-                />
-            </div>
+            {/*<div style={{marginTop:560}}>*/}
+            {/*    <AudioPlayer*/}
+            {/*        url='https://soundcloud.com/in3briant/blk-pn3l-skrp-x-in3brin-v-o-i-d?in=maybezawtra/sets/ta4ka&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing'*/}
+            {/*    />*/}
+            {/*</div>*/}
 
             <div className='header__right-block'>
                 <Title level={5} className='header__right-block_upd'>

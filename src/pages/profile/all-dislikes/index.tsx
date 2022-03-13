@@ -9,14 +9,14 @@ const AllDislikes = () => {
     const {Title} = Typography;
 
     const word = wordDeclension({
-        length: 45,
+        length: 5,
         word: 'дизлайк',
         suffix: ['a', 'ов'],
     })
 
     return (
         <div className='all-dislikes'>
-            <Title level={2}> {word}</Title>
+            <Title level={2}> 5 {word}</Title>
         </div>
     );
 };
