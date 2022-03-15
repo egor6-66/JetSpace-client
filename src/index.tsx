@@ -5,7 +5,7 @@ import {BrowserRouter} from "react-router-dom";
 import {ApolloProvider, ApolloClient, InMemoryCache, HttpLink, split} from "@apollo/client";
 import {WebSocketLink} from '@apollo/client/link/ws';
 import {getMainDefinition} from '@apollo/client/utilities'
-import {GRAPH_QL_URL, GRAPH_QL_WS_URL} from "./assets/constants";
+import {GRAPH_QL_URL, GRAPH_QL_WS_URL} from "./constants";
 import {store} from "./store";
 import {getToken} from "./services/localStorage";
 import App from './App';

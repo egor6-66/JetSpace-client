@@ -5,6 +5,7 @@ import {GET_USER} from "../../GRAPHQL/queries/user-queries";
 import {UseScroll} from '../../assets/hooks'
 import UserInfo from "./user-info";
 import UserPosts from "./user-posts";
+import UserSounds from './user-sounds'
 import NavMenu from "./nav-menu";
 import SocialsNetworks from "./socials-networts";
 import AllLikes from "./all-likes";

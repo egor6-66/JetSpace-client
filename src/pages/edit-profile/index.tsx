@@ -4,7 +4,7 @@ import {useMutation} from "@apollo/client";
 import {EDIT_PROFILE} from "../../GRAPHQL/mutations/user-mutations";
 import {useTypedSelector} from "../../store";
 import {useActions} from "../../store/actions";
-import {API_URL, themes} from "../../assets/constants";
+import {API_URL, themes} from "../../constants";
 import $axios from "../../services/axios-customs";
 import {userParams, socialNetworksInputs} from './nputs';
 import ImgCrop from 'antd-img-crop';

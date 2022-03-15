@@ -4,7 +4,8 @@ import {PlayerModels} from "../models";
 import {IPlayer} from "../../models/player-model";
 
 const initialState: IPlayer  = {
-    playing: false
+    playing: false,
+    isVisibleSoundModal: false,
 }
 
 export const PlayerReducer = (state = initialState, action: PlayerModels.Actions): IPlayer => {
@@ -13,6 +14,11 @@ export const PlayerReducer = (state = initialState, action: PlayerModels.Actions
             return {
                 ...state,
                 playing: action.payload
+            };
+        case PlayerModels.ActionsTypes.SET_IS_VISIBLE_SOUND_MODAL:
+            return {
+                ...state,
+                isVisibleSoundModal: action.payload
             };
         default :
             return state

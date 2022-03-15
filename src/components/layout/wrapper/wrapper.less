@@ -2,9 +2,10 @@
 
 
 .wrapper {
-  overflow-y: scroll;
+  overflow-y:auto;
   width: 100%;
   height: 100vh;
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,27 +22,22 @@
     width: 100%;
     display: flex;
     justify-content: center;
-
-    &_container {
-      .containerWidth
-    }
   }
 
   &__main {
-    width: 100%;
     flex: 1;
+    width: 100%;
     display: flex;
     justify-content: center;
-
-    &_container {
-      display: flex;
-      //.containerWidth
-    }
   }
 
   &__footer {
-    height: 50px;
-
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    height: 35px;
   }
 }
 

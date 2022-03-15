@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { API_URL } from "../assets/constants";
+import { API_URL } from "../constants";
 import { getToken, saveToken } from "./localStorage";
 
 

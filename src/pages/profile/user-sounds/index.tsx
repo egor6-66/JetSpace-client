@@ -6,8 +6,10 @@ import {ADD_SOUND} from "../../../GRAPHQL/mutations/sound-mutations";
 import ModalAddSounds from "./modal-add-sounds";
 import NewLogo from "../../../assets/icons/new-logo";
 import AudioPlayer from "../../../components/players/audio-player";
-import {Button, Form} from "antd";
+import {Button, Form, Modal} from "antd";
 import './user-sound.less';
+import {useTypedSelector} from "../../../store";
+import {useActions} from "../../../store/actions";
 
 
 interface UserMusicProps {
@@ -17,8 +19,9 @@ interface UserMusicProps {
 const UserMusic: FC<UserMusicProps> = ({myId}) => {
 
     const {id: currentId} = useParams();
+    const {setIsVisibleSoundModal} = useActions();
 
-
+    const {isVisibleSoundModal} = useTypedSelector(state => state.player);
     const [isVisibleModalAddSound, setIsVisibleModalAddSound] = useState<boolean>(false)
     const [soundType, setSoundType] = useState<string>('soundTracks')
 
@@ -38,7 +41,7 @@ const UserMusic: FC<UserMusicProps> = ({myId}) => {
     }, [])
 
     const closedModal = () => setIsVisibleModalAddSound(false)
-    const setTypeList = () => soundType === 'soundTracks'? setSoundType('playLists') : setSoundType('soundTracks')
+    const setTypeList = () => soundType === 'soundTracks' ? setSoundType('playLists') : setSoundType('soundTracks')
 
     const onFinish = async (value: any) => {
         await addSound({
@@ -55,17 +58,22 @@ const UserMusic: FC<UserMusicProps> = ({myId}) => {
     }
 
     return (
-        <>
+        <Modal
+            visible={isVisibleSoundModal}
+            width={800}
+            onCancel={() => setIsVisibleSoundModal(false)}
+            footer={false}
+        >
             <ModalAddSounds
                 isVisibleModalAddSound={isVisibleModalAddSound}
                 closedModal={closedModal}
                 onFinish={onFinish}
             />
             <div className='user-music'>
-                <Button onClick={() => setIsVisibleModalAddSound(true)}>добавить музыку</Button>
+                {myId === currentId && <Button onClick={() => setIsVisibleModalAddSound(true)}>добавить музыку</Button>}
                 <Button onClick={setTypeList}>{btnTitle}</Button>
                 <div className='user-music__list'>
-                    {data && data?.getAllUserSounds[soundType].map((item: any) =>
+                    {data?.getAllUserSounds && data?.getAllUserSounds[soundType].map((item: any) =>
                         <div key={item.id} className='user-music__list_item'>
                             <AudioPlayer
                                 url={item.path}
@@ -75,9 +83,8 @@ const UserMusic: FC<UserMusicProps> = ({myId}) => {
                     )}
                 </div>
                 <NewLogo/>
-
             </div>
-        </>
+        </Modal>
     );
 };
 
