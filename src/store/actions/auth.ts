@@ -3,7 +3,7 @@ import {Dispatch} from "redux";
 import {AuthModels} from "../models";
 import {removeToken, saveToken} from "../../services/localStorage";
 import $axios from "../../services/axios-customs";
-import {API_URL} from '../../assets/constants';
+import {API_URL} from '../../constants';
 
 
 export const registerUser = (data: any) => async (dispatch: Dispatch<AuthModels.Actions>) => {

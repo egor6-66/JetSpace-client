@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import $axios from "../../../services/axios-customs";
-import {API_URL} from "../../../assets/constants";
+import {API_URL} from "../../../constants";
 import {getBase64} from "../../../assets/functions/getBase64";
 import {Input, Upload, Typography} from "antd";
 import './user-avatar.less';

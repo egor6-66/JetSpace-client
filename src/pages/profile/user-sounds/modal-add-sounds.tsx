@@ -2,7 +2,7 @@ import React, {FC, useCallback, useEffect, useState} from 'react';
 import patterns from "../../../assets/patterns";
 import {QuestionIcon} from '../../../assets/icons'
 import {Button, Form, Input, Modal, Typography} from "antd";
-import {addPlayList, addSoundTrack} from "../../../assets/constants";
+import {addPlayList, addSoundTrack} from "../../../constants";
 
 
 interface ModalAddVideoProps {
