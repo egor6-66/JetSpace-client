@@ -1,6 +1,6 @@
 import axios, { AxiosRequestConfig } from "axios";
 import { API_URL } from "../constants";
-import { getToken, saveToken } from "./localStorage";
+import { getToken, saveToken } from "./cookies";
 
 
 const $axios = axios.create({

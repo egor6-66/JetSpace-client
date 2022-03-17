@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import $axios from "../../../services/axios-customs";
 import {API_URL} from "../../../constants";
 import {getBase64} from "../../../assets/functions/getBase64";
-import {Input, Upload, Typography} from "antd";
+import {Input, Upload, Typography, Avatar} from "antd";
 import './user-avatar.less';
 
 
@@ -52,10 +52,12 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
                 {isLoading ?
                     <div>loading...</div>
                     :
-                    <img onClick={(e) => clickToAvatar(e)}
-                         className='user-avatar__img'
-                         src={newAvatar ? newAvatar : avatar}
-                    />
+                    <div onClick={(e) => clickToAvatar(e)}>
+                        <Avatar
+                            src={newAvatar ? newAvatar : avatar}
+                            size={200}
+                        />
+                    </div>
                 }
                 <Upload
                     accept={'image/*'}

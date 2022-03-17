@@ -1,7 +1,7 @@
 import axios from "axios";
 import {Dispatch} from "redux";
 import {AuthModels} from "../models";
-import {removeToken, saveToken} from "../../services/localStorage";
+import {removeToken, saveToken} from "../../services/cookies";
 import $axios from "../../services/axios-customs";
 import {API_URL} from '../../constants';
 

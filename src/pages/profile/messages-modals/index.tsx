@@ -52,7 +52,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
          await addMessage({
             variables: {
                 myId: myId,
-                userId: currentId,
+                userId: userId,
                 content: newMessage,
             },
         });

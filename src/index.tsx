@@ -7,7 +7,7 @@ import {WebSocketLink} from '@apollo/client/link/ws';
 import {getMainDefinition} from '@apollo/client/utilities'
 import {GRAPH_QL_URL, GRAPH_QL_WS_URL} from "./constants";
 import {store} from "./store";
-import {getToken} from "./services/localStorage";
+import {getToken} from "./services/cookies";
 import App from './App';
 
 import './index.less';

@@ -26,7 +26,7 @@ const ModalAddSounds: FC<ModalAddVideoProps> = ({isVisibleModalAddSound, closedM
     const title = isTypeModal === 'soundTrack' ? 'добавить трэк' : 'добавить плэйлист'
     const placeholder = isTypeModal === 'soundTrack' ?
         'вставьте ссылку на трек из soundCloud' : 'вставьте ссылку на плэйлист из soundCloud'
-    const img = isTypeModal === 'soundTrack' ? addSoundTrack : addPlayList
+    const img = isTypeModal === 'soundTracks' ? addSoundTrack : addPlayList
 
     return (
         <>

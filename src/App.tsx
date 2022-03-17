@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {Routes, Route, Navigate} from "react-router-dom";
 import {useTypedSelector} from "./store";
 import {useActions} from "./store/actions";
-import {getToken} from "./services/localStorage";
+import {getToken} from "./services/cookies";
 import {UseGeolocation, UseSpeech, UseTheme} from './assets/hooks'
 import {themes} from './constants'
 

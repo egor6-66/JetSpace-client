@@ -38,7 +38,7 @@ const AudioPlayer: FC<AudioPlayerProps> = ({url, type}) => {
                 controls={false}
                 onPlay={() => setPlay(true)}
                 onPause={() => setPlay(false)}
-                playing={true}
+                // playing={true}
                 volume={v}
                 url={url}
                 config={{
