@@ -2,7 +2,6 @@ import React, {FC, useRef} from 'react';
 import {Outlet} from "react-router-dom";
 import {UseScroll, UseGetContainerWidth} from "../../../assets/hooks";
 import Header from "../header";
-import Footer from "../footer";
 import './wrapper.less'
 
 
@@ -30,13 +29,6 @@ const Wrapper: FC<WrapperProps> = ({myId}) => {
                      style={{width: width}}
                 >
                     <Outlet/>
-                </div>
-            </div>
-            <div className='wrapper__footer'>
-                <div className='wrapper__footer_container'
-                    style={{width: width}}
-                >
-                    <Footer myId={myId}/>
                 </div>
             </div>
         </div>

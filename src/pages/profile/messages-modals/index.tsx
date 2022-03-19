@@ -31,6 +31,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
     const [newMessage, setNewMessage] = useState<string>('')
     const [isRecord, setIsRecord] = useState<boolean>(false)
     const [volume, setVolume] = useState<number>(1)
+    const [sendVoice, setSendVoice] = useState<boolean>(false)
 
     const onEmojiClick = (event: any, emojiObject: any) => setNewMessage(newMessage + emojiObject.emoji)
 
@@ -93,13 +94,34 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
                        <VoiceMessages
                            isRecord={isRecord}
                            addMessage={addMessage}
+                           sendVoice={sendVoice}
                            myId={myId}
                            userId={userId}
                        />
                        <div className='messages-modal__footer_svg'>
-                           <div style={{display: "flex", alignItems: "center"}} onClick={() => setIsRecord(!isRecord)}>
-                               <MicrophoneIcon/>
-                           </div>
+                           <Popover visible={isRecord} content={
+                               <div>
+                                   <Button onClick={() => {
+                                       setIsRecord(false)
+                                       setSendVoice(false)
+                                   }}>
+                                       отмена
+                                   </Button>
+                                   <Button onClick={() => {
+                                       setTimeout(() => setSendVoice(true), 100)
+                                       setIsRecord(false)
+                                   }}>
+                                       отправить
+                                   </Button>
+                               </div>
+                           }>
+                               <div style={{display: "flex", alignItems: "center"}} onClick={() => {
+                                   setSendVoice(false)
+                                   setIsRecord(true)
+                               }}>
+                                   <MicrophoneIcon/>
+                               </div>
+                           </Popover>
                            <Popover content={
                                <Slider vertical step={0.1} style={{height: 50}} min={0} max={1}
                                        onChange={(value) => setVolume(value)}

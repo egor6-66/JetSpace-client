@@ -6,6 +6,7 @@ import ProjectMenuIcons from './project-menu-icons';
 import MicrophoneIcon from './microphone';
 import SmileIcon from './smile';
 import PlayerIcons from './player-icons';
+import MusicIcon from './music';
 
 export {
     LogoIcon,
@@ -16,4 +17,5 @@ export {
     MicrophoneIcon,
     SmileIcon,
     PlayerIcons,
+    MusicIcon
 }

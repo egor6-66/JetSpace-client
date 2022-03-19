@@ -10,3 +10,7 @@ export const setIsVisibleSoundModal = (playing: boolean) => (dispatch: Dispatch<
     dispatch({type: PlayerModels.ActionsTypes.SET_IS_VISIBLE_SOUND_MODAL, payload: playing})
 }
 
+export const setVolume = (playing: number) => (dispatch: Dispatch<PlayerModels.Actions>) =>{
+    dispatch({type: PlayerModels.ActionsTypes.SET_VOLUME, payload: playing})
+}
+
