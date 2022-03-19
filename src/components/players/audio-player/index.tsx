@@ -13,17 +13,9 @@ interface AudioPlayerProps {
 
 const AudioPlayer: FC<AudioPlayerProps> = ({url, type}) => {
 
-    const audioPlayerRef: any = useRef()
-    const [v, setv] = useState<number>(0.2)
     const {setPlaying} = useActions();
-
-    const {playing} = useTypedSelector(state => state.player);
-    const [play, setPlay] = useState<boolean>(false)
+    const {playing, isVisibleSoundModal, volume} = useTypedSelector(state => state.player);
     const height = type === 'soundTracks' ? 130 : 400
-
-    useEffect(() => {
-        setPlaying(play)
-    }, [audioPlayerRef])
 
     return (
         <div className='audio-player'>
@@ -31,14 +23,15 @@ const AudioPlayer: FC<AudioPlayerProps> = ({url, type}) => {
             <div className='audio-player__overlay'/>
             <div className='audio-player__hide-top-logo'/>
             <ReactPlayer
-                ref={audioPlayerRef}
                 width={'100%'}
                 height={height}
                 controls={false}
-                onPlay={() => setPlay(true)}
-                onPause={() => setPlay(false)}
-                playing={true}
-                volume={v}
+                onPlay={() => setPlaying(true)}
+                onPause={() => setPlaying(false)}
+                onEnded={() => setPlaying(false)}
+                onProgress={(value) => {}}
+                previewTabIndex={2}
+                volume={volume}
                 url={url}
                 config={{
                     soundcloud: {
@@ -53,18 +46,6 @@ const AudioPlayer: FC<AudioPlayerProps> = ({url, type}) => {
             />
             <div className='audio-player__hide-bottom-logo'/>
             <div style={{height: type === 'soundTracks' ? 32 : 74}} className='audio-player__footer'>
-                <div className='audio-player__footer_slider'>
-                    <Slider
-                        trackStyle={{backgroundColor: '#f50'}}
-                        handleStyle={{backgroundColor: 'rgb(204, 68, 0)'}}
-                        min={0}
-                        max={1}
-                        tooltipVisible={false}
-                        onChange={(vol) => setv(vol)}
-                        value={v}
-                        step={0.01}
-                    />
-                </div>
             </div>
         </div>
     );

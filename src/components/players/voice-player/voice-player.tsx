@@ -19,6 +19,7 @@ const VoicePlayer: FC<VoicePlayerProps> = ({url, volume}) => {
         controls.volume(volume)
     }, [volume])
 
+
     return (
         <div className='voice-player'>
             {audio}
