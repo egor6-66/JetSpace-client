@@ -1,31 +1,47 @@
 .messages-modal {
 
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+  }
+
   .modal-body {
+    display: flex;
+    flex-direction: column;
+
+    &__my-message {
+      .message-template;
+      justify-content: end;
+      align-self: flex-end;
+
+      .message-content {
+        order: 2;
+        white-space: pre-line;
+        font-size: 22px;
+      }
+
+      .message-date {
+        order: 1;
+        white-space: nowrap;
+        font-size: 12px;
+      }
+    }
 
     &__message {
-      margin-top: 25px;
-      height: auto;
-      display: flex;
-      gap: 15px;
+      .message-template;
+      justify-content: start;
+      align-self: flex-start;
 
-      img {
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
+      .message-content {
+        white-space: pre-line;
+        font-size: 22px;
       }
 
-      &_content {
-        width: 60%;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        white-space: pre-line
-      }
-
-      &_date {
-        justify-self: end;
+      .message-date {
         white-space: nowrap;
+        font-size: 12px;
       }
     }
   }
@@ -35,6 +51,12 @@
     position: relative;
 
     &_svg {
+      margin-right: 12px;
+      width: 90px;
+      height: 50px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
       cursor: pointer;
       position: absolute;
       top: 2px;
@@ -42,8 +64,10 @@
     }
 
     textarea {
+      position: relative;
       border-radius: 8px 0 0 8px !important;
       resize: none !important;
+      height: 100% !important;
     }
 
     button {
@@ -51,4 +75,28 @@
       height: 54px !important;
     }
   }
+}
+
+.sound-wave {
+  background-color: red;
+  width: 90%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 8px 0 0 8px;
+}
+
+.sound-wave-hidden {
+  display: none;
+}
+
+.message-template {
+  padding: 12px;
+  margin-top: 12px;
+  width: auto;
+  height: auto;
+  display: flex;
+  border-radius: 8px;
+  gap: 12px;
 }

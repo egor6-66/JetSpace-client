@@ -7,7 +7,6 @@ const notificationsSubscriptions = (subscribeToMore: any, myId: any) => {
         document: NOTIFICATION_SUB, updateQuery: (prev: NotificationModels.INotifications, {subscriptionData}: NotificationModels.INotificationSubscription)
             :NotificationModels.INotifications | undefined => {
             const newNotification = subscriptionData.data.newNotification
-            console.log(newNotification)
             if(newNotification.userId !== myId){
                 if (!prev?.getNotifications) {
                     return {

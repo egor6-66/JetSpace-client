@@ -52,7 +52,8 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
                 {isLoading ?
                     <div>loading...</div>
                     :
-                    <div onClick={(e) => clickToAvatar(e)}>
+                    <div className='user-avatar__img'
+                        onClick={(e) => clickToAvatar(e)}>
                         <Avatar
                             src={newAvatar ? newAvatar : avatar}
                             size={200}

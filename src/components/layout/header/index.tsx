@@ -1,15 +1,13 @@
-import React, {FC, useEffect, useState} from 'react';
-import {Link, useParams} from "react-router-dom";
+import React, {FC, useEffect} from 'react';
+import {Link, useLocation, useParams} from "react-router-dom";
 import {useQuery} from "@apollo/client";
-import {useActions} from "../../../store/actions";
-import Bell from "../../../assets/icons/bell";
 import {GET_NOTIFICATIONS} from "../../../GRAPHQL/queries/notification-queries";
 import notificationsSubscriptions from "./notifications-subscriptions";
-import soundNotification from '../../../assets/sounds/soundNotification.mp3'
-import {Badge, Button, Typography, Input} from "antd";
+import {SettingsIcon, BellIcon, LogoIcon} from '../../../assets/icons'
+import ProjectMenu from "../../project-menu";
+import {Badge, Typography, Input, Popover} from "antd";
 import './header.less';
-import Logo from "../../../assets/icons/logo";
-import AudioPlayer from "../../players/audio-player";
+import projectMenuList from "../../project-menu/list";
 
 
 interface HeaderProps {
@@ -18,12 +16,11 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({myId}) => {
 
-    const {Paragraph, Title} = Typography;
+    const {Title} = Typography;
     const {Search} = Input;
 
-    const {logout} = useActions();
+    const location = useLocation().pathname.split('/').pop();
     const {id: currentId} = useParams();
-
 
     const {data, loading, subscribeToMore} = useQuery(GET_NOTIFICATIONS, {
         fetchPolicy: `${myId === currentId ? 'cache-first' : 'network-only'}`,
@@ -43,11 +40,11 @@ const Header: FC<HeaderProps> = ({myId}) => {
     return (
         <div className='header'>
             <div className='header__left-block'>
-                <Logo size={45}/>
-                <Title level={5} className='header__right-block_upd'>
+                <LogoIcon size={45}/>
+                <Title level={4} className='header__left-block_title'>
                     <Link to={`/user/${myId}/profile`}>моя <br/> страница</Link>
                 </Title>
-                <Title level={5} className='header__right-block_upd'>
+                <Title level={4} className='header__left-block_title'>
                     <Link to={`/user/${myId}/allUsers`}>все <br/> пользователи</Link>
                 </Title>
             </div>
@@ -55,17 +52,23 @@ const Header: FC<HeaderProps> = ({myId}) => {
                 <Search placeholder="поиск" onSearch={onSearch} style={{width: 230}}/>
             </div>
             <div className='header__right-block'>
-                <Title level={5} className='header__right-block_upd'>
+                <Title level={4} className='header__right-block_title'>
                     <Link to={`/user/${myId}/editProfile`}>редактировать <br/> профиль</Link>
                 </Title>
                 <Badge showZero={false} count={data?.getNotifications?.notifications.length}>
-                    <Bell/>
+                    <Popover content={false} placement="bottomRight">
+                        <div className='header__right-block_icon'>
+                            <BellIcon/>
+                        </div>
+                    </Popover>
                 </Badge>
-                <Button
-                    onClick={() => logout(myId)}
-                >
-                    Выйти
-                </Button>
+                <Popover destroyTooltipOnHide={!projectMenuList.filter(item => item.path == location).length}
+                         content={<ProjectMenu myId={myId}/>}
+                         placement="bottomRight">
+                    <div className='header__right-block_icon'>
+                        <SettingsIcon/>
+                    </div>
+                </Popover>
             </div>
         </div>
     );

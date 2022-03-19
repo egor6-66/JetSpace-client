@@ -21,6 +21,8 @@ import AllPhotos from "./pages/profile/all-photos";
 import './core-less/themes/light.less';
 import './core-less/themes/dark.less';
 import './core-less/themes/purple.less';
+import Donations from "./pages/donations";
+import ProjectInfo from "./pages/project-info";
 
 
 const App = () => {
@@ -40,21 +42,25 @@ const App = () => {
 
     return (
         isAuth && user.isActivated ?
-            <Routes>
-                <Route path="*" element={<Navigate to={`/user/${user.id}/profile`}/>}/>
-                <Route path='user/:id' element={<Wrapper myId={user.id}/>}>
-                    <Route path='profile' element={<Profile myId={user.id}/>}>
-                        <Route path='messages' element={<DialogsList myId={user.id}/>}/>
-                        <Route path='message/:userId' element={<MessagesModal myId={user.id}/>}/>
-                        <Route path='friends' element={<UserFriends/>}/>
-                        <Route path='videos' element={<UserVideos myId={user.id}/>}/>
-                        <Route path='reposts' element={<UserReposts/>}/>
-                        <Route path='allPhotos/:userId' element={<AllPhotos/>}/>
+            <>
+                <Routes>
+                    <Route path="*" element={<Navigate to={`/user/${user.id}/profile`}/>}/>
+                    <Route path='user/:id' element={<Wrapper myId={user.id}/>}>
+                        <Route path='profile' element={<Profile myId={user.id}/>}>
+                            <Route path='messages' element={<DialogsList myId={user.id}/>}/>
+                            <Route path='message/:userId' element={<MessagesModal myId={user.id}/>}/>
+                            <Route path='friends' element={<UserFriends/>}/>
+                            <Route path='videos' element={<UserVideos myId={user.id}/>}/>
+                            <Route path='reposts' element={<UserReposts/>}/>
+                            <Route path='allPhotos/:userId' element={<AllPhotos/>}/>
+                        </Route>
+                        <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>
+                        <Route path='allUsers' element={<AllUsers/>}/>
+                        <Route path='donations' element={<Donations/>}/>
+                        <Route path='projectInfo' element={<ProjectInfo/>}/>
                     </Route>
-                    <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>
-                    <Route path='allUsers' element={<AllUsers/>}/>
-                </Route>
-            </Routes>
+                </Routes>
+            </>
             :
             <Routes>
                 <Route path='/' element={<Auth/>}/>

@@ -2,8 +2,8 @@ import {gql} from "@apollo/client";
 import {messagesModel} from "../models/message/messages-model";
 
 export const ADD_MESSAGE = gql`
-    mutation addMessage($myId: ID $userId: ID, $content: String){
-        addMessage(myId: $myId, userId: $userId,  content: $content){
+    mutation addMessage($myId: ID $userId: ID, $type: String $content: String){
+        addMessage(myId: $myId, userId: $userId, type: $type content: $content){
             ${messagesModel}
         }
     }
