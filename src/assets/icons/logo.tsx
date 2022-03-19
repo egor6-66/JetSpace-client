@@ -1,14 +1,10 @@
 import React, {FC} from 'react';
 
-interface Logo {
+interface LogoIcon {
     size: number,
-};
+}
 
-const Logo: FC<Logo> = (props) => {
-
-    const {
-        size
-    } = props;
+const LogoIcon: FC<LogoIcon> = ({size}) => {
 
     return (
         <svg width={size} height={size} viewBox="0 0 256 256" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -25,4 +21,4 @@ const Logo: FC<Logo> = (props) => {
     );
 };
 
-export default Logo;
+export default LogoIcon;

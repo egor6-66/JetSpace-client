@@ -3,14 +3,25 @@
   @import '~antd/dist/antd.dark.less';
   @import "../antCustoms";
 
+  //--------------------color--------------------
+  @primary-color: @magenta-5;
+  @link-hover-color: @magenta-6;;
 
+  //--------------------slider--------------------
+  @slider-track-background-color: @magenta-5;
+  @slider-rail-background-color: #595959;
+  @slider-track-background-color-hover: @magenta-6;
+
+  //--------------------shadow--------------------
+  @boxShadowColor: @magenta-2;
+  @textShadow: 1px 1px 2px @magenta-1, 0 0 1em @magenta-4;
+
+
+  //--------------------css--------------------
   background-color: #434343;
-  @primary-color: #d5b50b;
-  @boxShadowColor: @orange-9;
-  @textShadow: 1px 1px 2px black, 0 0 1em red;
 
-  .wrapper{
-    &__loading{
+  .wrapper {
+    &__loading {
       color: #d9d9d9;
       background-color: #262626;
     }
@@ -23,12 +34,15 @@
     z-index: 5;
   }
 
+  .modal-body__message, .modal-body__my-message {
+    border: 2px solid @border-color-base;
+  }
 
   .profile, .edit-profile {
     background-color: #262626;
     box-shadow: 0 0 20px 10px #262626;
 
-    .video{
+    .video {
       background-color: #1A1A1D;
     }
 
@@ -37,14 +51,14 @@
     }
 
     .user-avatar__img {
-      box-shadow:   0 0 20px 10px @boxShadowColor;;
+      box-shadow: 0 0 20px 10px @boxShadowColor;;
     }
 
     .posts__list_item {
       border: 2px solid @border-color-base;
     }
 
-    .dialogs-list__item{
+    .dialogs-list__item {
       border: 2px solid @border-color-base;
     }
 
@@ -55,7 +69,7 @@
       &__link {
         &_present {
           border: 2px solid #595959;
-          box-shadow:   0 0 6px 2px @boxShadowColor;;
+          box-shadow: 0 0 6px 2px @boxShadowColor;;
         }
       }
     }
@@ -76,7 +90,7 @@
 
   .all-users {
     .users-list__item_avatar {
-      box-shadow:   0 0 20px 10px @boxShadowColor;;
+      box-shadow: 0 0 20px 10px @boxShadowColor;;
     }
 
     .users-list__item_name {

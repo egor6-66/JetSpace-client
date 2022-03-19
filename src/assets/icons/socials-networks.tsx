@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 
 
-const SocialsNetworksIcons = ({id, size}: any) => {
+interface SNIcons {
+    id: string,
+    size: number,
+}
+
+const SocialsNetworksIcons:FC<SNIcons> = ({id, size}) => {
 
     switch (id) {
         case 'instagram':

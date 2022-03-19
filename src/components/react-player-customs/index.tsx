@@ -3,7 +3,7 @@ import ReactPlayer from "react-player";
 
 import {Button} from "antd";
 import './react-player-customs.less';
-import MenuIcon from "../../assets/icons/menu-icon";
+
 
 
 interface ReactPlayerCustomsProps {
@@ -15,7 +15,7 @@ interface ReactPlayerCustomsProps {
 
 
 export const ReactPlayerCustoms: FC<ReactPlayerCustomsProps> = ({width, height, url}) => {
-    console.log('youtube')
+
     const config = {
         youtube: {
             playerVars: {

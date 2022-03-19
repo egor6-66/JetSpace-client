@@ -1,11 +1,11 @@
 import React from 'react';
 
-const NewLogo = () => {
+const ProjectInfo = () => {
     return (
         <div>
-            
+            dwdw
         </div>
     );
 };
 
-export default NewLogo;
+export default ProjectInfo;

@@ -6,6 +6,7 @@ import UseGetContainerWidth from './useGetContainerWidth';
 import UseGetContainerHeight from './useGetContainerHeight';
 import UseGetElementWidth from './useGetElementWidth';
 import UseTheme from './useTheme';
+import UseTextColor from './useTextColor';
 
 
 export {
@@ -16,5 +17,6 @@ export {
     UseGetContainerWidth,
     UseGetContainerHeight,
     UseGetElementWidth,
-    UseTheme
+    UseTheme,
+    UseTextColor,
 }

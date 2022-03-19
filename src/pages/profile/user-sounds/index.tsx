@@ -4,7 +4,7 @@ import {useLazyQuery, useMutation} from "@apollo/client";
 import {GET_ALL_USER_SOUNDS} from "../../../GRAPHQL/queries/sound-queries";
 import {ADD_SOUND} from "../../../GRAPHQL/mutations/sound-mutations";
 import ModalAddSounds from "./modal-add-sounds";
-import NewLogo from "../../../assets/icons/new-logo";
+
 import AudioPlayer from "../../../components/players/audio-player";
 import {Button, Form, Modal} from "antd";
 import './user-sound.less';
@@ -82,7 +82,6 @@ const UserMusic: FC<UserMusicProps> = ({myId}) => {
                         </div>
                     )}
                 </div>
-                <NewLogo/>
             </div>
         </Modal>
     );
