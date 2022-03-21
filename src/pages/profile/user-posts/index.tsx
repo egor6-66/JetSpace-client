@@ -5,9 +5,8 @@ import {ADD_POST, SEND_DISLIKE_POST} from "../../../GRAPHQL/mutations/post-mutat
 import {SEND_LIKE_POST} from "../../../GRAPHQL/mutations/post-mutations";
 import postSubscriptions from "./post-subscriptions";
 import {sendDislike, sendLike} from '../../../assets/functions/likeAndDislike'
+import {LikeIcon, DislikeIcon} from '../../../assets/icons';
 import {Input, Button, Typography} from "antd";
-import {HeartOutlined} from "@ant-design/icons";
-
 import './user-posts.less';
 
 
@@ -81,10 +80,12 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
                             <Title level={5}>{content}</Title>
                         </div>
                         <div className='post-item__bottom-block'>
-                            <HeartOutlined onClick={() => likeClick(id, likes)}/>
-                            ----{likes && likes.length}
-                            <HeartOutlined onClick={() => dislikeClick(id, dislikes)}/>-
-                            ---{dislikes && dislikes.length}
+                            <div className='post-item__bottom-block_like' onClick={() => likeClick(id, likes)}>
+                                <LikeIcon /><Title level={4}>{likes && likes.length}</Title>
+                            </div>
+                            <div className='post-item__bottom-block_dislike' onClick={() => dislikeClick(id, dislikes)}>
+                                <DislikeIcon/><Title level={4}>{dislikes && dislikes.length}</Title>
+                            </div>
                         </div>
                     </div>
                 )}

@@ -1,12 +1,12 @@
 import React, {FC, useEffect, useState} from 'react';
 import {NavLink, useLocation, useParams} from "react-router-dom";
 import navMenuList from './list';
-import {Typography} from "antd";
-import {motion, AnimateSharedLayout} from "framer-motion";
-import './nav-menu.less';
 import {useActions} from "../../../store/actions";
 import {UseTextColor} from "../../../assets/hooks";
 import ActiveLineMenu from "../../../components/active-line-menu";
+import {motion, AnimateSharedLayout} from "framer-motion";
+import {Typography} from "antd";
+import './nav-menu.less';
 
 
 interface NavMenuProps {
@@ -17,14 +17,17 @@ interface NavMenuProps {
 const NavMenu: FC<NavMenuProps> = ({myId, currentId}) => {
 
     const {Title} = Typography;
-    const {setIsVisibleSoundModal} = useActions();
+    const {setIsVisibleSoundModal, setLocation} = useActions();
     const colors = UseTextColor();
     const location = useLocation().pathname.split('/').pop();
 
     const [activeItem, setActiveItem] = useState<number>(1);
 
     const onclick = (item: any) => {
-        item.title === 'музыка' ? setIsVisibleSoundModal(true) : setActiveItem(item.id)
+        if(item.title === 'музыка') {
+            setIsVisibleSoundModal(true)
+            setLocation('nav-menu')
+        } else{setActiveItem(item.id)}
     }
 
     useEffect(() => {

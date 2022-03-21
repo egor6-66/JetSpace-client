@@ -27,7 +27,6 @@ const postSubscriptions = (subscribeToMore: any) => {
         document: LIKE_POST_SUB,
         updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: LikeModels.ILikeSubscription): PostModels.IPosts => {
             const prevPostsData = prev?.getUserPosts?.posts
-            console.log('ok')
             const newLike = subscriptionData?.data?.newLike
             const updatePosts = prevPostsData?.map((post: any) =>
                 post.id == newLike.postId ? Object.assign({}, post, {likes: [newLike, ...post.likes]}) : post)

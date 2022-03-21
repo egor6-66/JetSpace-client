@@ -7,7 +7,7 @@ const messageSubscriptions = (subscribeToMore :any, refetch: any) => {
         updateQuery: (prev: any, {subscriptionData, variables}: any): any => {
             const newMessage = subscriptionData.data.newMessage
             if (!prev?.getMessages) {
-                console.log('"refetch" должен отработать один раз, только при первом сообщении! когда еще нету "prev"')
+                //"refetch" должен отработать один раз, только при первом сообщении! когда еще нету "prev"
                 refetch()
             } else {
                 const prevData = prev?.getMessages

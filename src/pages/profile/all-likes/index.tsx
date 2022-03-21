@@ -39,7 +39,7 @@ const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId}) => {
     const closed = () => {
         setIsShowAllLikes(false)
     }
-    // console.log(data?.getAllLikes)
+
     return (
         <>
             <div className='all-likes'

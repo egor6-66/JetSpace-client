@@ -78,7 +78,7 @@ const LoginForm: FC<LoginForm> = (props) => {
                 </Form.Item>
                 <div className='form__set-current-form'
                      onClick={() => setCurrentForm('register')}>
-                    Зарегистрироваться
+                    регистрация
                 </div>
             </Form>
         </>

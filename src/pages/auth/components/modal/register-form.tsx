@@ -55,15 +55,16 @@ const RegisterForm: FC<RegisterForm> = (props) => {
                     label="Email"
                     name="email"
                     hasFeedback
-                    rules={[{
-                        type: 'email', required: true,
-                        ...formRules({
+                    rules={
+                        // type: 'email',
+                        // required: true,
+                        formRules({
                             required: true,
                             message: 'Заполните поле!',
-                            validator: {type: 'length', length: 2},
+                            validator: {type: 'email', length: 1},
                             name: "email"
                         })
-                    }]}
+                    }
                 >
                     <Input suffix={<UserOutlined/>}/>
                 </Form.Item>
@@ -104,7 +105,7 @@ const RegisterForm: FC<RegisterForm> = (props) => {
                 </Form.Item>
                 <div className='form__set-current-form'
                      onClick={() => setCurrentForm('login')}>
-                    Авторизироваться
+                    логин
                 </div>
             </Form>
         </>

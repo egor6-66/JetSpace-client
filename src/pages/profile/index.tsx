@@ -11,6 +11,8 @@ import SocialsNetworks from "./socials-networts";
 import AllLikes from "./all-likes";
 import AllDislikes from "./all-dislikes";
 import './profile.less';
+import UserSubscriptions from "./user-subscriptions";
+import UserSubscribers from "./user-subscribers";
 
 
 interface ProfileProps {
@@ -72,6 +74,8 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                             currentId={currentId}
                         />
                         <AllDislikes/>
+                        <UserSubscribers/>
+                        <UserSubscriptions/>
                     </div>
                 </div>
             </div>

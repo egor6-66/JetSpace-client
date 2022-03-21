@@ -37,7 +37,6 @@ const App = () => {
         !!getToken() && checkAuth()
     }, [])
 
-
     UseTheme(user.theme, themes, user.theme)
 
     return (
@@ -49,9 +48,9 @@ const App = () => {
                         <Route path='profile' element={<Profile myId={user.id}/>}>
                             <Route path='messages' element={<DialogsList myId={user.id}/>}/>
                             <Route path='message/:userId' element={<MessagesModal myId={user.id}/>}/>
-                            <Route path='friends' element={<UserFriends/>}/>
                             <Route path='videos' element={<UserVideos myId={user.id}/>}/>
                             <Route path='reposts' element={<UserReposts/>}/>
+                            <Route path='news' element={<UserFriends/>}/>
                             <Route path='allPhotos/:userId' element={<AllPhotos/>}/>
                         </Route>
                         <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>

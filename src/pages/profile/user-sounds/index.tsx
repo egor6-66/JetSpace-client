@@ -10,18 +10,20 @@ import {Button, Form, Modal} from "antd";
 import './user-sound.less';
 import {useTypedSelector} from "../../../store";
 import {useActions} from "../../../store/actions";
+import Title from "antd/es/typography/Title";
+import {getItem, setItem} from "../../../services/local-storage";
 
 
-interface UserMusicProps {
+interface UserSoundProps {
     myId: string | undefined,
 }
 
-const UserMusic: FC<UserMusicProps> = ({myId}) => {
+const UserSound: FC<UserSoundProps> = ({myId}) => {
 
     const {id: currentId} = useParams();
-    const {setIsVisibleSoundModal} = useActions();
+    const {setIsVisibleSoundModal, setSoundsList} = useActions();
 
-    const {isVisibleSoundModal} = useTypedSelector(state => state.player);
+    const {sounds, isVisibleSoundModal, location} = useTypedSelector(state => state.player);
     const [isVisibleModalAddSound, setIsVisibleModalAddSound] = useState<boolean>(false)
     const [soundType, setSoundType] = useState<string>('soundTracks')
 
@@ -38,7 +40,15 @@ const UserMusic: FC<UserMusicProps> = ({myId}) => {
 
     useEffect(() => {
         getAllUserSound()
+        !sounds && setSoundsList(getItem('mySounds'))
     }, [])
+
+    useEffect(() => {
+        if(data){
+            data?.getAllUserSounds?.userId === myId && setSoundsList(data?.getAllUserSounds)
+            data?.getAllUserSounds?.userId === myId && setItem('mySounds', data?.getAllUserSounds)
+        }
+    }, [data])
 
     const closedModal = () => setIsVisibleModalAddSound(false)
     const setTypeList = () => soundType === 'soundTracks' ? setSoundType('playLists') : setSoundType('soundTracks')
@@ -73,18 +83,38 @@ const UserMusic: FC<UserMusicProps> = ({myId}) => {
                 {myId === currentId && <Button onClick={() => setIsVisibleModalAddSound(true)}>добавить музыку</Button>}
                 <Button onClick={setTypeList}>{btnTitle}</Button>
                 <div className='user-music__list'>
-                    {data?.getAllUserSounds && data?.getAllUserSounds[soundType].map((item: any) =>
-                        <div key={item.id} className='user-music__list_item'>
-                            <AudioPlayer
-                                url={item.path}
-                                type={item.type}
-                            />
-                        </div>
-                    )}
+                    {myId !== currentId && location === 'header' &&
+                    <Title level={3} style={{textAlign: "center",paddingTop: 30}}>
+                        мои треки
+                    </Title>}
+                    <div className={`${myId !== currentId && location === 'nav-menu' && 'sound-hidden'}`}>
+                        {sounds?.soundTracks?.map((item: any) =>
+                            <div key={item.id} className='user-music__list_item'>
+                                <AudioPlayer
+                                    url={item.path}
+                                    type={item.type}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <div className={`${myId === data?.getAllUserSounds?.userId && 'sound-hidden'}`}>
+                        {myId !== currentId && location === 'header' &&
+                        <Title level={3} style={{textAlign: "center", paddingTop: 30}}>
+                            треки друга
+                        </Title>}
+                        {data?.getAllUserSounds && data?.getAllUserSounds[soundType].map((item: any) =>
+                            <div key={item.id} className='user-music__list_item'>
+                                <AudioPlayer
+                                    url={item.path}
+                                    type={item.type}
+                                />
+                            </div>
+                        )}
+                    </div>
                 </div>
             </div>
         </Modal>
     );
 };
 
-export default UserMusic;
+export default UserSound;
