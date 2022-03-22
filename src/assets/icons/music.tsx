@@ -17,7 +17,6 @@ const MusicIcon = () => {
             }
         }
     }
-    console.log(playing)
     const pathVariant = {
         hidden: {
             color: '#d4380d',

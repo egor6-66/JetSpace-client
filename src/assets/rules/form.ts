@@ -42,6 +42,13 @@ export const formRules = ({required, message, validator, name}: FormRules) => {
                             return Promise.resolve();
                         }
                         return Promise.reject(new Error('Пароли не совпадают!'));
+
+                    case 'email':
+                        const regex = new RegExp('^\\S+@\\S+\\.\\S+$')
+                        if (regex.test(value) ) {
+                            return Promise.resolve();
+                        }
+                        return  Promise.reject(new Error(value && 'Не правельный формат Email'));
                 }
             },
         })

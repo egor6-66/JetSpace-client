@@ -6,6 +6,8 @@ status
 avatar
 headerAvatar
 likeCounter
+subscribers
+subscriptions
 theme
 instagram
 facebook

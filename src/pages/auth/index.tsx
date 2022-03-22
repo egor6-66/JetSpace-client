@@ -11,16 +11,16 @@ const Auth: React.FC = () => {
     const [currentForm, setCurrentForm] = useState<string | null>(null);
 
     return (
-        <div>
+        <div className='auth'>
             <Button
                 onClick={() => setCurrentForm('login')}
             >
-                log
+                логин
             </Button>
             <Button
                 onClick={() => setCurrentForm('register')}
             >
-                reg
+                регистрация
             </Button>
             <AuthModal
                 email={user!.email}

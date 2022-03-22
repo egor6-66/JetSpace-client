@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, {FC} from 'react';
 
 
 interface ConfirmAccountFormProps {
@@ -8,9 +8,11 @@ interface ConfirmAccountFormProps {
 const ConfirmAccountForm: FC<ConfirmAccountFormProps> = (props) => {
 
     const getRef = () => {
-        if(props.email){
-           const mail =  props.email?.split('@')?.[1]
-            if(mail === 'gmail.com') return 'https://mail.google.com/'
+        if (props.email) {
+            const mail = props.email?.split('@')[1].split('.')[0]
+            if (mail === 'gmail') return 'https://mail.google.com/'
+            if (mail === 'yandex') return 'https://mail.yandex.com/'
+            if (mail === 'mail') return ' https://mail.ru/'
         }
     }
 
@@ -21,8 +23,8 @@ const ConfirmAccountForm: FC<ConfirmAccountFormProps> = (props) => {
                 письмо с сылкой активации, перейдите
                 по ней для подтверждения аккаунта
             </div>
-            <a style={{marginTop: '15px' ,fontSize: '20px' ,color: "blue", cursor: "pointer"}}
-                href={getRef()}>Перейти к почте</a>
+            <a style={{marginTop: '15px', fontSize: '20px', color: "blue", cursor: "pointer"}}
+               href={getRef()}>{getRef() && 'Перейти к почте'}</a>
         </>
     );
 };

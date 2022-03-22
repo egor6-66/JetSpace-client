@@ -4,6 +4,8 @@ export interface IUser {
     name: string | undefined,
     lastName: string | undefined,
     avatar: string | undefined,
+    subscriptions: string[],
+    subscribers: string[],
     theme: string | undefined,
     instagram: string | undefined,
     facebook: string | undefined,

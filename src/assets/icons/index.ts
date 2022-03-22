@@ -7,6 +7,10 @@ import MicrophoneIcon from './microphone';
 import SmileIcon from './smile';
 import PlayerIcons from './player-icons';
 import MusicIcon from './music';
+import LikeIcon from "./like";
+import DislikeIcon from './dislike';
+import SubscriptionsIcons from './subscriptions-icons';
+
 
 export {
     LogoIcon,
@@ -17,5 +21,8 @@ export {
     MicrophoneIcon,
     SmileIcon,
     PlayerIcons,
-    MusicIcon
+    MusicIcon,
+    LikeIcon,
+    DislikeIcon,
+    SubscriptionsIcons,
 }

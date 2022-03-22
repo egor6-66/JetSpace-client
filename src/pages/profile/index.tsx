@@ -1,16 +1,17 @@
-import React, {FC, useRef} from 'react';
+import React, {FC, useState} from 'react';
 import {Outlet, useParams, useLocation} from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import {GET_USER} from "../../GRAPHQL/queries/user-queries";
-import {UseScroll} from '../../assets/hooks'
-import UserInfo from "./user-info";
-import UserPosts from "./user-posts";
-import UserSounds from './user-sounds'
-import NavMenu from "./nav-menu";
-import SocialsNetworks from "./socials-networts";
-import AllLikes from "./all-likes";
-import AllDislikes from "./all-dislikes";
+import {UseTextColor} from '../../assets/hooks'
+import UserInfo from "./top-panel/user-info";
+import UserPosts from "./left-panel/user-posts";
+import NavMenu from "./left-panel/nav-menu";
+import SocialsNetworks from "./right-panel/socials-networts";
+import profileMenuItems from "./list";
+import {motion, AnimateSharedLayout} from "framer-motion";
 import './profile.less';
+import ActiveLineMenu from "../../components/active-line-menu";
+import RightPanelMenu from "./right-panel/menu";
 
 
 interface ProfileProps {
@@ -22,12 +23,12 @@ const Profile: FC<ProfileProps> = ({myId}) => {
     const {id: currentId} = useParams();
     const location = useLocation().pathname.split('/');
 
-
     const {data, loading, error, subscribeToMore} = useQuery(GET_USER, {
         fetchPolicy: `${myId === currentId ? 'cache-and-network' : 'network-only'}`,
         nextFetchPolicy: 'cache-only',
         variables: {userId: currentId}
     });
+    console.log('+data?.getUser.likeCounter',+data?.getUser.likeCounter)
 
     return (
         <div className='profile'>
@@ -40,6 +41,8 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                 status={data?.getUser.status}
                 avatar={data?.getUser.avatar}
                 headerAvatar={data?.getUser.headerAvatar}
+                subscribers={data?.getUser.subscribers}
+                subscriptions={data?.getUser.subscriptions}
             />
             <div className='profile__content-wrapper'>
                 <NavMenu myId={myId} currentId={currentId}/>
@@ -56,7 +59,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                         />}
                         <Outlet/>
                     </div>
-                    <div className='profile__content_right-block'>
+                    <div className='profile__content_right-panel'>
                         <SocialsNetworks
                             instagram={data?.getUser.instagram}
                             facebook={data?.getUser.facebook}
@@ -67,11 +70,12 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                             soundCloud={data?.getUser.soundCloud}
                             youTube={data?.getUser.youTube}
                         />
-                        <AllLikes
+                        <RightPanelMenu
                             likeCounter={+data?.getUser.likeCounter}
                             currentId={currentId}
+                            subscribers={data?.getUser.subscribers}
+                            subscriptions={data?.getUser.subscriptions}
                         />
-                        <AllDislikes/>
                     </div>
                 </div>
             </div>
