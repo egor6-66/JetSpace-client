@@ -25,7 +25,10 @@ const DislikeIcon = () => {
                 yoyo: Infinity
             }
         },
-
+        click: {
+            scale: 0.7,
+            rotate: 360
+        }
     };
 
     return (
@@ -63,6 +66,7 @@ const DislikeIcon = () => {
                             fill="url(#radialGradient-1)"
                             variants={heartVariants2}
                             whileHover="hover"
+                            whileTap="click"
                         />
                         <motion.path
                             fill="#FFF"

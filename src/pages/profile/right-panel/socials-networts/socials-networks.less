@@ -1,0 +1,25 @@
+@import "../../../../core-less/antCustoms";
+
+.socials-networks {
+  padding: 12px 0;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-radius: @border-radius-base;
+
+  &__link {
+    height: 44px;
+
+    &_present{
+      cursor: pointer;
+      border-radius: 50%;
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+  }
+}

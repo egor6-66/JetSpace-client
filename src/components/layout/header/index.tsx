@@ -7,7 +7,7 @@ import {SettingsIcon, BellIcon, LogoIcon, PlayerIcons, MusicIcon} from '../../..
 import ProjectMenu from "../../project-menu";
 import {Badge, Typography, Input, Popover, Slider} from "antd";
 import projectMenuList from "../../project-menu/list";
-import UserSounds from "../../../pages/profile/user-sounds";
+import UserSounds from "../../../pages/profile/left-panel/user-sounds";
 import {useActions} from "../../../store/actions";
 import {useTypedSelector} from "../../../store";
 import './header.less';

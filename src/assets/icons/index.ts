@@ -9,6 +9,8 @@ import PlayerIcons from './player-icons';
 import MusicIcon from './music';
 import LikeIcon from "./like";
 import DislikeIcon from './dislike';
+import SubscriptionsIcons from './subscriptions-icons';
+
 
 export {
     LogoIcon,
@@ -21,5 +23,6 @@ export {
     PlayerIcons,
     MusicIcon,
     LikeIcon,
-    DislikeIcon
+    DislikeIcon,
+    SubscriptionsIcons,
 }
