@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {Outlet, useParams, useLocation} from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import {GET_USER} from "../../GRAPHQL/queries/user-queries";
@@ -12,6 +12,7 @@ import {motion, AnimateSharedLayout} from "framer-motion";
 import './profile.less';
 import ActiveLineMenu from "../../components/active-line-menu";
 import RightPanelMenu from "./right-panel/menu";
+import {useActions} from "../../store/actions";
 
 
 interface ProfileProps {
@@ -20,6 +21,7 @@ interface ProfileProps {
 
 const Profile: FC<ProfileProps> = ({myId}) => {
 
+    const {getUser} = useActions();
     const {id: currentId} = useParams();
     const location = useLocation().pathname.split('/');
 
@@ -28,7 +30,10 @@ const Profile: FC<ProfileProps> = ({myId}) => {
         nextFetchPolicy: 'cache-only',
         variables: {userId: currentId}
     });
-    console.log('+data?.getUser.likeCounter',+data?.getUser.likeCounter)
+
+    useEffect(() => {
+        getUser(data?.getUser)
+    }, [data, currentId])
 
     return (
         <div className='profile'>
@@ -48,15 +53,6 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                 <NavMenu myId={myId} currentId={currentId}/>
                 <div className='profile__content'>
                     <div className='profile__content_left-block'>
-                        {location.length === 4
-                        &&
-                        <UserPosts
-                            myId={myId}
-                            currentId={currentId}
-                            name={data?.getUser.name}
-                            lastName={data?.getUser.lastName}
-                            avatar={data?.getUser.avatar}
-                        />}
                         <Outlet/>
                     </div>
                     <div className='profile__content_right-panel'>

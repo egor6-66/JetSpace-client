@@ -1,7 +1,7 @@
 const navMenuList = (myId: string | undefined, currentId: string | undefined) => {
 
     const array = [
-        {id: 1, title: 'посты', path: `/user/${currentId}/profile`},
+        {id: 1, title: 'посты', path: `/user/${currentId}/profile/posts`},
         {id: 2, title: 'диалоги', path: `/user/${myId}/profile/messages`},
         {id: 3, title: 'написать', path: `/user/${currentId}/profile/message/${currentId}`},
         {id: 4, title: 'музыка', path: `#`},

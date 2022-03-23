@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {useMutation, useQuery} from "@apollo/client";
+import {useMutation, useQuery, useSubscription} from "@apollo/client";
 import {GET_USER_POSTS} from "../../../../GRAPHQL/queries/post-queries";
 import {ADD_POST, SEND_DISLIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import {SEND_LIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
@@ -8,20 +8,20 @@ import {sendDislike, sendLike} from '../../../../assets/functions/likeAndDislike
 import {LikeIcon, DislikeIcon} from '../../../../assets/icons';
 import {Input, Button, Typography} from "antd";
 import './user-posts.less';
+import {POST_SUB} from "../../../../GRAPHQL/subscriptions/post-subscriptions";
+import {useTypedSelector} from "../../../../store";
+import {useParams} from "react-router-dom";
 
 
 interface UserPostsProps {
     myId: string | undefined,
-    currentId: string | undefined,
-    name: string | undefined,
-    lastName: string | undefined,
-    avatar: string | undefined,
 }
 
-const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}) => {
+const UserPosts: FC<UserPostsProps> = ({myId}) => {
 
     const {Title, Text} = Typography;
-
+    const {id: currentId} = useParams();
+    const currentUser = useTypedSelector(state => state.currentUser);
     const [newPost, setNewPost] = useState<string>('')
 
     const [addPost] = useMutation(ADD_POST);
@@ -29,14 +29,15 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
     const [sendDislikePost] = useMutation(SEND_DISLIKE_POST);
 
     const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_USER_POSTS, {
-        fetchPolicy: `${myId === currentId ? 'cache-first' : 'network-only'}`,
-        nextFetchPolicy: 'cache-only',
+        fetchPolicy: 'cache-first',
         variables: {id: currentId}
     });
 
+
     useEffect(() => {
-        postSubscriptions(subscribeToMore)
-    }, [])
+        console.log('currentId',currentId)
+        postSubscriptions(subscribeToMore, currentId)
+    }, [currentId])
 
     const sendNewPost = async () => {
         await addPost({
@@ -70,9 +71,9 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
                 {data?.getUserPosts?.posts?.map(({id, date, content, likes, dislikes}: any) =>
                     <div key={id} className='posts__list_item post-item'>
                         <div className='post-item__top-block'>
-                            <img className='post-item__top-block_avatar' src={avatar} alt=""/>
+                            <img className='post-item__top-block_avatar' src={currentUser.avatar} alt=""/>
                             <div className='post-item__top-block_userNameAndData'>
-                                <Title level={4}>{name} {lastName}</Title>
+                                <Title level={4}>{currentUser.name} {currentUser.lastName}</Title>
                                 <Text>{date}</Text>
                             </div>
                         </div>
@@ -81,7 +82,7 @@ const UserPosts: FC<UserPostsProps> = ({myId, currentId, name, lastName, avatar}
                         </div>
                         <div className='post-item__bottom-block'>
                             <div className='post-item__bottom-block_like' onClick={() => likeClick(id, likes)}>
-                                <LikeIcon /><Title level={4}>{likes && likes.length}</Title>
+                                <LikeIcon/><Title level={4}>{likes && likes.length}</Title>
                             </div>
                             <div className='post-item__bottom-block_dislike' onClick={() => dislikeClick(id, dislikes)}>
                                 <DislikeIcon/><Title level={4}>{dislikes && dislikes.length}</Title>

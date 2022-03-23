@@ -3,24 +3,25 @@ import {LIKE_POST_SUB} from "../../../../GRAPHQL/subscriptions/post-subscription
 import {PostModels, LikeModels, DislikeModels} from '../../../../models'
 
 
-const postSubscriptions = (subscribeToMore: any) => {
+const postSubscriptions = (subscribeToMore: any, currentId: string | undefined) => {
     subscribeToMore({
         document: POST_SUB,
-        updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: PostModels.IPostSubscription): PostModels.IPosts => {
+        variables: { id: currentId },
+        updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: PostModels.IPostSubscription): PostModels.IPosts  => {
             const newPost = subscriptionData.data.newPost
-            if (!prev?.getUserPosts) {
-                return {
-                    getUserPosts: {
-                        __typename: "Posts",
-                        userId: newPost.userId,
-                        posts: [newPost],
+                if (!prev?.getUserPosts) {
+                    return {
+                        getUserPosts: {
+                            __typename: "Posts",
+                            userId: newPost.userId,
+                            posts: [newPost],
+                        }
                     }
+                } else {
+                    const prevData = prev?.getUserPosts
+                    const updatePosts = Object.assign({}, prevData, {posts: [newPost, ...prevData?.posts]})
+                    return {getUserPosts: updatePosts}
                 }
-            } else {
-                const prevData = prev?.getUserPosts
-                const updatePosts = Object.assign({}, prevData, {posts: [newPost, ...prevData?.posts]})
-                return {getUserPosts: updatePosts}
-            }
         }
     })
     subscribeToMore({

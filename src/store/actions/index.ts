@@ -4,6 +4,7 @@ import {useDispatch } from "react-redux";
 
 import * as AuthActions from "./auth";
 import * as UserActions from './user'
+import * as CurrentUserActions from './current-user'
 import * as PlayerActions from './player'
 
 
@@ -13,7 +14,8 @@ export const useActions = () => {
     const actions = {
         ...AuthActions,
         ...UserActions,
-        ...PlayerActions
+        ...PlayerActions,
+        ...CurrentUserActions
     }
 
     return bindActionCreators(actions, dispatch)

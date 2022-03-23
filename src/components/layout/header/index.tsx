@@ -37,10 +37,14 @@ const Header: FC<HeaderProps> = ({myId}) => {
     useEffect(() => {
         notificationsSubscriptions(subscribeToMore, myId)
 
-    }, [])
+    }, []);
 
     const onSearch = (payload: String) => {
         console.log(payload)
+    };
+
+    const goToMyPage = () =>{
+
     }
 
     return (
@@ -49,7 +53,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
             <div className='header__left-block'>
                 <LogoIcon size={45}/>
                 <Title level={4} className='header__left-block_title'>
-                    <Link to={`/user/${myId}/profile`}>моя <br/> страница</Link>
+                    <Link to={`/user/${myId}/profile/posts`}>моя <br/> страница</Link>
                 </Title>
                 <Title level={4} className='header__left-block_title'>
                     <Link to={`/user/${myId}/allUsers`}>все <br/> пользователи</Link>

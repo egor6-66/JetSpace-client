@@ -17,7 +17,6 @@ const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId}) => {
     const {Title, Text} = Typography;
 
     const [isShowAllLikes, setIsShowAllLikes] = useState<boolean>(false)
-    console.log(likeCounter)
     const word = wordDeclension({
         length: likeCounter || 0,
         word: 'лайк',
