@@ -8,6 +8,8 @@ const initialState: IUser = {
     name: '',
     lastName: '',
     avatar: '',
+    likeCounter: '',
+    dislikeCounter: '',
     subscriptions: [],
     subscribers: [],
     theme: '',

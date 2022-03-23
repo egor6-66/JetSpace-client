@@ -4,11 +4,9 @@ import {GET_USER_POSTS} from "../../../../GRAPHQL/queries/post-queries";
 import {ADD_POST, SEND_DISLIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import {SEND_LIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import postSubscriptions from "./post-subscriptions";
-import {sendDislike, sendLike} from '../../../../assets/functions/likeAndDislike'
 import {LikeIcon, DislikeIcon} from '../../../../assets/icons';
 import {Input, Button, Typography} from "antd";
 import './user-posts.less';
-import {POST_SUB} from "../../../../GRAPHQL/subscriptions/post-subscriptions";
 import {useTypedSelector} from "../../../../store";
 import {useParams} from "react-router-dom";
 
@@ -33,9 +31,8 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
         variables: {id: currentId}
     });
 
-
     useEffect(() => {
-        console.log('currentId',currentId)
+        console.log('currentId', currentId)
         postSubscriptions(subscribeToMore, currentId)
     }, [currentId])
 
@@ -50,11 +47,23 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
     }
 
     const likeClick = async (id: string, likes: any[]) => {
-        await sendLike({action: sendLikePost, postId: id, currentId, myId})
+        sendLikePost({
+            variables: {
+                ownerId: currentId,
+                postId: id,
+                userId: myId,
+            }
+        })
     }
 
     const dislikeClick = async (id: string, dislikes: any[]) => {
-        await sendDislike({action: sendDislikePost, postId: id, currentId, myId})
+        sendDislikePost({
+            variables: {
+                ownerId: currentId,
+                postId: id,
+                userId: myId,
+            }
+        })
     }
 
     return (

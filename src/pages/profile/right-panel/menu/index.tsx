@@ -4,17 +4,16 @@ import ActiveLineMenu from "../../../../components/active-line-menu";
 import {UseTextColor} from "../../../../assets/hooks";
 import {AnimateSharedLayout, motion} from "framer-motion";
 import './right-panel-menu.less';
+import {useTypedSelector} from "../../../../store";
 
 
 interface RightPanelMenuProps {
-    likeCounter: number,
     currentId: string | undefined,
-    subscribers: string[] | undefined,
-    subscriptions:string[] | undefined,
 }
 
-const RightPanelMenu: FC<RightPanelMenuProps> = ({likeCounter, currentId, subscribers, subscriptions}) => {
+const RightPanelMenu: FC<RightPanelMenuProps> = ({currentId}) => {
 
+    const user = useTypedSelector(state => state.currentUser);
     const colors = UseTextColor();
     const [activeItem, setActiveItem] = useState<number>(0);
     const [focus, setFocus] = useState<boolean>(false)
@@ -52,10 +51,11 @@ const RightPanelMenu: FC<RightPanelMenuProps> = ({likeCounter, currentId, subscr
                                 animate='initial'
                     >
                         <item.component
-                            likeCounter={likeCounter}
+                            likeCounter={+user.likeCounter}
+                            dislikeCounter={+user.dislikeCounter}
                             currentId={currentId}
-                            subscribers={subscribers}
-                            subscriptions={subscriptions}
+                            subscribers={user.subscribers}
+                            subscriptions={user.subscriptions}
                         />
                         {activeItem === item.id && focus && <ActiveLineMenu/>}
                     </motion.div>

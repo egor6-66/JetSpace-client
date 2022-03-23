@@ -1,18 +1,13 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {Outlet, useParams, useLocation} from "react-router-dom";
+import {useActions} from "../../store/actions";
 import {useQuery} from "@apollo/client";
 import {GET_USER} from "../../GRAPHQL/queries/user-queries";
-import {UseTextColor} from '../../assets/hooks'
 import UserInfo from "./top-panel/user-info";
-import UserPosts from "./left-panel/user-posts";
+import RightPanelMenu from "./right-panel/menu";
 import NavMenu from "./left-panel/nav-menu";
 import SocialsNetworks from "./right-panel/socials-networts";
-import profileMenuItems from "./list";
-import {motion, AnimateSharedLayout} from "framer-motion";
 import './profile.less';
-import ActiveLineMenu from "../../components/active-line-menu";
-import RightPanelMenu from "./right-panel/menu";
-import {useActions} from "../../store/actions";
 
 
 interface ProfileProps {
@@ -67,10 +62,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                             youTube={data?.getUser.youTube}
                         />
                         <RightPanelMenu
-                            likeCounter={+data?.getUser.likeCounter}
                             currentId={currentId}
-                            subscribers={data?.getUser.subscribers}
-                            subscriptions={data?.getUser.subscriptions}
                         />
                     </div>
                 </div>

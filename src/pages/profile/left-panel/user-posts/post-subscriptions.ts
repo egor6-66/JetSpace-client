@@ -1,48 +1,47 @@
 import {DISLIKE_POST_SUB, POST_SUB} from "../../../../GRAPHQL/subscriptions/post-subscriptions";
 import {LIKE_POST_SUB} from "../../../../GRAPHQL/subscriptions/post-subscriptions";
 import {PostModels, LikeModels, DislikeModels} from '../../../../models'
+import {getUpdPosts} from "./helpers";
 
 
 const postSubscriptions = (subscribeToMore: any, currentId: string | undefined) => {
     subscribeToMore({
         document: POST_SUB,
-        variables: { id: currentId },
-        updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: PostModels.IPostSubscription): PostModels.IPosts  => {
+        variables: {id: currentId},
+        updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: PostModels.IPostSubscription): PostModels.IPosts => {
             const newPost = subscriptionData.data.newPost
-                if (!prev?.getUserPosts) {
-                    return {
-                        getUserPosts: {
-                            __typename: "Posts",
-                            userId: newPost.userId,
-                            posts: [newPost],
-                        }
+            if (!prev?.getUserPosts) {
+                return {
+                    getUserPosts: {
+                        __typename: "Posts",
+                        userId: newPost.userId,
+                        posts: [newPost],
                     }
-                } else {
-                    const prevData = prev?.getUserPosts
-                    const updatePosts = Object.assign({}, prevData, {posts: [newPost, ...prevData?.posts]})
-                    return {getUserPosts: updatePosts}
                 }
+            } else {
+                const prevData = prev?.getUserPosts
+                const updatePosts = Object.assign({}, prevData, {posts: [newPost, ...prevData?.posts]})
+                return {getUserPosts: updatePosts}
+            }
         }
     })
     subscribeToMore({
         document: LIKE_POST_SUB,
         updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: LikeModels.ILikeSubscription): PostModels.IPosts => {
-            const prevPostsData = prev?.getUserPosts?.posts
-            const newLike = subscriptionData?.data?.newLike
-            const updatePosts = prevPostsData?.map((post: any) =>
-                post.id == newLike.postId ? Object.assign({}, post, {likes: [newLike, ...post.likes]}) : post)
-            const newData = Object.assign({}, prev?.getUserPosts, {posts: updatePosts})
+            const newElement = subscriptionData?.data?.newLike
+            const posts = prev?.getUserPosts.posts
+            const updPosts =  getUpdPosts(posts, newElement, 'addLike')
+            const newData = Object.assign({}, prev?.getUserPosts, {posts: updPosts})
             return {getUserPosts: newData}
         }
     })
     subscribeToMore({
         document: DISLIKE_POST_SUB,
-        updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: DislikeModels.IDislikeSubscription): PostModels.IPosts => {
-            const prevPostsData = prev?.getUserPosts?.posts
-            const newDislike = subscriptionData?.data?.newDislike
-            const updatePosts = prevPostsData?.map((post: any) =>
-                post.id == newDislike.postId ? Object.assign({}, post, {dislikes: [newDislike, ...post.dislikes]}) : post)
-            const newData = Object.assign({}, prev?.getUserPosts, {posts: updatePosts})
+        updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: DislikeModels.IDislikeSubscription): PostModels.IPosts | any => {
+            const newElement = subscriptionData?.data?.newDislike
+            const posts = prev?.getUserPosts.posts
+            const updPosts =  getUpdPosts(posts, newElement, 'addDislike')
+            const newData = Object.assign({}, prev?.getUserPosts, {posts: updPosts})
             return {getUserPosts: newData}
         }
     })
