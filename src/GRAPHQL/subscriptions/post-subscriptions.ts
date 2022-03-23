@@ -5,8 +5,8 @@ import {dislikeModel} from "../models/dislike/dislike-model";
 
 
 export const POST_SUB = gql`
-    subscription {
-        newPost{
+    subscription ($id: String) {
+        newPost(id: $id){
             ${postModel}
             likes{
                 ${likeModel}

@@ -9,6 +9,7 @@ import {themes} from './constants'
 import Auth from "./pages/auth";
 import Wrapper from "./components/layout/wrapper";
 import Profile from "./pages/profile";
+import UserPosts from "./pages/profile/left-panel/user-posts";
 import DialogsList from "./pages/profile/left-panel/dialogs-list";
 import MessagesModal from "./pages/profile/left-panel/messages-modals";
 import UserFriends from "./pages/profile/left-panel/user-friends";
@@ -44,9 +45,10 @@ const App = () => {
         isAuth && user.isActivated ?
             <>
                 <Routes>
-                    <Route path="*" element={<Navigate to={`/user/${user.id}/profile`}/>}/>
+                    <Route path="*" element={<Navigate to={`/user/${user.id}/profile/posts`}/>}/>
                     <Route path='user/:id' element={<Wrapper myId={user.id}/>}>
                         <Route path='profile' element={<Profile myId={user.id}/>}>
+                            <Route path='posts' element={<UserPosts myId={user.id}/>}/>
                             <Route path='messages' element={<DialogsList myId={user.id}/>}/>
                             <Route path='message/:userId' element={<MessagesModal myId={user.id}/>}/>
                             <Route path='videos' element={<UserVideos myId={user.id}/>}/>

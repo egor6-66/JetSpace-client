@@ -65,7 +65,7 @@ const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName,
     const clickStatus = () => {
         myId === currentId && setIsVisibleEditStatus(true)
     };
-    console.log('isFollow',isFollow)
+
     return (
         <div className='user-info' style={{backgroundImage: `url(${headerAvatar})`}}>
             <UserAvatar
