@@ -4,13 +4,12 @@ import {GET_USER_POSTS} from "../../../../GRAPHQL/queries/post-queries";
 import {ADD_POST, SEND_DISLIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import {SEND_LIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import postSubscriptions from "./post-subscriptions";
-import {sendDislike, sendLike} from '../../../../assets/functions/likeAndDislike'
 import {LikeIcon, DislikeIcon} from '../../../../assets/icons';
 import {Input, Button, Typography} from "antd";
 import './user-posts.less';
-import {POST_SUB} from "../../../../GRAPHQL/subscriptions/post-subscriptions";
 import {useTypedSelector} from "../../../../store";
 import {useParams} from "react-router-dom";
+import {useActions} from "../../../../store/actions";
 
 
 interface UserPostsProps {
@@ -21,7 +20,9 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
 
     const {Title, Text} = Typography;
     const {id: currentId} = useParams();
+    const {addLike, addDislike, removeLike, removeDislike} = useActions();
     const currentUser = useTypedSelector(state => state.currentUser);
+
     const [newPost, setNewPost] = useState<string>('')
 
     const [addPost] = useMutation(ADD_POST);
@@ -33,10 +34,8 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
         variables: {id: currentId}
     });
 
-
     useEffect(() => {
-        console.log('currentId',currentId)
-        postSubscriptions(subscribeToMore, currentId)
+        postSubscriptions(subscribeToMore, currentId, addLike, addDislike, removeLike, removeDislike)
     }, [currentId])
 
     const sendNewPost = async () => {
@@ -50,11 +49,28 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
     }
 
     const likeClick = async (id: string, likes: any[]) => {
-        await sendLike({action: sendLikePost, postId: id, currentId, myId})
+        console.log(likes)
+        sendLikePost({
+            variables: {
+                ownerId: currentId,
+                postId: id,
+                userId: myId,
+            }
+        })
     }
 
     const dislikeClick = async (id: string, dislikes: any[]) => {
-        await sendDislike({action: sendDislikePost, postId: id, currentId, myId})
+        sendDislikePost({
+            variables: {
+                ownerId: currentId,
+                postId: id,
+                userId: myId,
+            }
+        })
+    }
+
+    const isActive = (arr: any[]) => {
+        return arr.find((i: any) => i.userId === myId)
     }
 
     return (
@@ -81,11 +97,21 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
                             <Title level={5}>{content}</Title>
                         </div>
                         <div className='post-item__bottom-block'>
-                            <div className='post-item__bottom-block_like' onClick={() => likeClick(id, likes)}>
-                                <LikeIcon/><Title level={4}>{likes && likes.length}</Title>
+                            <div className='post-item__bottom-block_like'>
+                                <div className={`like-icon ${isActive(likes) && 'like-icon__active'}`}
+                                    onClick={() => likeClick(id, likes)}
+                                >
+                                    <LikeIcon/>
+                                </div>
+                                <Title level={4}>{likes && likes.length}</Title>
                             </div>
-                            <div className='post-item__bottom-block_dislike' onClick={() => dislikeClick(id, dislikes)}>
-                                <DislikeIcon/><Title level={4}>{dislikes && dislikes.length}</Title>
+                            <div className='post-item__bottom-block_dislike' >
+                                <div className={`dislike-icon ${isActive(dislikes) && 'dislike-icon__active'}`}
+                                     onClick={() => dislikeClick(id, dislikes)}
+                                >
+                                <DislikeIcon />
+                            </div>
+                                <Title level={4}>{dislikes && dislikes.length}</Title>
                             </div>
                         </div>
                     </div>

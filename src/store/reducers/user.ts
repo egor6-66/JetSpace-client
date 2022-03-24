@@ -7,18 +7,7 @@ const initialState: IUser = {
     email: '',
     name: '',
     lastName: '',
-    avatar: '',
-    subscriptions: [],
-    subscribers: [],
     theme: '',
-    instagram: '',
-    facebook: '',
-    twitter: '',
-    spotify: '',
-    telegram: '',
-    github: '',
-    soundCloud: '',
-    youTube: '',
     isActivated: false,
 }
 

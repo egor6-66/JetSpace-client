@@ -1,4 +1,5 @@
 import {ILike} from "./like-model";
+import {IDislike} from "./dislike-model";
 
 
 export interface IPost {
@@ -9,6 +10,7 @@ export interface IPost {
     time: String,
     content: String,
     likes: ILike[]
+    dislikes: IDislike[]
 }
 
 export interface IPosts {
@@ -18,6 +20,8 @@ export interface IPosts {
         posts: IPost[],
     }
 }
+
+
 
 export interface IPostSubscription {
     subscriptionData: {
