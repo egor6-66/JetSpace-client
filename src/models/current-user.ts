@@ -1,4 +1,4 @@
-export interface IUser {
+export interface ICurrentUser {
     id: string | undefined,
     email: string | undefined,
     name: string | undefined,
@@ -17,5 +17,4 @@ export interface IUser {
     github: string | undefined,
     soundCloud: string | undefined,
     youTube: string | undefined,
-    isActivated: boolean,
 }

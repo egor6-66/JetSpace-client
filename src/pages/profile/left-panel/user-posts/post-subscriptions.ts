@@ -4,12 +4,16 @@ import {PostModels, LikeModels, DislikeModels} from '../../../../models'
 import {getUpdPosts} from "./helpers";
 
 
-const postSubscriptions = (subscribeToMore: any, currentId: string | undefined) => {
+const postSubscriptions = (subscribeToMore: any,
+                           currentId: string | undefined, addLike: any, addDislike: any, removeLike: any, removeDislike: any) => {
+
+
     subscribeToMore({
         document: POST_SUB,
         variables: {id: currentId},
         updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: PostModels.IPostSubscription): PostModels.IPosts => {
             const newPost = subscriptionData.data.newPost
+            console.log(currentId)
             if (!prev?.getUserPosts) {
                 return {
                     getUserPosts: {
@@ -30,8 +34,9 @@ const postSubscriptions = (subscribeToMore: any, currentId: string | undefined) 
         updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: LikeModels.ILikeSubscription): PostModels.IPosts => {
             const newElement = subscriptionData?.data?.newLike
             const posts = prev?.getUserPosts.posts
-            const updPosts =  getUpdPosts(posts, newElement, 'addLike')
+            const updPosts = getUpdPosts(posts, newElement, 'addLike', removeDislike)
             const newData = Object.assign({}, prev?.getUserPosts, {posts: updPosts})
+            addLike()
             return {getUserPosts: newData}
         }
     })
@@ -40,8 +45,10 @@ const postSubscriptions = (subscribeToMore: any, currentId: string | undefined) 
         updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: DislikeModels.IDislikeSubscription): PostModels.IPosts | any => {
             const newElement = subscriptionData?.data?.newDislike
             const posts = prev?.getUserPosts.posts
-            const updPosts =  getUpdPosts(posts, newElement, 'addDislike')
+            const updPosts = getUpdPosts(posts, newElement, 'addDislike', removeLike)
             const newData = Object.assign({}, prev?.getUserPosts, {posts: updPosts})
+
+            addDislike()
             return {getUserPosts: newData}
         }
     })

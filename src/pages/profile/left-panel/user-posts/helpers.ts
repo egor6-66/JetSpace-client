@@ -1,8 +1,10 @@
-export const getUpdPosts = (posts: any, newElement: any, action: string) => {
+export const getUpdPosts = (posts: any, newElement: any, action: string, removeElement: any) => {
+
 
     if (action === 'addLike') {
         return posts?.map((post: any) => {
             if (post.id === newElement?.postId) {
+                !!post.dislikes.find((dislike: any) => dislike.userId === newElement.userId) && removeElement()
                 const updDislikes = post?.dislikes.filter((dislike: any) => dislike.userId !== newElement.userId)
                 return Object.assign({}, post, {dislikes: updDislikes, likes: [newElement, ...post.likes]})
             }
@@ -12,6 +14,7 @@ export const getUpdPosts = (posts: any, newElement: any, action: string) => {
     if (action === 'addDislike') {
         return posts?.map((post: any) => {
             if (post.id === newElement?.postId) {
+                !!post.likes.find((like: any) => like.userId === newElement.userId) && removeElement()
                 const updLikes = post?.likes.filter((like: any) => like.userId !== newElement.userId)
                 return Object.assign({}, post, {likes: updLikes, dislikes: [newElement, ...post.dislikes]})
             }
