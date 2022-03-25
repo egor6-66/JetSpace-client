@@ -23,7 +23,7 @@ const initialState: ICurrentUser = {
     youTube: '',
 }
 
-export const currentUserReducer = (state = initialState, action: CurrentUserModels.Actions): ICurrentUser => {
+export const CurrentUserReducer = (state = initialState, action: CurrentUserModels.Actions): ICurrentUser => {
     switch (action.type) {
         case CurrentUserModels.ActionsTypes.GER_USER:
             return {...state, ...action.payload}

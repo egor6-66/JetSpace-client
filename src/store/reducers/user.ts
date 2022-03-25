@@ -15,7 +15,7 @@ export const UserReducer = (state = initialState, action: AuthModels.Actions | U
     switch (action.type) {
 
         case UserModels.ActionsTypes.SET_THEME:
-            return {...state, theme: action.payload}
+            return {...state, theme: action.payload};
 
         case AuthModels.ActionsTypes.REGISTER_USER_SUCCESS:
             return {...state, ...action.payload};

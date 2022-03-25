@@ -1,12 +1,10 @@
 import React, {FC, useEffect, useState} from 'react';
-import {NavLink, useLocation, useParams, useNavigate} from "react-router-dom";
+import {NavLink, useLocation} from "react-router-dom";
 import navMenuList from './list';
 import {useActions} from "../../../../store/actions";
 import {UseTextColor} from "../../../../assets/hooks";
 import ActiveLineMenu from "../../../../components/active-line-menu";
-import SpeechRecognition, {useSpeechRecognition} from 'react-speech-recognition'
-import {motion, AnimateSharedLayout} from "framer-motion";
-import {Button, Typography} from "antd";
+import {motion} from "framer-motion";
 import './nav-menu.less';
 
 
@@ -17,38 +15,12 @@ interface NavMenuProps {
 
 const NavMenu: FC<NavMenuProps> = ({myId, currentId}) => {
 
-    const {Title} = Typography;
     const {setIsVisibleSoundModal, setLocation} = useActions();
     const colors = UseTextColor();
     const location = useLocation().pathname.split('/').pop();
-    let navigate = useNavigate();
 
     const [activeItem, setActiveItem] = useState<number>(1);
-    const [redirectUrl, setRedirectUrl] = useState<string>('')
 
-    const commands = [
-        {
-            command: ["Go to *", "Open *"],
-            callback: (redirectPage: any) => setRedirectUrl(redirectPage)
-        }
-    ]
-
-
-    const {transcript} = useSpeechRecognition({commands})
-
-    useEffect(() => {
-        for (const item of navMenuList(myId, currentId)) {
-           if(redirectUrl.toLowerCase() === item.speech) {
-                setActiveItem(item.id)
-               navigate(item.path)
-            }
-        }
-    }, [transcript, redirectUrl])
-
-
-    // if (!SpeechRecognition.browserSupportsSpeechRecognition()) {
-    //     return <span>Browser doesn't support speech recognition.</span>;
-    // }
 
     const onclick = (item: any) => {
         if (item.title === 'музыка') {
@@ -57,28 +29,25 @@ const NavMenu: FC<NavMenuProps> = ({myId, currentId}) => {
         } else {
             setActiveItem(item.id)
         }
-    }
+    };
 
-    useEffect(() => {
+    const getActiveItem = () => {
         for (const item of navMenuList(myId, currentId)) {
             location === item.path.split('/').pop() && setActiveItem(item.id)
         }
-    }, [location])
+    };
 
-    const startVoiceNavigations = async () =>{
-        console.log('timer')
-            await SpeechRecognition.startListening({
-                language: 'ru',
-                continuous: true,
-            })
-    }
+    useEffect(() => {
+        getActiveItem()
+    }, [location]);
 
     return (
-        <div className='nav-menu'>
+        <div className='nav-menu' onMouseLeave={getActiveItem}>
             {navMenuList(myId, currentId).map(item =>
                 <NavLink key={item.id} to={item.path} className='nav-menu__item'>
                     <motion.div
                         onClick={() => onclick(item)}
+                        onMouseEnter={() => setActiveItem(item.id)}
                         initial={{color: '#000'}}
                         animate={{color: activeItem === item.id ? colors.active : colors.disabled}}
                     >
@@ -87,7 +56,6 @@ const NavMenu: FC<NavMenuProps> = ({myId, currentId}) => {
                     {activeItem === item.id && <ActiveLineMenu/>}
                 </NavLink>
             )}
-            <Button onClick={startVoiceNavigations}>Start</Button>
         </div>
     );
 };
