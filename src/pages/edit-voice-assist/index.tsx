@@ -1,11 +1,11 @@
 import React from 'react';
-import {Collapse, Typography} from 'antd';
-import './edit-profile-assist.less';
 import ParamsSettings from "./params-settings";
 import {useTypedSelector} from "../../store";
 import {useActions} from "../../store/actions";
 import ResponseSettings from "./response-settings";
-
+import {motion} from "framer-motion";
+import {Collapse, Typography} from 'antd';
+import './edit-profile-assist.less';
 
 const EditVoiceAssist = () => {
 
@@ -31,9 +31,10 @@ const EditVoiceAssist = () => {
     };
 
     return (
-        <div className='edit-profile-assist'>
-            <Collapse className='edit-profile-assist__collapse'
-                      defaultActiveKey={['1']}>
+        <motion.div className='edit-profile-assist'
+                    initial={{opacity:0}} animate={{opacity: 1}} exit={{opacity:0}}
+        >
+            <Collapse className='edit-profile-assist__collapse'>
                 <Panel showArrow={false} header={<Title level={2}>параметры</Title>} key="1">
                     <ParamsSettings
                         onFinishParamsSettings={onFinishParamsSettings}
@@ -48,7 +49,7 @@ const EditVoiceAssist = () => {
                     <ResponseSettings onFinishResponseSettings={onFinishResponseSettings}/>
                 </Panel>
             </Collapse>
-        </div>
+        </motion.div>
     );
 };
 

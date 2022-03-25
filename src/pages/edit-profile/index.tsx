@@ -9,6 +9,7 @@ import $axios from "../../services/axios-customs";
 import {userParams, socialNetworksInputs} from './nputs';
 import ImgCrop from 'antd-img-crop';
 import {Button, Form, Input, Select, Typography, Upload} from "antd";
+import {motion} from "framer-motion";
 import './edit-profile.less';
 
 
@@ -59,7 +60,9 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
 
 
     return (
-        <div className='edit-profile'>
+        <motion.div className='edit-profile'
+                    initial={{opacity:0}} animate={{opacity: 1}} exit={{opacity:0}}
+        >
             {isLoading ?
                 <div>loading</div>
                 :
@@ -102,7 +105,7 @@ const EditProfile: FC<EditProfileProps> = ({myId}) => {
                         </Button>
                     </Form.Item>
                 </Form>}
-        </div>
+        </motion.div>
     );
 };
 
