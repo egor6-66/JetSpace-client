@@ -8,6 +8,7 @@ import RightPanelMenu from "./right-panel/menu";
 import NavMenu from "./left-panel/nav-menu";
 import SocialsNetworks from "./right-panel/socials-networts";
 import './profile.less';
+import moment from "moment";
 
 
 interface ProfileProps {

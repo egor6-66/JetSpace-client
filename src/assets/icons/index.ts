@@ -10,7 +10,11 @@ import MusicIcon from './music';
 import LikeIcon from "./like";
 import DislikeIcon from './dislike';
 import SubscriptionsIcons from './subscriptions-icons';
-
+import CommentsIcon from './comments';
+import SendCommentIcon from './send-comment-icon';
+import CloseIcon from './close-icon';
+import DownIcon from './down-icon';
+import SayIcon from './say-icon';
 
 export {
     LogoIcon,
@@ -25,4 +29,9 @@ export {
     LikeIcon,
     DislikeIcon,
     SubscriptionsIcons,
+    CommentsIcon,
+    SendCommentIcon,
+    CloseIcon,
+    DownIcon,
+    SayIcon,
 }
