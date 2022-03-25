@@ -1,19 +1,12 @@
-import {useSpeech} from "react-use";
 import {useEffect} from "react";
 
+const voices = window.speechSynthesis.getVoices()
 
-const UseSpeech = ({text}: any) => {
 
-    const voices = window.speechSynthesis.getVoices()
-
-    useSpeech('y', {
-        rate: 0.8,
-        pitch: 0.5,
-        voice: voices[0],
-    })
-    return (
-        <div>rrr</div>
-    )
+const UseSpeech = (text: any) => {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    window.speechSynthesis.speak(utterance);
 };
 
 

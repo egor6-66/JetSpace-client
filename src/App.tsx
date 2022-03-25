@@ -4,6 +4,8 @@ import {useTypedSelector} from "./store";
 import {useActions} from "./store/actions";
 import {getToken} from "./services/cookies";
 import {UseGeolocation, UseSpeech, UseTheme} from './assets/hooks'
+import {VoiceAssistRoutes} from './voice-assistant'
+
 import {themes} from './constants'
 
 import Auth from "./pages/auth";
@@ -25,21 +27,29 @@ import ProjectInfo from "./pages/project-info";
 import './core-less/themes/light.less';
 import './core-less/themes/dark.less';
 import './core-less/themes/purple.less';
+import EditVoiceAssist from "./pages/edit-voice-assist";
+import {useSpeech} from "react-use";
+import {Button} from "antd";
+import UserSound from "./pages/profile/left-panel/user-sounds";
 
 
 const App = () => {
 
     const {checkAuth} = useActions();
-    const geoLock = UseGeolocation()
+    const geoLock = UseGeolocation();
 
     const {isAuth} = useTypedSelector(state => state.auth);
     const user = useTypedSelector(state => state.user);
+    const {isActivated} = useTypedSelector(state => state.voiceAssist);
+    const text = 'пососи писю у птицы'
 
     useEffect(() => {
         !!getToken() && checkAuth()
-    }, [])
+    }, []);
 
-    UseTheme(user.theme, themes, user.theme)
+    UseTheme(user.theme, themes, user.theme);
+
+    VoiceAssistRoutes(isActivated)
 
     return (
         isAuth && user.isActivated ?
@@ -60,6 +70,7 @@ const App = () => {
                         <Route path='allUsers' element={<AllUsers/>}/>
                         <Route path='donations' element={<Donations/>}/>
                         <Route path='projectInfo' element={<ProjectInfo/>}/>
+                        <Route path='editVoiceAssist' element={<EditVoiceAssist/>}/>
                     </Route>
                 </Routes>
             </>

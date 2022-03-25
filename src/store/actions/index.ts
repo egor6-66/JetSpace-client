@@ -6,7 +6,7 @@ import * as AuthActions from "./auth";
 import * as UserActions from './user'
 import * as CurrentUserActions from './current-user'
 import * as PlayerActions from './player'
-
+import * as VoiceAssist from './voice-assist'
 
 export const useActions = () => {
     const dispatch = useDispatch()
@@ -15,7 +15,8 @@ export const useActions = () => {
         ...AuthActions,
         ...UserActions,
         ...PlayerActions,
-        ...CurrentUserActions
+        ...CurrentUserActions,
+        ...VoiceAssist,
     }
 
     return bindActionCreators(actions, dispatch)

@@ -15,6 +15,8 @@ import SendCommentIcon from './send-comment-icon';
 import CloseIcon from './close-icon';
 import DownIcon from './down-icon';
 import SayIcon from './say-icon';
+import VoiceAssistIcon from './voice-assist-icon';
+import StatusIcons from './status-icons';
 
 export {
     LogoIcon,
@@ -34,4 +36,6 @@ export {
     CloseIcon,
     DownIcon,
     SayIcon,
+    VoiceAssistIcon,
+    StatusIcons
 }

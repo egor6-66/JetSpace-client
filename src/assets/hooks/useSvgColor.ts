@@ -7,7 +7,7 @@ const UseTextColor = () => {
         case 'dark':
             return {active: '#262626', disabled: '#FFF'}
 
-        default: return {active: '', disabled: ''}
+        default: return {active: '#FFF', disabled: ''}
     }
 
 }
