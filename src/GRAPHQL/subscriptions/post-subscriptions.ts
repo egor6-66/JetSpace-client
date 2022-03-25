@@ -2,6 +2,7 @@ import {gql} from "@apollo/client";
 import {postModel} from "../models/post/post-model";
 import {likeModel} from "../models/like/like-model";
 import {dislikeModel} from "../models/dislike/dislike-model";
+import {commentModel} from "../models/comment/comment-model";
 
 
 export const POST_SUB = gql`
@@ -14,6 +15,14 @@ export const POST_SUB = gql`
             dislikes{
                 ${dislikeModel}
             }
+        }
+    }
+`
+
+export const COMMENT_POST_SUB = gql`
+    subscription  {
+        newComment{
+            ${commentModel}
         }
     }
 `

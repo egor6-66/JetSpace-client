@@ -7,7 +7,7 @@ import UseGetContainerHeight from './useGetContainerHeight';
 import UseGetElementWidth from './useGetElementWidth';
 import UseTheme from './useTheme';
 import UseTextColor from './useTextColor';
-
+import UseSvgColor from './useSvgColor';
 
 export {
     UseIdle,
@@ -19,4 +19,5 @@ export {
     UseGetElementWidth,
     UseTheme,
     UseTextColor,
+    UseSvgColor,
 }

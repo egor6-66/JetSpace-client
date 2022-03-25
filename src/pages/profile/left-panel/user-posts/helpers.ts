@@ -1,5 +1,4 @@
-export const getUpdPosts = (posts: any, newElement: any, action: string, removeElement: any) => {
-
+export const getUpdPosts = (posts: any, newElement: any, action: string, removeElement?: any) => {
 
     if (action === 'addLike') {
         return posts?.map((post: any) => {
@@ -21,6 +20,27 @@ export const getUpdPosts = (posts: any, newElement: any, action: string, removeE
             return post
         })
     }
+    if (action === 'addComment') {
+        return posts?.map((post: any) => {
+            if (post.id === newElement?.postId) {
+                return Object.assign({}, post, {comments: [...post.comments, newElement]})
+            }
+            return post
+        })
+    }
+}
 
-
+export const animationVariant = {
+    hidden: {
+        opacity: 0
+    },
+    visible:  {
+        opacity: 1,
+        transition: {
+            duration: 1
+        },
+    },
+    exit: {
+        opacity: 0,
+    }
 }

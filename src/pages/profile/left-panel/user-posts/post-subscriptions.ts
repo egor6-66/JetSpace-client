@@ -1,4 +1,4 @@
-import {DISLIKE_POST_SUB, POST_SUB} from "../../../../GRAPHQL/subscriptions/post-subscriptions";
+import {COMMENT_POST_SUB, DISLIKE_POST_SUB, POST_SUB} from "../../../../GRAPHQL/subscriptions/post-subscriptions";
 import {LIKE_POST_SUB} from "../../../../GRAPHQL/subscriptions/post-subscriptions";
 import {PostModels, LikeModels, DislikeModels} from '../../../../models'
 import {getUpdPosts} from "./helpers";
@@ -13,7 +13,6 @@ const postSubscriptions = (subscribeToMore: any,
         variables: {id: currentId},
         updateQuery: (prev: PostModels.IPosts | null, {subscriptionData}: PostModels.IPostSubscription): PostModels.IPosts => {
             const newPost = subscriptionData.data.newPost
-            console.log(currentId)
             if (!prev?.getUserPosts) {
                 return {
                     getUserPosts: {
@@ -52,6 +51,27 @@ const postSubscriptions = (subscribeToMore: any,
             return {getUserPosts: newData}
         }
     })
+    subscribeToMore({
+        document:  COMMENT_POST_SUB,
+        updateQuery: (prev: any, {subscriptionData}:any): PostModels.IPosts | any => {
+            const newComment = subscriptionData.data.newComment
+            if (!prev?.getUserPosts) {
+                return {
+                    getUserPosts: {
+                        __typename: "Posts",
+                        userId: newComment.userId,
+                        posts: [newComment],
+                    }
+                }
+            } else {
+                const prevData = prev?.getUserPosts
+                const updPosts = getUpdPosts(prevData.posts, newComment, 'addComment')
+                const newPostData = Object.assign({}, prevData, {posts: updPosts})
+                return {getUserPosts: newPostData}
+            }
+        }
+    })
+
 }
 
 export default postSubscriptions;

@@ -9,6 +9,15 @@ export const ADD_POST = gql`
         }
     }
 `
+
+export const ADD_COMMENT = gql`
+    mutation addCommentPost($ownerId: ID, $userId: ID, $postId: ID, $content: String){
+        addCommentPost(ownerId: $ownerId, userId: $userId, postId: $postId,  content: $content){
+            ${postsModel}
+        }
+    }
+`
+
 export const SEND_LIKE_POST = gql`
     mutation addLikePost($ownerId: ID, $postId: ID, $userId: ID){
         addLikePost(ownerId: $ownerId, postId: $postId, userId: $userId){

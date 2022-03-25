@@ -1,10 +1,11 @@
 import React from 'react';
 import {motion} from "framer-motion";
+import {UseSvgColor} from "../hooks";
 
 
 const LikeIcon = () => {
 
-
+    const color = UseSvgColor()
 
     const heartVariants = {
         hover: {
@@ -37,9 +38,9 @@ const LikeIcon = () => {
     return (
         <motion.svg
             xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 519 519"
             width="24"
             height="24"
-            viewBox="0 0 519 519"
             style={{cursor: "pointer", borderRadius: '50%'}}
         >
             <defs>
@@ -71,7 +72,7 @@ const LikeIcon = () => {
                             whileTap="click"
                         />
                         <motion.path
-                            fill="#FFF"
+                            fill={color.active}
                             variants={heartVariants}
                             whileHover="hover"
                             whileTap="click"
