@@ -17,6 +17,7 @@ import DownIcon from './down-icon';
 import SayIcon from './say-icon';
 import VoiceAssistIcon from './voice-assist-icon';
 import StatusIcons from './status-icons';
+import MessageIcon from './message-icon';
 
 export {
     LogoIcon,
@@ -37,5 +38,6 @@ export {
     DownIcon,
     SayIcon,
     VoiceAssistIcon,
-    StatusIcons
+    StatusIcons,
+    MessageIcon
 }

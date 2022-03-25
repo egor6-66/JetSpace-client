@@ -7,8 +7,9 @@ import UserInfo from "./top-panel/user-info";
 import RightPanelMenu from "./right-panel/menu";
 import NavMenu from "./left-panel/nav-menu";
 import SocialsNetworks from "./right-panel/socials-networts";
+import {motion,AnimatePresence} from "framer-motion";
 import './profile.less';
-import moment from "moment";
+import navMenuList from "./left-panel/nav-menu/list";
 
 
 interface ProfileProps {
@@ -19,7 +20,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
 
     const {getUser} = useActions();
     const {id: currentId} = useParams();
-    const location = useLocation().pathname.split('/');
+    const location = useLocation().pathname.split('/').pop();
 
     const {data, loading, error, subscribeToMore} = useQuery(GET_USER, {
         fetchPolicy: `${myId === currentId ? 'cache-and-network' : 'network-only'}`,
@@ -33,7 +34,9 @@ const Profile: FC<ProfileProps> = ({myId}) => {
     }, [data, currentId])
 
     return (
-        <div className='profile'>
+        <motion.div className='profile'
+                    initial={{opacity:0}} animate={{opacity: 1}} exit={{opacity:0}}
+        >
             <UserInfo
                 myId={myId}
                 currentId={currentId}
@@ -69,7 +72,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

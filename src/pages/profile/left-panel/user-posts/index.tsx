@@ -14,6 +14,7 @@ import './user-posts.less';
 import AddComment from "./comment/add-comment";
 import AllCommentsPost from "./comment/all-comments-post";
 import {UseSpeech} from "../../../../assets/hooks";
+import moment from "moment";
 
 
 interface UserPostsProps {
@@ -100,7 +101,7 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
                             <img className='post-item__top-block_avatar' src={currentUser.avatar} alt=""/>
                             <div className='post-item__top-block_userNameAndData'>
                                 <Title level={4}>{currentUser.name} {currentUser.lastName}</Title>
-                                <Text>{date}</Text>
+                                <Text>{moment.unix(date).calendar()}</Text>
                             </div>
                         </div>
                         <div className='post-item__center-block'>

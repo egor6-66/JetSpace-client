@@ -2,7 +2,8 @@ import React, {FC, useEffect} from 'react';
 import {NavLink} from "react-router-dom";
 import {useLazyQuery} from "@apollo/client";
 import {GET_ALL_DIALOGS} from "../../../../GRAPHQL/queries/dialogs-queries";
-import {Typography, Avatar} from 'antd'
+import {MessageIcon} from '../../../../assets/icons';
+import {Typography, Avatar} from 'antd';
 import './dialogs-list.less';
 
 
@@ -40,6 +41,9 @@ const DialogsList: FC<DialogsListProps> = ({myId}) => {
                         <NavLink to={`/user/${userId}/profile`}>
                             перейти на страницу пользователя
                         </NavLink>
+                    </div>
+                    <div className='dialogs-list__item_message-icon'>
+                        <MessageIcon/>
                     </div>
                 </div>
             )}

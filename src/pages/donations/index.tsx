@@ -1,15 +1,18 @@
-import React, {useState} from 'react';
+import React from 'react';
+import BanksIcons from "../../assets/icons/banks-icons";
+import {motion} from "framer-motion";
 import './donations.less';
 import {Typography} from "antd";
-import {Link} from "react-router-dom";
-import BanksIcons from "../../assets/icons/banks-icons";
+
 
 const Donations = () => {
 
     const {Title} = Typography;
 
     return (
-        <div className='donations'>
+        <motion.div className='donations'
+             initial={{opacity:0}} animate={{opacity: 1}} exit={{opacity:0}}
+        >
             <div className='donations__body'>
                 <div className='sberBank'>
                     <Title>8 911 242 8761</Title>
@@ -24,7 +27,7 @@ const Donations = () => {
                     <BanksIcons id='youMoney'/>
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

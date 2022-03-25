@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useTypedSelector } from "../../store";
 import AuthModal from "./components/modal";
 import { Button } from "antd";
+import {motion} from "framer-motion";
 import './auth.less'
 
 
@@ -11,7 +12,9 @@ const Auth: React.FC = () => {
     const [currentForm, setCurrentForm] = useState<string | null>(null);
 
     return (
-        <div className='auth'>
+        <motion.div className='auth'
+                    initial={{opacity:0}} animate={{opacity: 1}} exit={{opacity:0}}
+        >
             <Button
                 onClick={() => setCurrentForm('login')}
             >
@@ -27,7 +30,7 @@ const Auth: React.FC = () => {
                 currentForm={currentForm}
                 setCurrentForm={setCurrentForm}
             />
-        </div>
+        </motion.div>
     );
 };
 
