@@ -16,6 +16,10 @@
   @boxShadowColor: @magenta-2;
   @textShadow: 1px 1px 2px @magenta-1, 0 0 1em @magenta-4;
 
+  //--------------------border--------------------
+  .ant-collapse > .ant-collapse-item {
+    border-bottom: 2px solid @magenta-4 ;
+  }
 
   //--------------------css--------------------
   background-color: #434343;
@@ -97,6 +101,14 @@
 
   .all-likes-modal__item {
     border-bottom: 2px solid @border-color-base;
+
+    .right-block{
+
+      &__content{
+        border-top: 1px solid @border-color-base;
+        border-left: 1px solid @border-color-base;
+      }
+    }
   }
 
   .all-users {

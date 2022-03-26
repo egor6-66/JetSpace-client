@@ -13,7 +13,7 @@ import SubscriptionsIcons from './subscriptions-icons';
 import CommentsIcon from './comments';
 import SendCommentIcon from './send-comment-icon';
 import CloseIcon from './close-icon';
-import DownIcon from './down-icon';
+import ArrowIcon from './arrow-icon';
 import SayIcon from './say-icon';
 import VoiceAssistIcon from './voice-assist-icon';
 import StatusIcons from './status-icons';
@@ -35,7 +35,7 @@ export {
     CommentsIcon,
     SendCommentIcon,
     CloseIcon,
-    DownIcon,
+    ArrowIcon,
     SayIcon,
     VoiceAssistIcon,
     StatusIcons,

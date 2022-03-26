@@ -1,18 +1,22 @@
 import React, {FC, useState} from 'react';
 import {useLazyQuery} from "@apollo/client";
 import wordDeclension from "../../../../assets/functions/word-declension";
-// import {GET_ALL_LIKES} from "../../../GRAPHQL/queries/like-queries";
-import {Typography, Modal, Button} from "antd";
+import {GET_ALL_LIKES} from "../../../../GRAPHQL/queries/like-queries";
+import {UseAnimate} from '../../../../assets/hooks';
+import {Typography, Modal, Button, Avatar} from "antd";
+import {motion} from "framer-motion";
 import './all-likes.less';
+import moment from "moment";
 
 
 interface AllLikesProps {
     likeCounter: number | undefined,
     currentId: string | undefined,
+    myId: string | undefined,
 }
 
 
-const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId}) => {
+const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId,myId}) => {
 
     const {Title, Text} = Typography;
 
@@ -23,30 +27,37 @@ const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId}) => {
         suffix: ['a', 'ов'],
     })
 
-    // const [getAllLikes, {loading, data}] = useLazyQuery(GET_ALL_LIKES, {
-    //     fetchPolicy: 'cache-and-network',
-    //     variables: {
-    //         id: currentId,
-    //     }
-    // });
+    const [getAllLikes, {loading, data}] = useLazyQuery(GET_ALL_LIKES, {
+        fetchPolicy: 'cache-and-network',
+        variables: {
+            id: currentId,
+        }
+    });
 
     const clickOnAllLikes = () => {
         setIsShowAllLikes(true)
-        // getAllLikes()
+        getAllLikes()
     }
 
     const closed = () => {
         setIsShowAllLikes(false)
     }
 
+const getName = (like: any) => {
+    console.log('myId',myId)
+    console.log('like.userId',like.userId)
+    return   like.userId === myId ? 'вы' : `${like.userName} ${like.userLastName? like.userLastName : ''}`
+}
+
     return (
-        <>
+        <div>
             <div className='all-likes'
                  onClick={clickOnAllLikes}
             >
               {likeCounter || 0} {word}
             </div>
             <Modal
+                destroyOnClose={true}
                 className='all-likes-modal'
                 title={<Title style={{textAlign: "center"}} level={2}>{likeCounter || 0} {word}</Title>}
                 bodyStyle={{display: "flex", flexDirection: "column", gap: '20px'}}
@@ -54,21 +65,28 @@ const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId}) => {
                 visible={isShowAllLikes}
                 onCancel={closed}
             >
-                {/*{data?.getAllLikes && data?.getAllLikes.map(({like, post}: any) =>*/}
-                {/*    <div key={like.id} className='all-likes-modal__item'>*/}
-                {/*        <div className='all-likes-modal__item_left-block'>*/}
-                {/*            <img src={like.userAvatar} alt=""/>*/}
-                {/*            <Title level={4}>{like.userName} {like.userLastName}</Title>*/}
-                {/*            <Text >{like.date}</Text>*/}
-                {/*        </div>*/}
-                {/*        <div className='right-block'>*/}
-                {/*            <Title level={5}>{post.date}</Title>*/}
-                {/*            <Text>{post.content}</Text>*/}
-                {/*        </div>*/}
-                {/*    </div>*/}
-                {/*)}*/}
+                {data?.getAllLikes.map((like: any, index: number) =>
+                    <motion.div key={like.id} className='all-likes-modal__item'
+                                custom={index}
+                                initial='hidden'
+                                animate="visible"
+                                variants={UseAnimate('arrayIteration', index)}
+                    >
+                        <div className='all-likes-modal__item_left-block'>
+                            <Avatar size={70} src={like.userAvatar}/>
+                        </div>
+                        <div className='right-block'>
+                            <Title level={4}>{getName(like)}</Title>
+                            <Text >{moment.unix(like.date).calendar()}, понравилась запись</Text>
+                            <Text>сделанная {moment.unix(like.contentDate).calendar()}</Text>
+                            <div className='right-block__content'>
+                                <Text>{like.content}</Text>
+                            </div>
+                        </div>
+                    </motion.div>
+                )}
             </Modal>
-        </>
+        </div>
     );
 };
 

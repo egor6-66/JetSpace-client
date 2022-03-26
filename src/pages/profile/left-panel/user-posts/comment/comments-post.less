@@ -59,13 +59,14 @@
 
 
     .close-post-comment-btn{
+      transform: rotate(180deg) translateX(50%,);
       position: absolute;
       left: 50%;
       bottom: 2px;
-      //transform: translateX(-50%);
+
       transition: all 0.5s;
       &:hover{
-        transform: scale(1.1);
+        transform: scale(1.1)rotate(180deg) translateX(50%,);
       }
     }
 

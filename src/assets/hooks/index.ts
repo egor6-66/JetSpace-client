@@ -8,6 +8,7 @@ import UseGetElementWidth from './useGetElementWidth';
 import UseTheme from './useTheme';
 import UseTextColor from './useTextColor';
 import UseSvgColor from './useSvgColor';
+import UseAnimate from "./useAnimate";
 
 export {
     UseIdle,
@@ -20,4 +21,5 @@ export {
     UseTheme,
     UseTextColor,
     UseSvgColor,
+    UseAnimate,
 }

@@ -12,6 +12,7 @@ const SmileIcon = () => {
             width={30}
             height={30}
             fill="#9BA3B1"
+            style={{cursor: "pointer"}}
         >
             <g>
                 <g>

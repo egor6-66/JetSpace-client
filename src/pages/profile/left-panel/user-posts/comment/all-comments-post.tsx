@@ -1,11 +1,11 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import AddComment from "./add-comment";
-import {animationVariant} from '../helpers';
 import moment from "moment";
-import {DownIcon, SayIcon} from "../../../../../assets/icons";
+import {ArrowIcon, SayIcon} from "../../../../../assets/icons";
+import {UseAnimate} from '../../../../../assets/hooks';
 import {Avatar, Modal, Typography} from "antd";
 import {motion, AnimatePresence} from "framer-motion";
-import './comments-post.less'
+import './comments-post.less';
 
 
 interface AllCommentsPostProps {
@@ -14,33 +14,32 @@ interface AllCommentsPostProps {
     post: any,
     activePostId: boolean,
     setActivePostId: any,
+    scrollBottom: any,
+    scrollTop: any,
+    commentsRef: any
 }
 
 
-const AllCommentsPost: FC<AllCommentsPostProps> = ({ownerId, userId, post, activePostId, setActivePostId}) => {
+const AllCommentsPost: FC<AllCommentsPostProps> = ({ownerId, userId, post, activePostId, setActivePostId, scrollBottom, scrollTop,commentsRef}) => {
 
         const {Title, Text} = Typography;
-        const comment: any = useRef(null);
 
         const [newComment, setNewComment] = useState<string>('');
 
-        const scrollBottom = () => {
-            setTimeout(() => comment?.current?.scrollIntoView({behavior: "smooth", block: "end"}), 50)
-        };
-
         return (
-            <AnimatePresence>
-                <motion.div ref={comment} className='comments-post'
-                            variants={animationVariant}
+                <motion.div className='comments-post'
+                            ref={commentsRef}
                             initial='hidden'
                             animate="visible"
                             exit='exit'
+                            variants={UseAnimate('smoothOpen')}
                 >
+                    {post?.comments.length > 6 &&
                     <div className='comments-post__down' onClick={scrollBottom}>
                         <div className='down-icon'>
-                            <DownIcon/>
+                            <ArrowIcon/>
                         </div>
-                    </div>
+                    </div>}
                     <div className='comments-post__content'>
                         {post?.comments?.map((comment: any, index: number) =>
                             <motion.div key={comment?.id} className='post-comment'>
@@ -64,12 +63,12 @@ const AllCommentsPost: FC<AllCommentsPostProps> = ({ownerId, userId, post, activ
                             userId={userId}
                             newComment={newComment}
                             setNewComment={setNewComment}
-                            setActivePostId={setActivePostId}
+                            post={post}
                             scrollBottom={scrollBottom}
-                        />
+                            scrollTop={scrollTop}
+                            />
                     </div>
                 </motion.div>
-            </AnimatePresence>
         );
     }
 ;

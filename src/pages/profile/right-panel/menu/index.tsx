@@ -13,7 +13,8 @@ interface RightPanelMenuProps {
 
 const RightPanelMenu: FC<RightPanelMenuProps> = ({currentId}) => {
 
-    const user = useTypedSelector(state => state.currentUser);
+    const user = useTypedSelector(state => state.user);
+    const currentUser = useTypedSelector(state => state.currentUser);
     const colors = UseTextColor();
     const [activeItem, setActiveItem] = useState<number>(0);
     const [focus, setFocus] = useState<boolean>(false)
@@ -51,11 +52,12 @@ const RightPanelMenu: FC<RightPanelMenuProps> = ({currentId}) => {
                                 animate='initial'
                     >
                         <item.component
-                            likeCounter={+user.likeCounter}
-                            dislikeCounter={+user.dislikeCounter}
+                            myId={user.id}
+                            likeCounter={+currentUser.likeCounter}
+                            dislikeCounter={+currentUser.dislikeCounter}
                             currentId={currentId}
-                            subscribers={user.subscribers}
-                            subscriptions={user.subscriptions}
+                            subscribers={currentUser.subscribers}
+                            subscriptions={currentUser.subscriptions}
                         />
                         {activeItem === item.id && focus && <ActiveLineMenu/>}
                     </motion.div>
