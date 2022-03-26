@@ -6,6 +6,7 @@ status
 avatar
 headerAvatar
 likeCounter
+dislikeCounter
 subscribers
 subscriptions
 theme

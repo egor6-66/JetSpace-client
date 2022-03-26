@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DownIcon = () => {
+const ArrowIcon = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
              width="24"
@@ -27,4 +27,4 @@ const DownIcon = () => {
     )
 }
 
-export default DownIcon;
+export default ArrowIcon;

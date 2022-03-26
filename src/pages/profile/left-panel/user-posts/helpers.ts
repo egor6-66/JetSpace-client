@@ -30,17 +30,3 @@ export const getUpdPosts = (posts: any, newElement: any, action: string, removeE
     }
 }
 
-export const animationVariant = {
-    hidden: {
-        opacity: 0
-    },
-    visible:  {
-        opacity: 1,
-        transition: {
-            duration: 1
-        },
-    },
-    exit: {
-        opacity: 0,
-    }
-}
