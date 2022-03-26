@@ -13,7 +13,7 @@ import Wrapper from "./components/layout/wrapper";
 import Profile from "./pages/profile";
 import UserPosts from "./pages/profile/left-panel/user-posts";
 import DialogsList from "./pages/profile/left-panel/dialogs-list";
-import MessagesModal from "./pages/profile/left-panel/messages-modals";
+import MessagesModal from "./pages/profile/left-panel/messages-modal";
 import UserFriends from "./pages/profile/left-panel/user-friends";
 import UserVideos from "./pages/profile/left-panel/user-videos";
 import UserReposts from "./pages/profile/left-panel/user-reposts";
