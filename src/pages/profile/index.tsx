@@ -29,7 +29,6 @@ const Profile: FC<ProfileProps> = ({myId}) => {
     });
 
     useEffect(() => {
-        console.log(data?.getUser)
         getUser(data?.getUser)
 
     }, [data, currentId])

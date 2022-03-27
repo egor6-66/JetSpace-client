@@ -24,7 +24,6 @@ const VoiceAssistRoutes = (isActivated: boolean) => {
     const {transcript} = useSpeechRecognition({commands})
 
     useEffect(() => {
-        console.log('redirectUrl', redirectUrl)
         const rout = allRoutes(user.id, currentUser.id).find(item => item.title === redirectUrl.toLowerCase())
 
         if (redirectUrl.toLowerCase() === rout?.title) {

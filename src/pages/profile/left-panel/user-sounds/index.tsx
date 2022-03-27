@@ -44,7 +44,7 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
     }, [])
 
     useEffect(() => {
-        if(data){
+        if (data) {
             data?.getAllUserSounds?.userId === myId && setSoundsList(data?.getAllUserSounds)
             data?.getAllUserSounds?.userId === myId && setItem('mySounds', data?.getAllUserSounds)
         }
@@ -66,7 +66,7 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
         }
         closedModal()
     }
-
+    console.log(sounds)
     return (
         <Modal
             visible={isVisibleSoundModal}
@@ -84,18 +84,28 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
                 <Button onClick={setTypeList}>{btnTitle}</Button>
                 <div className='user-music__list'>
                     {myId !== currentId && location === 'header' &&
-                    <Title level={3} style={{textAlign: "center",paddingTop: 30}}>
+                    <Title level={3} style={{textAlign: "center", paddingTop: 30}}>
                         мои треки
                     </Title>}
                     <div className={`${myId !== currentId && location === 'nav-menu' && 'sound-hidden'}`}>
-                        {sounds?.soundTracks?.map((item: any) =>
-                            <div key={item.id} className='user-music__list_item'>
-                                <AudioPlayer
-                                    url={item.path}
-                                    type={item.type}
-                                />
-                            </div>
-                        )}
+                        {soundType === 'soundTracks' ?
+                            sounds?.soundTracks?.map((item: any) =>
+                                <div key={item.id} className='user-music__list_item'>
+                                    <AudioPlayer
+                                        url={item.path}
+                                        type={item.type}
+                                    />
+                                </div>
+                            )
+                            :
+                            sounds?.playLists?.map((item: any) =>
+                                <div key={item.id} className='user-music__list_item'>
+                                    <AudioPlayer
+                                        url={item.path}
+                                        type={item.type}
+                                    />
+                                </div>
+                            )}
                     </div>
                     <div className={`${myId === data?.getAllUserSounds?.userId && 'sound-hidden'}`}>
                         {myId !== currentId && location === 'header' &&

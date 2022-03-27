@@ -91,7 +91,7 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
     const scrollTop = () => {
         setTimeout(() => post?.current?.scrollIntoView({behavior: "smooth", block: "start"}), 50)
     };
-    console.log(activePostId)
+
     return (
         <div className='posts'>
             {myId === currentId &&

@@ -18,6 +18,7 @@ import SayIcon from './say-icon';
 import VoiceAssistIcon from './voice-assist-icon';
 import StatusIcons from './status-icons';
 import MessageIcon from './message-icon';
+import SoundCloudIcon from './sound-cloud-icon';
 
 export {
     LogoIcon,
@@ -39,5 +40,6 @@ export {
     SayIcon,
     VoiceAssistIcon,
     StatusIcons,
-    MessageIcon
+    MessageIcon,
+    SoundCloudIcon
 }
