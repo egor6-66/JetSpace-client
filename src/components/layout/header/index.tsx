@@ -66,7 +66,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
                 {headerList(myId).map(item =>
                     <NavLink key={item.id} to={item.path}>
                         <motion.div className='header__left-block_item'
-                                    style={{marginLeft:item.id === 3 ? '-35px' : 0}}
+                                    style={{marginLeft:item.id === 3 ? '-20px' : 0}}
                                     initial={{color: '#000'}}
                                     animate={{color: activeItem === item.id ? colors.active : colors.disabled}}
                                     onMouseEnter={() => setActiveItem(item.id)}

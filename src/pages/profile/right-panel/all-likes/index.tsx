@@ -44,8 +44,6 @@ const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId,myId}) => {
     }
 
 const getName = (like: any) => {
-    console.log('myId',myId)
-    console.log('like.userId',like.userId)
     return   like.userId === myId ? 'вы' : `${like.userName} ${like.userLastName? like.userLastName : ''}`
 }
 

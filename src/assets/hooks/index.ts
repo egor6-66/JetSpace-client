@@ -9,6 +9,7 @@ import UseTheme from './useTheme';
 import UseTextColor from './useTextColor';
 import UseSvgColor from './useSvgColor';
 import UseAnimate from "./useAnimate";
+import UseColor from "./useColor";
 
 export {
     UseIdle,
@@ -22,4 +23,5 @@ export {
     UseTextColor,
     UseSvgColor,
     UseAnimate,
+    UseColor,
 }
