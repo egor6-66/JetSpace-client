@@ -1,6 +1,9 @@
 import React from 'react';
+import {UseColor} from "../hooks";
 
 const SmileIcon = () => {
+
+    const colors = UseColor()
 
     return (
         <svg
@@ -9,9 +12,9 @@ const SmileIcon = () => {
             version="1.1"
             viewBox="0 0 80 80"
             xmlSpace="preserve"
-            width={30}
-            height={30}
-            fill="#9BA3B1"
+            width="26"
+            height="26"
+            fill={colors?.svg?.svg}
             style={{cursor: "pointer"}}
         >
             <g>

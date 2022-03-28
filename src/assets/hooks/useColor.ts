@@ -1,4 +1,6 @@
 import {darkTheme} from '../themes/dark-theme'
+import Defs from "../icons/DEFS";
+
 
 const UseColor = () => {
 
@@ -12,6 +14,10 @@ const UseColor = () => {
                     active: '#1A1A1D',
                     disabled: '#000'
                 },
+                svg: {
+                    svg: "url(#svg-bc-dark-theme)",
+                    path:'#262626',
+                }
 
             }
 

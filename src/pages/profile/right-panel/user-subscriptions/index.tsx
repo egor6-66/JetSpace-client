@@ -1,24 +1,27 @@
 import React, {FC, useState} from 'react';
+import {NavLink, Link, useNavigate} from "react-router-dom";
 import wordDeclension from "../../../../assets/functions/word-declension";
-import {Avatar, Button, Modal, Typography} from "antd";
-import './user-subscriptions.less';
 import {useLazyQuery} from "@apollo/client";
-import {GET_ALL_SUBSCRIBERS, GET_ALL_SUBSCRIPTIONS} from "../../../../GRAPHQL/queries/followers-queries";
-import {motion} from "framer-motion";
+import {GET_ALL_SUBSCRIPTIONS} from "../../../../GRAPHQL/queries/followers-queries";
 import {UseAnimate} from "../../../../assets/hooks";
 import moment from "moment";
+import {Avatar, Button, Modal, Typography} from "antd";
+import {motion} from "framer-motion";
+import './user-subscriptions.less';
 
 
 interface UserSubscriptionsProps {
     subscriptions: string[] | undefined
     currentId: string | undefined
+    myId: string | undefined
 }
 
-const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId}) => {
+const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId, myId}) => {
 
     const {Title, Text} = Typography;
+    const navigate = useNavigate();
 
-    const [isShowAllSubscriptions, setIsShowAllSubscriptions] = useState<boolean>(false);
+    const [isVisibleShowAllSubscriptions, setIsVisibleShowAllSubscriptions] = useState<boolean>(false);
 
     const [getAllSubscriptions, {loading, data}] = useLazyQuery(GET_ALL_SUBSCRIPTIONS, {
         fetchPolicy: 'cache-and-network',
@@ -33,16 +36,24 @@ const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId
         word: subscriptions?.length && subscriptions?.length % 10 === 1 ? 'подписка' : 'подпис',
         suffix: ['ки', 'ок'],
     });
-    console.log(data)
+
     const clickOnAllSubscriptions = () => {
-        setIsShowAllSubscriptions(true)
+        setIsVisibleShowAllSubscriptions(true)
         getAllSubscriptions()
     };
 
     const closed = () => {
-        setIsShowAllSubscriptions(false)
+        setIsVisibleShowAllSubscriptions(false)
     };
 
+    const goToUserPage = (id: string) => {
+        setIsVisibleShowAllSubscriptions(false)
+        navigate(`/user/${id}/profile/posts`)
+    };
+
+    const goToUserDialog = (id: string) => {
+        navigate(`/user/${currentId}/profile/message/${id}`)
+    };
 
     return (
         <>
@@ -53,25 +64,28 @@ const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId
             </div>
             <Modal
                 destroyOnClose={true}
-                className='all-likes-modal'
                 title={<Title style={{textAlign: "center"}} level={2}>{subscriptions?.length || 0} {word}</Title>}
                 bodyStyle={{display: "flex", flexDirection: "column", gap: '20px'}}
                 footer={[<Button key="close" onClick={closed}>закрыть</Button>]}
-                visible={isShowAllSubscriptions}
+                visible={isVisibleShowAllSubscriptions}
                 onCancel={closed}
             >
-                {data?.getAllSubscriptions.map((subscription: any, index: number) =>
-                    <motion.div key={subscription.id} className='all-likes-modal__item'
+                {data?.getAllSubscriptions?.map((subscription: any, index: number) =>
+                    <motion.div key={subscription.id} className='user-subscriptions-item'
                                 custom={index}
                                 initial='hidden'
                                 animate="visible"
                                 variants={UseAnimate('arrayIteration', index)}
                     >
-                        <div className='all-likes-modal__item_left-block'>
+                        <div className='user-subscriptions-item__left-block'>
+                            <Text>{moment.unix(subscription.dateSub).calendar()}, {currentId === myId?
+                            'вы подписались на' : `${subscription.userName} ${subscription.userName} подписался на`}</Text>
                             <Avatar size={70} src={subscription.userAvatar}/>
+                            <Title level={4}> {subscription.userName} {subscription.userLastName}</Title>
                         </div>
-                        <div className='right-block'>
-                            <Title level={4}>{subscription.userName} {subscription.userLastName}</Title>
+                        <div className='user-subscriptions-item__right-block'>
+                            <Button onClick={() => goToUserPage(subscription.userId)}>перейти на страницу</Button>
+                            <Button onClick={() => goToUserDialog(subscription.userId)}>перейти на диалогам</Button>
                         </div>
                     </motion.div>
                 )}

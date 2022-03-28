@@ -38,7 +38,7 @@ const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName,
     const [isFollow, setIsFollow] = useState<boolean>(false)
 
     useEffect(() => {
-        subscribers && currentId && setIsFollow(subscribers.includes(myId))
+        subscribers && currentId && setIsFollow(subscribers.find(subscriber => subscriber.userId === myId))
     }, [subscribers, currentId])
 
     const submitNewStatus = async () => {

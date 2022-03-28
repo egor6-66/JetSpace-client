@@ -38,19 +38,6 @@ const MessageIcon = () => {
             height="60"
             viewBox="0 0 60 60"
         >
-            <defs>
-                <radialGradient
-                    id="radialGradient-1"
-                    cx="50%"
-                    cy="21.931%"
-                    r="87.888%"
-                    fx="50%"
-                    fy="21.931%"
-                >
-                    <stop offset="0%" stopColor="#F25674"/>
-                    <stop offset="100%" stopColor="#D82D4E"/>
-                </radialGradient>
-            </defs>
             <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
                 <g>
                     <path

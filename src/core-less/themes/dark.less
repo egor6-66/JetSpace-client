@@ -23,13 +23,16 @@
 
   //--------------------css--------------------
   background-color: #434343;
+  .wrapper { &__loading {color: #d9d9d9;background-color: #262626;} }
+  //-------------sound-player-------------
+  .audio-player__overlay{background:radial-gradient(circle at 50% 50%, rgba(244, 0, 255, 0.02) 31%, rgba(158, 16, 104, 0.28) 100%);}
 
-  .wrapper {
-    &__loading {
-      color: #d9d9d9;
-      background-color: #262626;
-    }
-  }
+  //-------------right-menu-------------
+  .post-comment{border-top: 2px solid @border-color-base;}
+  .user-subscriptions-item {border-bottom: 2px solid @border-color-base;}
+  .user-subscribers-item {border-bottom: 2px solid @border-color-base;}
+  .all-likes {border-bottom: 2px solid @border-color-base;}
+
 
 
   .header, .wrapper__header {
@@ -42,8 +45,9 @@
     border: 2px solid @border-color-base;
   }
 
-  .post-comment{
-    border-top: 2px solid @border-color-base;
+
+  .all-dislikes {
+    border-bottom: 2px solid @border-color-base;
   }
 
   .profile, .edit-profile {
@@ -80,22 +84,6 @@
           box-shadow: 0 0 6px 2px @boxShadowColor;;
         }
       }
-    }
-
-    .all-likes {
-      border-bottom: 2px solid @border-color-base;
-    }
-
-    .all-dislikes {
-      border-bottom: 2px solid @border-color-base;
-    }
-
-    .user-subscriptions {
-      border-bottom: 2px solid @border-color-base;
-    }
-
-    .user-subscribers {
-      border-bottom: 2px solid @border-color-base;
     }
   }
 

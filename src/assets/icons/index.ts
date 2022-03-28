@@ -1,4 +1,4 @@
-import LogoIcon from './logo';
+import LogoProjectIcon from "./logo";
 import QuestionIcon from './question';
 import SettingsIcon from "./settings";
 import BellIcon from './bell';
@@ -19,9 +19,12 @@ import VoiceAssistIcon from './voice-assist-icon';
 import StatusIcons from './status-icons';
 import MessageIcon from './message-icon';
 import SoundCloudIcon from './sound-cloud-icon';
+import SaveIcon from './save-icon';
+import DeleteIcon from './delete-icon';
+import YouTubeIcon from './youTube-icon';
 
 export {
-    LogoIcon,
+    LogoProjectIcon,
     QuestionIcon,
     SettingsIcon,
     BellIcon,
@@ -41,5 +44,8 @@ export {
     VoiceAssistIcon,
     StatusIcons,
     MessageIcon,
-    SoundCloudIcon
+    SoundCloudIcon,
+    SaveIcon,
+    DeleteIcon,
+    YouTubeIcon
 }

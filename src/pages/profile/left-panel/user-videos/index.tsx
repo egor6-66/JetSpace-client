@@ -3,7 +3,7 @@ import {useParams} from "react-router-dom";
 import {useLazyQuery, useMutation} from "@apollo/client";
 import {ADD_VIDEO} from "../../../../GRAPHQL/mutations/video-mutations";
 import {GET_ALL_USER_VIDEOS} from "../../../../GRAPHQL/queries/videos-queries";
-import {ReactPlayerCustoms} from "../../../../components/react-player-customs";
+import {ReactPlayerCustoms} from "../../../../components/players/video-player";
 import ModalAddVideo from "./modal-add-video";
 import {Button, Form, Typography} from "antd";
 import './user-videos.less';

@@ -9,3 +9,11 @@ export const ADD_SOUND = gql`
         }
     }
 `
+
+export const REMOVE_SOUND = gql`
+    mutation removeSound($id: ID, $soundId: ID $type: String){
+        removeSound(id: $id, soundId: $soundId type: $type){
+            ${soundsModel}
+        }
+    }
+`

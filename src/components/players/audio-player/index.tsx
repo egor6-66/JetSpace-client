@@ -1,27 +1,57 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import ReactPlayer from "react-player";
-import {Slider} from "antd";
-import './audio-player.less'
+import {useMutation} from "@apollo/client";
+import {ADD_SOUND, REMOVE_SOUND} from "../../../GRAPHQL/mutations/sound-mutations";
 import {UseColor} from '../../../assets/hooks';
-import {SoundCloudIcon} from '../../../assets/icons'
+import {SoundCloudIcon, SaveIcon, PlayerIcons,DeleteIcon} from '../../../assets/icons'
 import {useActions} from "../../../store/actions";
 import {useTypedSelector} from "../../../store";
 import {motion, AnimatePresence} from "framer-motion";
+import {Popover} from "antd";
+import './audio-player.less'
 
 
 interface AudioPlayerProps {
+    myId: string | undefined,
+    currentId: string | undefined,
     url?: string | undefined,
     type?: string | undefined,
+    soundId?: string | undefined,
 }
 
-const AudioPlayer: FC<AudioPlayerProps> = ({url, type}) => {
+const AudioPlayer: FC<AudioPlayerProps> = ({myId, currentId, url, type, soundId}) => {
 
     const colors = UseColor()
     const {setPlaying} = useActions();
     const {playing, isVisibleSoundModal, volume} = useTypedSelector(state => state.player);
     const height = type === 'soundTracks' ? 130 : 400
     const [isReady, setIsReady] = useState<boolean>(false)
-    console.log(isReady)
+    const [currentPlay, setCurrentPlay] = useState<boolean>(false)
+    console.log(type)
+
+    const [addSound] = useMutation(ADD_SOUND);
+    const [removeSound] = useMutation(REMOVE_SOUND);
+
+    const saveSound = async () => {
+        await addSound({
+            variables: {
+                id: myId,
+                path: url,
+                type: type,
+            },
+        });
+    };
+
+    const deleteSound = async () => {
+        await removeSound({
+            variables: {
+                id: myId,
+                soundId: soundId,
+                type: type,
+            },
+        });
+    };
+
     return (
         <AnimatePresence>
             <motion.div className='audio-player' style={{height: height}}
@@ -33,15 +63,36 @@ const AudioPlayer: FC<AudioPlayerProps> = ({url, type}) => {
                         <SoundCloudIcon/>
                     </div>
                 </motion.div>}
-                <div className='audio-player__header'/>
+                <div className={type === 'soundTracks' ? 'audio-player__play-icon-soundsTracks' : 'audio-player__play-icon-playLists'}>
+                    <PlayerIcons id={currentPlay ? 'pause' : 'play'}/>
+                </div>
                 <div className='audio-player__overlay'/>
-                <div className='audio-player__hide-top-logo'/>
+                <div className='audio-player__hide-privacy'/>
+                <div className='audio-player__disabled-linc'/>
+
+                <div className='audio-player__icons'>
+                    {myId === currentId ?
+                        <Popover content={'удалить трек'} placement='left'>
+                            <div onClick={deleteSound}><DeleteIcon/></div>
+                        </Popover>
+                        :
+                        <Popover content={'добавить себе'} placement='left'>
+                            <div onClick={saveSound}><SaveIcon/></div>
+                        </Popover>
+                    }
+                </div>
                 <ReactPlayer
                     width={'100%'}
                     height={height}
                     controls={false}
-                    onPlay={() => setPlaying(true)}
-                    onPause={() => setPlaying(false)}
+                    onPlay={() => {
+                        setCurrentPlay(true)
+                        setPlaying(true)
+                    }}
+                    onPause={() => {
+                        setCurrentPlay(false)
+                        setPlaying(false)
+                    }}
                     onEnded={() => setPlaying(false)}
                     // onProgress={(value) => }
                     onReady={() => setIsReady(true)}
@@ -60,9 +111,6 @@ const AudioPlayer: FC<AudioPlayerProps> = ({url, type}) => {
                         }
                     }}
                 />
-                <div className='audio-player__hide-bottom-logo'/>
-                <div style={{height: type === 'soundTracks' ? 32 : 74}} className='audio-player__footer'>
-                </div>
             </motion.div>
         </AnimatePresence>
     );
