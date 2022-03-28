@@ -3,7 +3,7 @@ import {Link, NavLink, useLocation, useParams} from "react-router-dom";
 import {useQuery} from "@apollo/client";
 import {GET_NOTIFICATIONS} from "../../../GRAPHQL/queries/notification-queries";
 import notificationsSubscriptions from "./notifications-subscriptions";
-import {SettingsIcon, BellIcon, LogoIcon, PlayerIcons, MusicIcon, VoiceAssistIcon} from '../../../assets/icons'
+import {SettingsIcon, BellIcon, LogoProjectIcon, PlayerIcons, MusicIcon, VoiceAssistIcon} from '../../../assets/icons'
 import ProjectMenu from "../../project-menu";
 import {Badge, Typography, Input, Popover, Slider, Button} from "antd";
 import projectMenuList from "../../project-menu/list";
@@ -52,6 +52,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
         const rout = headerList(myId).find(item => location === item.path.split('/').pop() )
         const childRout = navMenuList(myId, currentId).find(item => location === item.path.split('/').pop() )
         rout ? setActiveItem(rout.id) : childRout ? setActiveItem(1) : setActiveItem(null)
+        myId !== currentId && setActiveItem(null)
     };
 
     useEffect(() => {
@@ -62,7 +63,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
         <div className='header'>
             <UserSounds myId={myId}/>
             <div className='header__left-block' onMouseLeave={getActiveItem}>
-                <LogoIcon size={45}/>
+                <LogoProjectIcon size={45}/>
                 {headerList(myId).map(item =>
                     <NavLink key={item.id} to={item.path}>
                         <motion.div className='header__left-block_item'

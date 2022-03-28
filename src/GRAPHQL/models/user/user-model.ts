@@ -7,8 +7,8 @@ avatar
 headerAvatar
 likeCounter
 dislikeCounter
-subscribers
-subscriptions
+subscribers { userId dateSub }
+subscriptions { userId dateSub }
 theme
 instagram
 facebook

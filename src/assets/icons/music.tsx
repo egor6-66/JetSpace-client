@@ -1,10 +1,13 @@
 import React from 'react';
 import {motion} from "framer-motion";
 import {useTypedSelector} from "../../store";
+import {UseColor} from "../hooks";
 
 const MusicIcon = () => {
 
     const {playing, isVisibleSoundModal} = useTypedSelector(state => state.player);
+
+    const colors = UseColor()
 
     const svgVariants = {
         hidden: {},
@@ -41,7 +44,7 @@ const MusicIcon = () => {
             version="1.1"
             viewBox="0 0 50 50"
             xmlSpace="preserve"
-            fill="#9BA3B1"
+            fill={colors?.svg?.svg}
             variants={playing ? svgVariants : {}}
             initial='hidden'
             animate='visible'

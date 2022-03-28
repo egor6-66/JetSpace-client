@@ -1,11 +1,11 @@
 import React from 'react';
 import {motion} from "framer-motion";
-import {UseSvgColor} from "../hooks";
+import {UseColor, UseSvgColor} from "../hooks";
 
 
 const DislikeIcon = () => {
 
-    const color = UseSvgColor()
+    const colors = UseColor()
 
     const heartVariants = {
         hover: {
@@ -41,37 +41,27 @@ const DislikeIcon = () => {
             width="24"
             height="24"
             style={{cursor: "pointer", borderRadius: '50%',transform: 'rotate(180deg)'}}
+            fill={colors?.svg?.svg}
         >
-            <defs>
-                <radialGradient
-                    id="radialGradient-1"
-                    cx="50%"
-                    cy="21.931%"
-                    r="87.888%"
-                    fx="50%"
-                    fy="21.931%"
-                >
-                    <stop offset="0%" stopColor="#F25674"/>
-                    <stop offset="100%" stopColor="#D82D4E"/>
-                </radialGradient>
-            </defs>
+
             <motion.g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1"
                       variants={heartVariants2}
                       whileHover="hover"
             >
+
                 <g transform="translate(-718 -153)">
                     <g transform="translate(718 153)">
                         <motion.circle
                             cx="259.5"
                             cy="259.5"
                             r="259.5"
-                            fill="url(#radialGradient-1)"
+                            fill={colors?.svg?.svg}
                             variants={heartVariants2}
                             whileHover="hover"
                             whileTap="click"
                         />
                         <motion.path
-                            fill={color.active}
+                            fill={colors?.svg?.path}
                             variants={heartVariants}
                             whileHover="hover"
                             whileTap="click"

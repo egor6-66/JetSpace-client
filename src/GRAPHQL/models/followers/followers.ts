@@ -4,4 +4,5 @@ export const followersModel = `
     userName
     userLastName
     userAvatar
+    dateSub
 `

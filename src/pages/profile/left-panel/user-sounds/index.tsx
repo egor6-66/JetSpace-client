@@ -4,14 +4,14 @@ import {useLazyQuery, useMutation} from "@apollo/client";
 import {GET_ALL_USER_SOUNDS} from "../../../../GRAPHQL/queries/sound-queries";
 import {ADD_SOUND} from "../../../../GRAPHQL/mutations/sound-mutations";
 import ModalAddSounds from "./modal-add-sounds";
-
-import AudioPlayer from "../../../../components/players/audio-player";
-import {Button, Form, Modal} from "antd";
-import './user-sound.less';
 import {useTypedSelector} from "../../../../store";
 import {useActions} from "../../../../store/actions";
 import Title from "antd/es/typography/Title";
 import {getItem, setItem} from "../../../../services/local-storage";
+import AudioPlayer from "../../../../components/players/audio-player";
+import {Button, Form, Modal} from "antd";
+import {motion, AnimatePresence} from "framer-motion";
+import './user-sound.less';
 
 
 interface UserSoundProps {
@@ -66,7 +66,7 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
         }
         closedModal()
     }
-    console.log(sounds)
+
     return (
         <Modal
             visible={isVisibleSoundModal}
@@ -92,6 +92,9 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
                             sounds?.soundTracks?.map((item: any) =>
                                 <div key={item.id} className='user-music__list_item'>
                                     <AudioPlayer
+                                        myId={myId}
+                                        currentId={currentId}
+                                        soundId={item.id}
                                         url={item.path}
                                         type={item.type}
                                     />
@@ -101,6 +104,9 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
                             sounds?.playLists?.map((item: any) =>
                                 <div key={item.id} className='user-music__list_item'>
                                     <AudioPlayer
+                                        myId={myId}
+                                        currentId={currentId}
+                                        soundId={item.id}
                                         url={item.path}
                                         type={item.type}
                                     />
@@ -115,6 +121,9 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
                         {data?.getAllUserSounds && data?.getAllUserSounds[soundType].map((item: any) =>
                             <div key={item.id} className='user-music__list_item'>
                                 <AudioPlayer
+                                    myId={myId}
+                                    currentId={currentId}
+                                    soundId={item.id}
                                     url={item.path}
                                     type={item.type}
                                 />
