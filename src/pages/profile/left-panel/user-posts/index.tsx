@@ -94,7 +94,6 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
     };
 
     return (
-
         <div className='posts'>
             {myId === currentId &&
             <div className='posts__form'>

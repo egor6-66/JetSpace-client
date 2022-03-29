@@ -1,8 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
 import {Link, NavLink, useLocation, useParams} from "react-router-dom";
 import {useQuery} from "@apollo/client";
-import {GET_NOTIFICATIONS} from "../../../GRAPHQL/queries/notification-queries";
-import notificationsSubscriptions from "./notifications-subscriptions";
+import {GET_NOTIFICATIONS, GET_NOTIFICATIONS_SUB} from "../../../GRAPHQL/queries/notification-queries";
+import notificationsSubscriptions from "../../notifications/notifications-subscriptions";
 import {SettingsIcon, BellIcon, LogoProjectIcon, PlayerIcons, MusicIcon, VoiceAssistIcon} from '../../../assets/icons'
 import ProjectMenu from "../../project-menu";
 import {Badge, Typography, Input, Popover, Slider, Button} from "antd";
@@ -10,11 +10,13 @@ import projectMenuList from "../../project-menu/list";
 import UserSounds from "../../../pages/profile/left-panel/user-sounds";
 import {useActions} from "../../../store/actions";
 import {useTypedSelector} from "../../../store";
-import './header.less';
+import Notifications from "../../notifications";
 import {headerList} from "./list";
 import navMenuList from "../../../pages/profile/left-panel/nav-menu/list";
 import {UseTextColor} from "../../../assets/hooks";
 import {motion} from "framer-motion";
+import './header.less';
+
 
 interface HeaderProps {
     myId: string | undefined,
@@ -34,19 +36,11 @@ const Header: FC<HeaderProps> = ({myId}) => {
 
     const [activeItem, setActiveItem] = useState<number | null>(null);
 
-    const {data, loading, subscribeToMore} = useQuery(GET_NOTIFICATIONS, {
-        fetchPolicy: `${myId === currentId ? 'cache-first' : 'network-only'}`,
-        nextFetchPolicy: 'cache-only',
-        variables: {myId: myId}
-    });
-
-    useEffect(() => {
-        notificationsSubscriptions(subscribeToMore, myId)
-    }, []);
-
     const onSearch = (payload: String) => {
         console.log(payload)
     };
+
+    const {data, loading, subscribeToMore} = useQuery( GET_NOTIFICATIONS_SUB, {variables: {myId: myId}});
 
     const getActiveItem = () => {
         const rout = headerList(myId).find(item => location === item.path.split('/').pop() )
@@ -55,6 +49,10 @@ const Header: FC<HeaderProps> = ({myId}) => {
         myId !== currentId && setActiveItem(null)
     };
 
+    useEffect(() => {
+        notificationsSubscriptions(subscribeToMore, myId)
+    },[]);
+    console.log(data)
     useEffect(() => {
         getActiveItem()
     },[location])
@@ -87,7 +85,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
                             {isActivated ? 'отключить' : 'включить'}
                         </Button>
                     </div>
-                }>
+                } trigger='click'>
                     <div className='header__right-block_icon'>
                         <VoiceAssistIcon/>
                     </div>
@@ -96,7 +94,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
                     <Slider vertical step={0.1} style={{height: 50}} min={0} max={1}
                             onChange={(value) => setVolume(value)}
                             value={volume}/>
-                }>
+                } trigger='click'>
                     <div className='header__right-block_icon'>
                         <PlayerIcons id={'volume'}/>
                     </div>
@@ -107,8 +105,13 @@ const Header: FC<HeaderProps> = ({myId}) => {
                 }}>
                     <MusicIcon/>
                 </div>
-                <Badge showZero={false} count={data?.getNotifications?.notifications.length}>
-                    <Popover content={false} placement="bottomRight">
+                <Badge showZero={false} count={data?.getNotificationsSub.notifications.length}>
+                    <Popover content={
+                        <Notifications
+                            myId={myId}
+                            currentId={currentId}
+                        />
+                    } trigger='click'>
                         <div className='header__right-block_icon'>
                             <BellIcon/>
                         </div>
@@ -116,6 +119,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
                 </Badge>
                 <Popover destroyTooltipOnHide={!projectMenuList.filter(item => item.path == location).length}
                          content={<ProjectMenu myId={myId}/>}
+                         trigger='click'
                          placement="bottomRight">
                     <div className='header__right-block_icon'>
                         <SettingsIcon/>

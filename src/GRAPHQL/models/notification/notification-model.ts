@@ -1,10 +1,13 @@
 export const notificationModel = `
-parentId
 id
 date
-title
-content
+ownerId
 userId
+action
+content
+contentDate
+userName
+userLastName
 userAvatar
 `
 

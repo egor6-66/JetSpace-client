@@ -44,7 +44,7 @@ const UserSubscribers:FC<UserSubscribersProps> = ({subscribers, currentId, myId}
     const closed = () => {
         setIsVisibleShowAllSubscribers(false)
     };
-    console.log(currentId)
+
     const goToUserPage = (id: string) => {
         setIsVisibleShowAllSubscribers(false)
         navigate(`/user/${id}/profile/posts`)
