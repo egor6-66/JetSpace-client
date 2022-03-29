@@ -44,7 +44,7 @@ const AllPhotos = () => {
             visible={true}
             onCancel={() => navigate(-1,)}
             width={width}
-            bodyStyle={{height: height}}
+            bodyStyle={{height: height, overflowY: "scroll"}}
             footer={
                 <Swiper
                     onSwiper={setThumbsSwiper}

@@ -1,5 +1,5 @@
 import React, { FC, Dispatch, SetStateAction } from 'react';
-import Logo from '../../../../assets/icons/logo';
+import {LogoProjectIcon} from '../../../../assets/icons'
 import LoginForm from './login-form';
 import RegisterForm from './register-form';
 import ConfirmAccountForm from "./confirm-account-form";
@@ -31,7 +31,7 @@ const AuthModal: FC<AuthModal> = (props) => {
             onCancel={() => setCurrentForm(null)}
         >
             <div className='auth-modal'>
-                <div><Logo size={60}/></div>
+                <div><LogoProjectIcon size={60} isActiveAnim={true}/></div>
                 {currentForm === 'login' && <LoginForm setCurrentForm={setCurrentForm}/>}
                 {currentForm === 'register' && <RegisterForm setCurrentForm={setCurrentForm}/>}
                 {currentForm === 'register success' && <ConfirmAccountForm email={email}/>}

@@ -3,7 +3,7 @@ import {NavLink, Link, useNavigate} from "react-router-dom";
 import wordDeclension from "../../../../assets/functions/word-declension";
 import {useLazyQuery} from "@apollo/client";
 import {GET_ALL_SUBSCRIPTIONS} from "../../../../GRAPHQL/queries/followers-queries";
-import {UseAnimate} from "../../../../assets/hooks";
+import {UseAnimate, UseGetContainerHeight} from "../../../../assets/hooks";
 import moment from "moment";
 import {Avatar, Button, Modal, Typography} from "antd";
 import {motion} from "framer-motion";
@@ -20,7 +20,7 @@ const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId
 
     const {Title, Text} = Typography;
     const navigate = useNavigate();
-
+    const height = UseGetContainerHeight(360, 990, 600)
     const [isVisibleShowAllSubscriptions, setIsVisibleShowAllSubscriptions] = useState<boolean>(false);
 
     const [getAllSubscriptions, {loading, data}] = useLazyQuery(GET_ALL_SUBSCRIPTIONS, {
@@ -65,7 +65,7 @@ const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId
             <Modal
                 destroyOnClose={true}
                 title={<Title style={{textAlign: "center"}} level={2}>{subscriptions?.length || 0} {word}</Title>}
-                bodyStyle={{display: "flex", flexDirection: "column", gap: '20px'}}
+                bodyStyle={{display: "flex", flexDirection: "column", gap: '20px', height:height, overflowY: "scroll"}}
                 footer={[<Button key="close" onClick={closed}>закрыть</Button>]}
                 visible={isVisibleShowAllSubscriptions}
                 onCancel={closed}
@@ -75,7 +75,7 @@ const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId
                                 custom={index}
                                 initial='hidden'
                                 animate="visible"
-                                variants={UseAnimate('arrayIteration', index)}
+                                variants={UseAnimate('arrayIteration')}
                     >
                         <div className='user-subscriptions-item__left-block'>
                             <Text>{moment.unix(subscription.dateSub).calendar()}, {currentId === myId?

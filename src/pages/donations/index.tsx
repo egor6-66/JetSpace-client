@@ -1,8 +1,9 @@
 import React from 'react';
 import BanksIcons from "../../assets/icons/banks-icons";
+import {LogoProjectIcon} from '../../assets/icons'
+import {Typography} from "antd";
 import {motion} from "framer-motion";
 import './donations.less';
-import {Typography} from "antd";
 
 
 const Donations = () => {

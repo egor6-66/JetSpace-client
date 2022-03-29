@@ -5,7 +5,7 @@ import './all-dislikes.less';
 import {useLazyQuery} from "@apollo/client";
 import {GET_ALL_DISLIKES} from "../../../../GRAPHQL/queries/dislike-queries";
 import moment from "moment";
-import {UseAnimate} from "../../../../assets/hooks";
+import {UseAnimate, UseGetContainerHeight} from "../../../../assets/hooks";
 import {motion} from "framer-motion";
 
 
@@ -18,7 +18,7 @@ interface AllDislikesProps {
 const AllDislikes: FC<AllDislikesProps> = ({dislikeCounter, currentId}) => {
 
     const {Title, Text} = Typography;
-
+    const height = UseGetContainerHeight(360, 990, 600)
     const word = wordDeclension({
         length: dislikeCounter,
         word: 'дизлайк',
@@ -53,7 +53,7 @@ const AllDislikes: FC<AllDislikesProps> = ({dislikeCounter, currentId}) => {
                 destroyOnClose={true}
                 className='all-likes-modal'
                 title={<Title style={{textAlign: "center"}} level={2}>{dislikeCounter || 0} {word}</Title>}
-                bodyStyle={{display: "flex", flexDirection: "column", gap: '20px'}}
+                bodyStyle={{display: "flex", flexDirection: "column", gap: '20px', height:height, overflowY: "scroll"}}
                 footer={[<Button key="close" onClick={closed}>закрыть</Button>]}
                 visible={isShowAllDislikes}
                 onCancel={closed}
@@ -63,7 +63,7 @@ const AllDislikes: FC<AllDislikesProps> = ({dislikeCounter, currentId}) => {
                          custom={index}
                          initial='hidden'
                          animate="visible"
-                         variants={UseAnimate('arrayIteration', index)}
+                         variants={UseAnimate('arrayIteration')}
                     >
                         <div className='all-likes-modal__item_left-block'>
                             <Avatar size={70} src={dislike.userAvatar}/>
