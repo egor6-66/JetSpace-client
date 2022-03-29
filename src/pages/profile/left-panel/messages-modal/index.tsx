@@ -48,7 +48,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
     }, [data]);
 
     useEffect(() => {
-        messageSubscriptions(subscribeToMore, refetch)
+        messageSubscriptions(subscribeToMore, refetch, userId, myId)
     }, []);
 
     const getDate = (date: any) => {
@@ -61,6 +61,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
         await addMessage({
             variables: {
                 myId: myId,
+                recipientId: currentId,
                 userId: userId,
                 type: 'text',
                 content: newMessage,
@@ -68,7 +69,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
         });
         setNewMessage('')
     }
-
+    console.log(data?.getMessages?.messages)
     return (
         <Modal className='messages-modal'
                visible={true}

@@ -17,6 +17,7 @@ import {UseAnimate, UseSpeech} from "../../../../assets/hooks";
 import moment from "moment";
 import TextArea from "antd/es/input/TextArea";
 import EmojiPicker from "../../../../components/emoji-picker";
+import Loader from "../../../../components/spinner";
 
 
 interface UserPostsProps {
@@ -93,6 +94,7 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
     };
 
     return (
+
         <div className='posts'>
             {myId === currentId &&
             <div className='posts__form'>
@@ -115,70 +117,77 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
                 </Button>
             </div>
             }
-            <div className='posts__list'>
-                <Collapse
-                    bordered={false}
-                    // onChange={(key) => setActivePostId(key[0])}
-                    activeKey={activePostId}
-                    destroyInactivePanel={true}
-                >
-                    {data?.getUserPosts?.posts?.map(({id, date, content, likes, dislikes, comments}: any, index: number) =>
-                        <Panel  key={id} showArrow={false} header={
-                            <div ref={id === activePostId ? post : null} className='posts__list_item post-item'>
-                                <div className='post-item__top-block'>
-                                    <img className='post-item__top-block_avatar' src={currentUser.avatar} alt=""/>
-                                    <div className='post-item__top-block_userNameAndData'>
-                                        <Title level={4}>{currentUser.name} {currentUser.lastName}</Title>
-                                        <Text>{moment.unix(date).calendar()}</Text>
+            {loading ?
+                <div className='posts__loader'>
+                    <Loader size={130}/>
+                </div>
+                :
+                !data?.getUserPosts?
+                <div><Title>Нет постов</Title></div>
+                :
+                <div className='posts__list'>
+                    <Collapse
+                        bordered={false}
+                        // onChange={(key) => setActivePostId(key[0])}
+                        activeKey={activePostId}
+                        destroyInactivePanel={true}
+                    >
+                        {data?.getUserPosts?.posts?.map(({id, date, content, likes, dislikes, comments}: any, index: number) =>
+                            <Panel key={id} showArrow={false} header={
+                                <div ref={id === activePostId ? post : null} className='posts__list_item post-item'>
+                                    <div className='post-item__top-block'>
+                                        <img className='post-item__top-block_avatar' src={currentUser.avatar} alt=""/>
+                                        <div className='post-item__top-block_userNameAndData'>
+                                            <Title level={4}>{currentUser.name} {currentUser.lastName}</Title>
+                                            <Text>{moment.unix(date).calendar()}</Text>
+                                        </div>
+                                    </div>
+                                    <div className='post-item__center-block'>
+                                        <Title level={5}>{content}</Title>
+                                    </div>
+                                    <div className='post-item__bottom-block'>
+                                        <div className='post-item__bottom-block_like'>
+                                            <div className={`like-icon ${isActive(likes) && 'like-icon__active'}`}
+                                                 onClick={() => likeClick(id, likes)}
+                                            >
+                                                <LikeIcon/>
+                                            </div>
+                                            <Title level={4}>{likes && likes.length}</Title>
+                                        </div>
+                                        <div className='post-item__bottom-block_dislike'>
+                                            <div className={`dislike-icon ${isActive(dislikes) && 'dislike-icon__active'}`}
+                                                 onClick={() => dislikeClick(id, dislikes)}
+                                            >
+                                                <DislikeIcon/>
+                                            </div>
+                                            <Title level={4}>{dislikes && dislikes.length}</Title>
+                                        </div>
+                                        <div className='post-item__bottom-block_comments' onClick={() => {
+                                            id === activePostId ? setActivePostId(null) : setActivePostId(id)
+                                        }}>
+                                            <div className='comments-icon'>
+                                                <CommentsIcon/>
+                                            </div>
+                                            <Title level={4}>{comments.length}</Title>
+                                        </div>
                                     </div>
                                 </div>
-                                <div className='post-item__center-block'>
-                                    <Title level={5}>{content}</Title>
-                                </div>
-                                <div className='post-item__bottom-block'>
-                                    <div className='post-item__bottom-block_like'>
-                                        <div className={`like-icon ${isActive(likes) && 'like-icon__active'}`}
-                                             onClick={() => likeClick(id, likes)}
-                                        >
-                                            <LikeIcon/>
-                                        </div>
-                                        <Title level={4}>{likes && likes.length}</Title>
-                                    </div>
-                                    <div className='post-item__bottom-block_dislike'>
-                                        <div className={`dislike-icon ${isActive(dislikes) && 'dislike-icon__active'}`}
-                                             onClick={() => dislikeClick(id, dislikes)}
-                                        >
-                                            <DislikeIcon/>
-                                        </div>
-                                        <Title level={4}>{dislikes && dislikes.length}</Title>
-                                    </div>
-                                    <div className='post-item__bottom-block_comments' onClick={() =>  {
-                                        id === activePostId ? setActivePostId(null) : setActivePostId(id)
-                                    }}>
-                                        <div className='comments-icon'>
-                                            <CommentsIcon/>
-                                        </div>
-                                        <Title level={4}>{comments.length}</Title>
-                                    </div>
-                                </div>
-                            </div>
-                        }>
-                            <AllCommentsPost
-                                commentsRef={commentsRef}
-                                ownerId={currentId}
-                                userId={myId}
-                                post={data?.getUserPosts?.posts?.find((post: any) => post?.id === activePostId)}
-                                activePostId={activePostId}
-                                setActivePostId={setActivePostId}
-                                scrollBottom={scrollBottom}
-                                scrollTop={scrollTop}
-                            />
-                        </Panel>
-                    )}
-                </Collapse>
-            </div>
+                            }>
+                                <AllCommentsPost
+                                    commentsRef={commentsRef}
+                                    ownerId={currentId}
+                                    userId={myId}
+                                    post={data?.getUserPosts?.posts?.find((post: any) => post?.id === activePostId)}
+                                    activePostId={activePostId}
+                                    setActivePostId={setActivePostId}
+                                    scrollBottom={scrollBottom}
+                                    scrollTop={scrollTop}
+                                />
+                            </Panel>
+                        )}
+                    </Collapse>
+                </div>}
         </div>
-
     );
 };
 

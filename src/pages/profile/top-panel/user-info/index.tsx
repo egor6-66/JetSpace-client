@@ -5,10 +5,9 @@ import UserAvatar from "../user-avatar";
 import {SubscriptionsIcons} from '../../../../assets/icons';
 import {motion} from "framer-motion";
 import {Button, Input, Modal, Typography} from "antd";
-import './user-info.less';
-import {animationVariant1} from "./animation";
 import {FOLLOW, UNFOLLOW} from "../../../../GRAPHQL/mutations/follow-mutations";
-import {UseTextColor} from "../../../../assets/hooks";
+import {UseAnimate, UseTextColor} from "../../../../assets/hooks";
+import './user-info.less';
 
 
 interface UserInfoProps {
@@ -87,7 +86,7 @@ const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName,
             </Title>
             {myId !== currentId && <motion.div className='user-info__follow-btn'
                                                onClick={clickFollowBtn}
-                                               variants={animationVariant1}
+                                               variants={UseAnimate('rotateY')}
                                                initial='visible'
                                                animate='hidden'
                                                whileTap='click'

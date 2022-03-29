@@ -2,7 +2,7 @@ import React, {FC, useState} from 'react';
 import {useLazyQuery} from "@apollo/client";
 import wordDeclension from "../../../../assets/functions/word-declension";
 import {GET_ALL_LIKES} from "../../../../GRAPHQL/queries/like-queries";
-import {UseAnimate} from '../../../../assets/hooks';
+import {UseAnimate, UseGetContainerHeight} from '../../../../assets/hooks';
 import {Typography, Modal, Button, Avatar} from "antd";
 import {motion} from "framer-motion";
 import './all-likes.less';
@@ -19,7 +19,7 @@ interface AllLikesProps {
 const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId,myId}) => {
 
     const {Title, Text} = Typography;
-
+    const height = UseGetContainerHeight(360, 990, 600);
     const [isShowAllLikes, setIsShowAllLikes] = useState<boolean>(false)
     const word = wordDeclension({
         length: likeCounter || 0,
@@ -58,7 +58,7 @@ const getName = (like: any) => {
                 destroyOnClose={true}
                 className='all-likes-modal'
                 title={<Title style={{textAlign: "center"}} level={2}>{likeCounter || 0} {word}</Title>}
-                bodyStyle={{display: "flex", flexDirection: "column", gap: '20px'}}
+                bodyStyle={{display: "flex", flexDirection: "column", gap: '20px', height:height, overflowY: "scroll"}}
                 footer={[<Button key="close" onClick={closed}>закрыть</Button>]}
                 visible={isShowAllLikes}
                 onCancel={closed}
@@ -68,7 +68,7 @@ const getName = (like: any) => {
                                 custom={index}
                                 initial='hidden'
                                 animate="visible"
-                                variants={UseAnimate('arrayIteration', index)}
+                                variants={UseAnimate('arrayIteration')}
                     >
                         <div className='all-likes-modal__item_left-block'>
                             <Avatar size={70} src={like.userAvatar}/>

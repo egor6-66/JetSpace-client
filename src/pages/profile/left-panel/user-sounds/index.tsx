@@ -12,6 +12,7 @@ import AudioPlayer from "../../../../components/players/audio-player";
 import {Button, Form, Modal} from "antd";
 import {motion, AnimatePresence} from "framer-motion";
 import './user-sound.less';
+import {UseGetContainerHeight} from "../../../../assets/hooks";
 
 
 interface UserSoundProps {
@@ -22,6 +23,7 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
 
     const {id: currentId} = useParams();
     const {setIsVisibleSoundModal, setSoundsList} = useActions();
+    const height = UseGetContainerHeight(260, 990, 600)
 
     const {sounds, isVisibleSoundModal, location} = useTypedSelector(state => state.player);
     const [isVisibleModalAddSound, setIsVisibleModalAddSound] = useState<boolean>(false)
@@ -73,6 +75,13 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
             width={800}
             onCancel={() => setIsVisibleSoundModal(false)}
             footer={false}
+            title={
+                <div className='user-music-btns'>
+                {myId === currentId && <Button onClick={() => setIsVisibleModalAddSound(true)}>добавить музыку</Button>}
+                <Button onClick={setTypeList}>{btnTitle}</Button>
+                </div>
+            }
+            bodyStyle={{height: height}}
         >
             <ModalAddSounds
                 isVisibleModalAddSound={isVisibleModalAddSound}
@@ -80,8 +89,6 @@ const UserSound: FC<UserSoundProps> = ({myId}) => {
                 onFinish={onFinish}
             />
             <div className='user-music'>
-                {myId === currentId && <Button onClick={() => setIsVisibleModalAddSound(true)}>добавить музыку</Button>}
-                <Button onClick={setTypeList}>{btnTitle}</Button>
                 <div className='user-music__list'>
                     {myId !== currentId && location === 'header' &&
                     <Title level={3} style={{textAlign: "center", paddingTop: 30}}>

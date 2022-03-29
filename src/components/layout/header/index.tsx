@@ -63,7 +63,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
         <div className='header'>
             <UserSounds myId={myId}/>
             <div className='header__left-block' onMouseLeave={getActiveItem}>
-                <LogoProjectIcon size={45}/>
+                <LogoProjectIcon size={45} isActiveAnim={false}/>
                 {headerList(myId).map(item =>
                     <NavLink key={item.id} to={item.path}>
                         <motion.div className='header__left-block_item'

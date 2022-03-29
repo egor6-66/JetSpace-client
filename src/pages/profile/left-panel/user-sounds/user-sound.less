@@ -1,24 +1,30 @@
-.user-music{
-  height: auto;
+.user-music-btns {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
-  button {
-   margin-top: 18px !important;
-    width: 100%;
+.user-music {
+  height: 100%;
+  overflow-y: auto;
+  &::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    background-color: #d9d9d9;
   }
 
-
-  &__list{
+  &__list {
     height: auto;
     display: flex;
     flex-direction: column;
-    //gap: 15px;
 
-    &_item{
+    &_item {
       border-radius: 28px;
     }
   }
 
-  .sound-hidden{
+  .sound-hidden {
     visibility: hidden;
     display: none;
   }

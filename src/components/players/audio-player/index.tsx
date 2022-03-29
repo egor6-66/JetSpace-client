@@ -27,7 +27,6 @@ const AudioPlayer: FC<AudioPlayerProps> = ({myId, currentId, url, type, soundId}
     const height = type === 'soundTracks' ? 130 : 400
     const [isReady, setIsReady] = useState<boolean>(false)
     const [currentPlay, setCurrentPlay] = useState<boolean>(false)
-    console.log(type)
 
     const [addSound] = useMutation(ADD_SOUND);
     const [removeSound] = useMutation(REMOVE_SOUND);
@@ -68,11 +67,20 @@ const AudioPlayer: FC<AudioPlayerProps> = ({myId, currentId, url, type, soundId}
                 </div>
                 <div className='audio-player__overlay'/>
                 <div className='audio-player__hide-privacy'/>
-                <div className='audio-player__disabled-linc'/>
-
+                <div className='audio-player__disabled-linc'
+                     style={{
+                         marginLeft: type === 'soundTracks'? 0: 50,
+                     }}
+                />
+                <div className='audio-player__overlay-avatar'
+                style={{
+                    width: type === 'soundTracks'? 100 : 150,
+                    height: type === 'soundTracks'? 100 : 150
+                }}
+                />
                 <div className='audio-player__icons'>
                     {myId === currentId ?
-                        <Popover content={'удалить трек'} placement='left'>
+                        <Popover content={`удалить ${type === 'soundTracks'? 'трек' : 'плэйлист'}`} placement='left'>
                             <div onClick={deleteSound}><DeleteIcon/></div>
                         </Popover>
                         :

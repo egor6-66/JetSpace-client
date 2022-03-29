@@ -30,7 +30,7 @@ const VoiceAssistRoutes = (isActivated: boolean) => {
             UseSpeech(voiceAssist.voiceResponse)
             navigate(rout.path)
         } else {
-            UseSpeech('я тебя не поняла беззубый')
+            // UseSpeech('я тебя не поняла беззубый')
         }
     }, [redirectUrl])
 

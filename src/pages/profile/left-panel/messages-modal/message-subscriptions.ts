@@ -1,9 +1,10 @@
 import {MESSAGE_SUB} from "../../../../GRAPHQL/subscriptions/message-subscriptions";
 
 
-const messageSubscriptions = (subscribeToMore :any, refetch: any) => {
+const messageSubscriptions = (subscribeToMore :any, refetch: any, userId: any, myId: any) => {
     subscribeToMore({
         document: MESSAGE_SUB,
+        variables: {userId: userId, myId: myId},
         updateQuery: (prev: any, {subscriptionData, variables}: any): any => {
             const newMessage = subscriptionData.data.newMessage
             if (!prev?.getMessages) {
