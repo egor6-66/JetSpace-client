@@ -69,7 +69,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
         });
         setNewMessage('')
     }
-    console.log(data?.getMessages?.messages)
+
     return (
         <Modal className='messages-modal'
                visible={true}
