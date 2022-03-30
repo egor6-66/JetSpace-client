@@ -46,7 +46,7 @@ const UserPosts: FC<UserPostsProps> = ({myId}) => {
     });
 
     useEffect(() => {
-        postSubscriptions(subscribeToMore, currentId, addLike, addDislike, removeLike, removeDislike)
+        postSubscriptions(subscribeToMore, currentId)
     }, [currentId])
 
     const onEmojiClick = (event: any, emojiObject: any) => setNewPost(newPost + emojiObject.emoji)

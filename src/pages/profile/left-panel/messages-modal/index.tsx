@@ -10,6 +10,7 @@ import EmojiPicker from "../../../../components/emoji-picker";
 import VoiceMessages from "./voice-messages";
 import VoicePlayer from "../../../../components/players/voice-player/voice-player";
 import moment from "moment";
+import {useStartTyping} from 'react-use';
 import {Modal, Popover, Button, Typography, Avatar, Slider} from "antd";
 import TextArea from "antd/es/input/TextArea";
 import './messages-modal.less'
@@ -20,6 +21,7 @@ interface MessagesModalProps {
 }
 
 const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
+
 
     const {Title, Text} = Typography;
     const navigate = useNavigate();
@@ -32,6 +34,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
     const [isRecord, setIsRecord] = useState<boolean>(false)
     const [volume, setVolume] = useState<number>(1)
     const [sendVoice, setSendVoice] = useState<boolean>(false)
+    const [startTyping, setStartTyping] = useState<boolean>(false)
 
     const onEmojiClick = (event: any, emojiObject: any) => setNewMessage(newMessage + emojiObject.emoji)
 
@@ -42,6 +45,10 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
         nextFetchPolicy: 'cache-only',
         variables: {myId: myId, userId: userId}
     });
+
+    useEffect(() => {
+        newMessage.length >=1 ? setStartTyping(true) : setStartTyping(false)
+    }, [newMessage]);
 
     useEffect(() => {
         setTimeout(() => message?.current?.scrollIntoView({block: "end"}), 50)
@@ -69,7 +76,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
         });
         setNewMessage('')
     }
-
+    console.log(startTyping)
     return (
         <Modal className='messages-modal'
                visible={true}
@@ -91,6 +98,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
                        <TextArea value={newMessage}
                                  onChange={(e) => setNewMessage(e.target.value)}
                                  onPressEnter={e => e.code === 'Enter' && !e.ctrlKey && !e.altKey && submit()}
+
                        />
                        <VoiceMessages
                            isRecord={isRecord}
@@ -155,6 +163,10 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
                         <Text className='message-date'>{getDate(message.date.split(','))}</Text>
                     </div>
                 )}
+                {startTyping &&
+                    <div>
+                        ddd
+                    </div>}
             </div>
         </Modal>
     );

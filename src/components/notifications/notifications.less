@@ -1,3 +1,33 @@
-.notifications{
+.notifications {
+  display: flex;
+  gap: 20px;
 
+  &__body{
+
+    &_header{
+      width: 300px;
+      height: 90px;
+      text-align: center;
+    }
+
+    &_list {
+      height: 90vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .notifications-item{
+        height: auto;
+
+        &__content {
+          white-space: pre-line;
+          padding: 12px 24px;
+          margin-top: 12px;
+          margin-left: 12px;
+          border-radius: 8px 8px 0 0;
+        }
+      }
+    }
+  }
 }

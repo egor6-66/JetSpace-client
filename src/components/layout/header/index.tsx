@@ -52,7 +52,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
     useEffect(() => {
         notificationsSubscriptions(subscribeToMore, myId)
     },[]);
-    console.log(data)
+
     useEffect(() => {
         getActiveItem()
     },[location])
@@ -111,7 +111,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
                             myId={myId}
                             currentId={currentId}
                         />
-                    } trigger='click'>
+                    } trigger='click' destroyTooltipOnHide={true}>
                         <div className='header__right-block_icon'>
                             <BellIcon/>
                         </div>
