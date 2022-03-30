@@ -1,10 +1,9 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC} from 'react';
 import {useQuery} from "@apollo/client";
 import {GET_NOTIFICATIONS} from "../../GRAPHQL/queries/notification-queries";
-import notificationsSubscriptions from "./notifications-subscriptions";
-import './notifications.less';
-import {Typography} from "antd";
 import moment from "moment";
+import {Typography} from "antd";
+import './notifications.less';
 
 
 interface NotificationsProps {
@@ -22,21 +21,31 @@ const Notifications: FC<NotificationsProps> = ({myId, currentId}) => {
         variables: {myId: myId}
     });
 
-    const getActionType = (action: string) => {
-        if (action === 'add-like-post') return 'нравится ваш пост'
-    }
+    const getActionType = (action: string, ) => {
+        if (action === 'add-like-post') return `оценил ваш пост`
+        if (action === 'add-dislike-post')  return `не понравился ваш пост`
+    };
 
     return (
-        <div>
-            {data?.getNotifications?.notifications?.map((item: any) =>
-                <div key={item.id}>
-                    <Title>{item.userName} {item.userLastName}</Title>
-                    <Text>{getActionType(item.action)}</Text>
-                    <Text>сделанный {moment.unix(item.contentDate).calendar()}</Text>
-                    <Text>{item.content}</Text>
+        <div className='notifications'>
+            <div className='notifications__body'>
+                <div className='notifications__body_header'>
+                    <Title level={3}>уведомления</Title>
                 </div>
-            )}
-            Notifications
+                <div className='notifications__body_list'>
+                    {data?.getNotifications?.notifications.map((item: any) =>
+                        <div key={item.id} className='notifications-item'>
+                            <Text> {moment.unix(item.date).calendar()} </Text> <br/>
+                            <Title level={4}> {item.userName} {item.userLastName} </Title>
+                            <Text> {getActionType(item.action)} </Text> <br/>
+                            <Text> сделанный {moment.unix(item.contentDate).calendar()}</Text> <br/>
+                            <div className='notifications-item__content'>
+                                <Text> {item.content} </Text>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 };
