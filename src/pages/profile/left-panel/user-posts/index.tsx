@@ -8,16 +8,15 @@ import {ADD_POST, SEND_DISLIKE_POST} from "../../../../GRAPHQL/mutations/post-mu
 import {SEND_LIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import postSubscriptions from "./post-subscriptions";
 import {LikeIcon, DislikeIcon, CommentsIcon, ArrowIcon, SayIcon, SmileIcon} from '../../../../assets/icons';
-import {Input, Button, Typography, Popover, Collapse} from "antd";
-import {motion, AnimatePresence} from "framer-motion";
+import {Button, Typography, Popover, Collapse} from "antd";
 import './user-posts.less';
-import AddComment from "./comment/add-comment";
-import AllCommentsPost from "./comment/all-comments-post";
-import {UseAnimate, UseSpeech} from "../../../../assets/hooks";
+import AllComments from "../../../../components/comment/all-comments";
 import moment from "moment";
 import TextArea from "antd/es/input/TextArea";
 import EmojiPicker from "../../../../components/emoji-picker";
-import Loader from "../../../../components/spinner";
+import Spinner1 from "../../../../components/spinners/spinner-1";
+import PostsList from "./posts-list";
+import PostForm from "./post-form";
 
 
 interface UserPostsProps {
@@ -26,166 +25,65 @@ interface UserPostsProps {
 
 const UserPosts: FC<UserPostsProps> = ({myId}) => {
 
-    const {Title, Text} = Typography;
+    const {Title} = Typography;
     const {id: currentId} = useParams();
-    const {addLike, addDislike, removeLike, removeDislike} = useActions();
     const currentUser = useTypedSelector(state => state.currentUser);
-    const post: any = useRef(null);
-    const {Panel} = Collapse;
+    const postRef: any = useRef(null);
+
     const commentsRef: any = useRef(null);
     const [newPost, setNewPost] = useState<string>('');
-    const [activePostId, setActivePostId] = useState<any>(null);
+
 
     const [addPost] = useMutation(ADD_POST);
     const [sendLikePost] = useMutation(SEND_LIKE_POST);
     const [sendDislikePost] = useMutation(SEND_DISLIKE_POST);
 
-    const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_USER_POSTS, {
-        fetchPolicy: 'cache-first',
-        variables: {id: currentId}
-    });
+    const {data, loading, subscribeToMore} = useQuery(GET_USER_POSTS, {fetchPolicy: 'cache-first', variables: {id: currentId}});
 
-    useEffect(() => {
-        postSubscriptions(subscribeToMore, currentId)
-    }, [currentId])
-
-    const onEmojiClick = (event: any, emojiObject: any) => setNewPost(newPost + emojiObject.emoji)
+    useEffect(() => postSubscriptions(subscribeToMore, currentId), [currentId]);
 
     const sendNewPost = async () => {
-        await addPost({
-            variables: {
-                userId: myId,
-                content: newPost
-            }
-        });
+        await addPost({variables: {userId: myId, content: newPost}})
         setNewPost('')
-    }
-
-    const likeClick = async (id: string, likes: any[]) => {
-        sendLikePost({
-            variables: {
-                ownerId: currentId,
-                postId: id,
-                userId: myId,
-            }
-        })
-    }
-
-    const dislikeClick = async (id: string, dislikes: any[]) => {
-        sendDislikePost({
-            variables: {
-                ownerId: currentId,
-                postId: id,
-                userId: myId,
-            }
-        })
-    }
-
-    const isActive = (arr: any[]) => {
-        return arr.find((i: any) => i.userId === myId)
-    }
-
-    const scrollBottom = () => {
-        setTimeout(() => commentsRef?.current?.scrollIntoView({behavior: "smooth", block: "end"}), 50)
     };
 
-    const scrollTop = () => {
-        setTimeout(() => post?.current?.scrollIntoView({behavior: "smooth", block: "start"}), 50)
-    };
+    const isActive = (arr: any[]) =>  arr.find((i: any) => i.userId === myId);
+
+    const likeClick = async (id: string) => await sendLikePost({variables: {ownerId: currentId, postId: id, userId: myId,}});
+    const dislikeClick = async (id: string) => await sendDislikePost({variables: {ownerId: currentId, postId: id, userId: myId,}});
+
+    const scrollBottom = () => commentsRef?.current?.scrollIntoView({behavior: "smooth", block: "end"});
+    const scrollTop = () => postRef?.current?.scrollIntoView({behavior: "smooth", block: "start"});
 
     return (
         <div className='posts'>
             {myId === currentId &&
-            <div className='posts__form'>
-                <div className='posts__form_input'>
-                    <TextArea className='textarea'
-                              value={newPost}
-                              onChange={(e) => setNewPost(e.target.value)}
-                              onPressEnter={e => e.code === 'Enter' && !e.ctrlKey && !e.altKey && sendNewPost()}
-
-                    />
-                    <Popover placement={"left"} content={<EmojiPicker onEmojiClick={onEmojiClick}/>}>
-                        <div className='emojiPicker'>
-                            <SmileIcon/>
-                        </div>
-                    </Popover>
-                </div>
-                <Button className='posts__form_submit'
-                        onClick={sendNewPost}>
-                    Submit
-                </Button>
-            </div>
+            <PostForm
+                newPost={newPost}
+                setNewPost={setNewPost}
+                sendNewPost={sendNewPost}
+            />
             }
             {loading ?
-                <div className='posts__loader'>
-                    <Loader size={130}/>
-                </div>
+                <Spinner1 size={230}/>
                 :
-                !data?.getUserPosts?
-                <div><Title>Нет постов</Title></div>
-                :
-                <div className='posts__list'>
-                    <Collapse
-                        bordered={false}
-                        // onChange={(key) => setActivePostId(key[0])}
-                        activeKey={activePostId}
-                        destroyInactivePanel={true}
-                    >
-                        {data?.getUserPosts?.posts?.map(({id, date, content, likes, dislikes, comments}: any, index: number) =>
-                            <Panel key={id} showArrow={false} header={
-                                <div ref={id === activePostId ? post : null} className='posts__list_item post-item'>
-                                    <div className='post-item__top-block'>
-                                        <img className='post-item__top-block_avatar' src={currentUser.avatar} alt=""/>
-                                        <div className='post-item__top-block_userNameAndData'>
-                                            <Title level={4}>{currentUser.name} {currentUser.lastName}</Title>
-                                            <Text>{moment.unix(date).calendar()}</Text>
-                                        </div>
-                                    </div>
-                                    <div className='post-item__center-block'>
-                                        <Title level={5}>{content}</Title>
-                                    </div>
-                                    <div className='post-item__bottom-block'>
-                                        <div className='post-item__bottom-block_like'>
-                                            <div className={`like-icon ${isActive(likes) && 'like-icon__active'}`}
-                                                 onClick={() => likeClick(id, likes)}
-                                            >
-                                                <LikeIcon/>
-                                            </div>
-                                            <Title level={4}>{likes && likes.length}</Title>
-                                        </div>
-                                        <div className='post-item__bottom-block_dislike'>
-                                            <div className={`dislike-icon ${isActive(dislikes) && 'dislike-icon__active'}`}
-                                                 onClick={() => dislikeClick(id, dislikes)}
-                                            >
-                                                <DislikeIcon/>
-                                            </div>
-                                            <Title level={4}>{dislikes && dislikes.length}</Title>
-                                        </div>
-                                        <div className='post-item__bottom-block_comments' onClick={() => {
-                                            id === activePostId ? setActivePostId(null) : setActivePostId(id)
-                                        }}>
-                                            <div className='comments-icon'>
-                                                <CommentsIcon/>
-                                            </div>
-                                            <Title level={4}>{comments.length}</Title>
-                                        </div>
-                                    </div>
-                                </div>
-                            }>
-                                <AllCommentsPost
-                                    commentsRef={commentsRef}
-                                    ownerId={currentId}
-                                    userId={myId}
-                                    post={data?.getUserPosts?.posts?.find((post: any) => post?.id === activePostId)}
-                                    activePostId={activePostId}
-                                    setActivePostId={setActivePostId}
-                                    scrollBottom={scrollBottom}
-                                    scrollTop={scrollTop}
-                                />
-                            </Panel>
-                        )}
-                    </Collapse>
-                </div>}
+                !data?.getUserPosts ?
+                    <div><Title>Нет постов</Title></div>
+                    :
+                    <PostsList
+                        myId={myId}
+                        data={data}
+                        currentUser={currentUser}
+                        postRef={postRef}
+                        likeClick={likeClick}
+                        dislikeClick={dislikeClick}
+                        isActive={isActive}
+                        commentsRef={commentsRef}
+                        currentId={currentId}
+                        scrollBottom={scrollBottom}
+                        scrollTop={scrollTop}
+                    />
+            }
         </div>
     );
 };

@@ -4,6 +4,7 @@ export interface IPlayer {
     playing: boolean
     isVisibleSoundModal: boolean
     location: string | null,
-    volume: number
+    soundVolume: number,
+    voiceMessageVolume: number,
     sounds: ISounds | null
 }

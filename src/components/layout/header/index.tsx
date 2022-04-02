@@ -30,8 +30,8 @@ const Header: FC<HeaderProps> = ({myId}) => {
     const location = useLocation().pathname.split('/').pop();
     const {id: currentId} = useParams();
 
-    const {setIsVisibleSoundModal, setLocation, setVolume, setActiveVoiceAssist} = useActions();
-    const {sounds, isVisibleSoundModal, volume} = useTypedSelector(state => state.player);
+    const {setIsVisibleSoundModal, setLocation, setSoundVolume, setActiveVoiceAssist} = useActions();
+    const {sounds, isVisibleSoundModal, soundVolume} = useTypedSelector(state => state.player);
     const {isActivated, name} = useTypedSelector(state => state.voiceAssist);
 
     const [activeItem, setActiveItem] = useState<number | null>(null);
@@ -92,8 +92,8 @@ const Header: FC<HeaderProps> = ({myId}) => {
                 </Popover>
                 <Popover content={
                     <Slider vertical step={0.1} style={{height: 50}} min={0} max={1}
-                            onChange={(value) => setVolume(value)}
-                            value={volume}/>
+                            onChange={(value) => setSoundVolume(value)}
+                            value={soundVolume}/>
                 } trigger='click'>
                     <div className='header__right-block_icon'>
                         <PlayerIcons id={'volume'}/>

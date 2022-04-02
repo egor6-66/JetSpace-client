@@ -1,15 +1,17 @@
-import {darkTheme} from '../themes/dark-theme'
-import Defs from "../icons/DEFS";
-
+import {themes} from "../../constants";
 
 const UseColor = () => {
-
-    // @ts-ignore
-    const theme = document.querySelector("body").classList[0]
+    const body = document.querySelector("body");
+    const elems = Array.prototype.slice.call(body?.classList);
+    const theme = elems.find(i => themes.indexOf(i) > -1)
 
     switch (theme){
         case 'dark':
             return {
+                text:{
+                    active: '#eb2f96',
+                    disabled: '#9e1068'
+                },
                 bc: {
                     active: '#1A1A1D',
                     disabled: '#000'

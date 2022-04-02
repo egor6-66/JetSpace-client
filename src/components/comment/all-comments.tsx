@@ -1,33 +1,31 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import AddComment from "./add-comment";
 import moment from "moment";
-import {ArrowIcon, SayIcon} from "../../../../../assets/icons";
-import {UseAnimate} from '../../../../../assets/hooks';
+import {ArrowIcon, SayIcon} from "../../assets/icons";
+import {UseAnimate} from '../../assets/hooks';
 import {Avatar, Modal, Typography} from "antd";
 import {motion, AnimatePresence} from "framer-motion";
-import './comments-post.less';
+import './comments.less';
 
 
-interface AllCommentsPostProps {
+interface AllCommentsProps {
     ownerId: string | undefined,
     userId: string | undefined,
     post: any,
-    activePostId: boolean,
-    setActivePostId: any,
     scrollBottom: any,
     scrollTop: any,
     commentsRef: any
 }
 
 
-const AllCommentsPost: FC<AllCommentsPostProps> = ({ownerId, userId, post, activePostId, setActivePostId, scrollBottom, scrollTop,commentsRef}) => {
+const AllComments: FC<AllCommentsProps> = ({ownerId, userId, post, scrollBottom, scrollTop,commentsRef}) => {
 
         const {Title, Text} = Typography;
 
         const [newComment, setNewComment] = useState<string>('');
 
         return (
-                <motion.div className='comments-post'
+                <motion.div className='comments'
                             ref={commentsRef}
                             initial='hidden'
                             animate="visible"
@@ -35,28 +33,28 @@ const AllCommentsPost: FC<AllCommentsPostProps> = ({ownerId, userId, post, activ
                             variants={UseAnimate('smoothOpen')}
                 >
                     {post?.comments.length > 6 &&
-                    <div className='comments-post__down' onClick={scrollBottom}>
+                    <div className='comments__down' onClick={scrollBottom}>
                         <div className='down-icon'>
                             <ArrowIcon/>
                         </div>
                     </div>}
-                    <div className='comments-post__content'>
+                    <div className='comments__content'>
                         {post?.comments?.map((comment: any, index: number) =>
-                            <motion.div key={comment?.id} className='post-comment'>
+                            <motion.div key={comment?.id} className='comment'>
                                 <Text style={{textAlign: 'center'}}>{moment.unix(comment?.date).calendar()}</Text>
-                                <div className='post-comment_user-info'>
-                                    <div className='post-comment-avatar'>
+                                <div className='comment_user-info'>
+                                    <div className='comment-avatar'>
                                         <Avatar src={comment?.userAvatar} size={40}/>
                                     </div>
                                     <Title level={4}>{comment?.userName} {comment?.userLastName}</Title>
                                 </div>
-                                <div className='post-comment_content'>
+                                <div className='comment_content'>
                                     <Title level={5}>{comment?.content}</Title>
                                 </div>
                             </motion.div>
                         )}
                     </div>
-                    <div className='comments-post__footer'>
+                    <div className='comments__footer'>
                         <AddComment
                             ownerId={ownerId}
                             postId={post?.id}
@@ -73,4 +71,4 @@ const AllCommentsPost: FC<AllCommentsPostProps> = ({ownerId, userId, post, activ
     }
 ;
 
-export default AllCommentsPost;
+export default AllComments;

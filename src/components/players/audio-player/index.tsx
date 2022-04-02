@@ -23,7 +23,7 @@ const AudioPlayer: FC<AudioPlayerProps> = ({myId, currentId, url, type, soundId}
 
     const colors = UseColor()
     const {setPlaying} = useActions();
-    const {playing, isVisibleSoundModal, volume} = useTypedSelector(state => state.player);
+    const {playing, isVisibleSoundModal, soundVolume} = useTypedSelector(state => state.player);
     const height = type === 'soundTracks' ? 130 : 400
     const [isReady, setIsReady] = useState<boolean>(false)
     const [currentPlay, setCurrentPlay] = useState<boolean>(false)
@@ -106,7 +106,7 @@ const AudioPlayer: FC<AudioPlayerProps> = ({myId, currentId, url, type, soundId}
                     onReady={() => setIsReady(true)}
                     onBuffer={() => setIsReady(false)}
                     previewTabIndex={2}
-                    volume={volume}
+                    volume={soundVolume}
                     url={url}
                     config={{
                         soundcloud: {

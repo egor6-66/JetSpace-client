@@ -1,23 +1,23 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {useAudio} from "react-use";
-import {UseTextColor} from "../../../assets/hooks";
 import {PlayerIcons} from '../../../assets/icons';
-import {Popover, Slider} from "antd";
+import {Slider} from "antd";
+import {useTypedSelector} from "../../../store";
 import './voice-player.less';
 
 
 interface VoicePlayerProps {
     url: string
-    volume: number
 }
 
-const VoicePlayer: FC<VoicePlayerProps> = ({url, volume}) => {
+const VoicePlayer: FC<VoicePlayerProps> = ({url}) => {
 
     const [audio, state, controls] = useAudio({src: url,});
+    const {voiceMessageVolume} = useTypedSelector(state => state.player);
 
     useEffect(() => {
-        controls.volume(volume)
-    }, [volume])
+        controls.volume(voiceMessageVolume / 100)
+    }, [voiceMessageVolume])
 
 
     return (

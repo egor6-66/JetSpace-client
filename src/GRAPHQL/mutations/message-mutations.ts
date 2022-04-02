@@ -8,3 +8,11 @@ export const ADD_MESSAGE = gql`
         }
     }
 `
+
+export const USER_TYPING = gql`
+    mutation userTyping($myId: ID $userId: ID, $userName: String){
+        userTyping(myId: $myId, userId: $userId, userName: $userName){
+             userId
+        }
+    }
+`

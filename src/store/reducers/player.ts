@@ -7,7 +7,8 @@ const initialState: IPlayer  = {
     playing: false,
     isVisibleSoundModal: false,
     location: null,
-    volume: 1,
+    soundVolume: 1,
+    voiceMessageVolume: 1,
     sounds: null,
 }
 
@@ -18,10 +19,15 @@ export const PlayerReducer = (state = initialState, action: PlayerModels.Actions
                 ...state,
                 playing: action.payload
             };
-        case PlayerModels.ActionsTypes.SET_VOLUME:
+        case PlayerModels.ActionsTypes.SET_SOUND_VOLUME:
             return {
                 ...state,
-                volume: action.payload
+                soundVolume: action.payload
+            };
+        case PlayerModels.ActionsTypes.SET_VOICE_MESSAGE_VOLUME:
+            return {
+                ...state,
+                voiceMessageVolume: action.payload
             };
         case PlayerModels.ActionsTypes.SET_SOUNDS_LIST:
             return {

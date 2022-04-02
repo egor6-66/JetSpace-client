@@ -1,10 +1,10 @@
 import React, {FC, useState} from 'react';
-import {ADD_COMMENT} from "../../../../../GRAPHQL/mutations/post-mutations";
+import {ADD_COMMENT} from "../../GRAPHQL/mutations/post-mutations";
 import {useMutation} from "@apollo/client";
-import {ArrowIcon, SmileIcon} from '../../../../../assets/icons';
+import {ArrowIcon, SmileIcon} from '../../assets/icons';
 import {Button, Input, Modal, Popover} from "antd";
 import TextArea from "antd/es/input/TextArea";
-import EmojiPicker from "../../../../../components/emoji-picker";
+import EmojiPicker from "../emoji-picker";
 
 
 interface AddCommentProps {
