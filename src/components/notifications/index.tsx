@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {useQuery} from "@apollo/client";
 import {GET_NOTIFICATIONS} from "../../GRAPHQL/queries/notification-queries";
 import moment from "moment";
-import {Typography} from "antd";
+import {Avatar, Typography} from "antd";
 import './notifications.less';
 
 
@@ -41,6 +41,9 @@ const Notifications: FC<NotificationsProps> = ({myId, currentId}) => {
                             <Text> сделанный {moment.unix(item.contentDate).calendar()}</Text> <br/>
                             <div className='notifications-item__content'>
                                 <Text> {item.content} </Text>
+                            </div>
+                            <div className='notifications-item__avatar'>
+                                <Avatar size={80} src={item.userAvatar}/>
                             </div>
                         </div>
                     )}

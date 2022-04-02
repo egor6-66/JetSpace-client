@@ -8,3 +8,11 @@ export const GET_MESSAGES = gql`
         }
     }
 `
+
+export const GET_USER_TYPING = gql`
+    query userTypingSub($myId: ID, $userId: ID){
+        userTypingSub(myId: $myId, userId: $userId){
+            userName
+        }
+    }
+`

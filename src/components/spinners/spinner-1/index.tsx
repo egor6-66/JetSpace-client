@@ -1,13 +1,18 @@
-import React from 'react';
-import './spinner.less';
-import {UseColor} from "../../assets/hooks";
+import React, {FC} from 'react';
+import {UseColor} from "../../../assets/hooks";
+import './spinner-1.less';
 
-const Loader = ({size} : any) => {
 
-    const colors = UseColor()
+interface Spinner1Props {
+    size: number | string
+}
+
+const Spinner1:FC<Spinner1Props> = ({size}) => {
+
+    const colors = UseColor();
 
     return (
-    <>
+    <div className='spinner-1'>
         <svg className="loader"
              viewBox="0 0 100 100"
              width={size}
@@ -20,8 +25,8 @@ const Loader = ({size} : any) => {
                 <circle className="ci1" cx="95" cy="50" r="4" fill={colors?.svg?.path}/>
             </g>
         </svg>
-    </>
+    </div>
     );
 };
 
-export default Loader;
+export default Spinner1;

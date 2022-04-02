@@ -6,6 +6,8 @@ const messageSubscriptions = (subscribeToMore :any, refetch: any, userId: any, m
         document: MESSAGE_SUB,
         variables: {userId: userId, myId: myId},
         updateQuery: (prev: any, {subscriptionData, variables}: any): any => {
+            console.log('prev',prev)
+            console.log('subscriptionData',subscriptionData)
             const newMessage = subscriptionData.data.newMessage
             if (!prev?.getMessages) {
                 //"refetch" должен отработать один раз, только при первом сообщении! когда еще нету "prev"
@@ -17,6 +19,7 @@ const messageSubscriptions = (subscribeToMore :any, refetch: any, userId: any, m
             }
         }
     })
+
 }
 
 export default messageSubscriptions;

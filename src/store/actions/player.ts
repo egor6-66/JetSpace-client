@@ -15,8 +15,12 @@ export const setLocation = (playing: string) => (dispatch: Dispatch<PlayerModels
     dispatch({type: PlayerModels.ActionsTypes.SET_LOCATION, payload: playing})
 }
 
-export const setVolume = (playing: number) => (dispatch: Dispatch<PlayerModels.Actions>) =>{
-    dispatch({type: PlayerModels.ActionsTypes.SET_VOLUME, payload: playing})
+export const setSoundVolume = (playing: number) => (dispatch: Dispatch<PlayerModels.Actions>) =>{
+    dispatch({type: PlayerModels.ActionsTypes.SET_SOUND_VOLUME, payload: playing})
+}
+
+export const setVoiceMessageVolume = (playing: number) => (dispatch: Dispatch<PlayerModels.Actions>) =>{
+    dispatch({type: PlayerModels.ActionsTypes.SET_VOICE_MESSAGE_VOLUME, payload: playing})
 }
 
 export const setSoundsList = (playing: ISounds) => (dispatch: Dispatch<PlayerModels.Actions>) =>{
