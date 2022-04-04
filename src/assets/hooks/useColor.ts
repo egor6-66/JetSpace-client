@@ -8,19 +8,10 @@ const UseColor = () => {
     switch (theme){
         case 'dark':
             return {
-                text:{
-                    active: '#eb2f96',
-                    disabled: '#9e1068'
-                },
-                bc: {
-                    active: '#1A1A1D',
-                    disabled: '#000'
-                },
-                svg: {
-                    svg: "url(#svg-bc-dark-theme)",
-                    path:'#262626',
-                }
-
+                text:{active: '#eb2f96', disabled: '#9e1068'},
+                border:{active: '#595959', disabled: '#141414'},
+                bc: {active: '#1A1A1D', disabled: '#000'},
+                svg: {svg: "url(#svg-bc-dark-theme)", path:'#262626',}
             }
 
         default: return {active: '#6666', disabled: '#000'}

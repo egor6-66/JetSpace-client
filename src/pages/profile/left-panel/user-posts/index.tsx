@@ -1,29 +1,24 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {useTypedSelector} from "../../../../store";
 import {useParams} from "react-router-dom";
-import {useActions} from "../../../../store/actions";
-import {useMutation, useQuery, useSubscription} from "@apollo/client";
+import {useMutation, useQuery} from "@apollo/client";
 import {GET_USER_POSTS} from "../../../../GRAPHQL/queries/post-queries";
 import {ADD_POST, SEND_DISLIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import {SEND_LIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import postSubscriptions from "./post-subscriptions";
-import {LikeIcon, DislikeIcon, CommentsIcon, ArrowIcon, SayIcon, SmileIcon} from '../../../../assets/icons';
-import {Button, Typography, Popover, Collapse} from "antd";
-import './user-posts.less';
-import AllComments from "../../../../components/comment/all-comments";
-import moment from "moment";
-import TextArea from "antd/es/input/TextArea";
-import EmojiPicker from "../../../../components/emoji-picker";
 import Spinner1 from "../../../../components/spinners/spinner-1";
 import PostsList from "./posts-list";
 import PostForm from "./post-form";
+import {Typography} from "antd";
+import './user-posts.less';
 
 
 interface UserPostsProps {
     myId: string | undefined,
+    colors: any,
 }
 
-const UserPosts: FC<UserPostsProps> = ({myId}) => {
+const UserPosts: FC<UserPostsProps> = ({myId, colors}) => {
 
     const {Title} = Typography;
     const {id: currentId} = useParams();

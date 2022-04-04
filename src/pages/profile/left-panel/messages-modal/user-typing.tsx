@@ -31,7 +31,6 @@ const UserTyping: FC<UserTypingProps> = ({userName}) => {
         },
         isRunning ? delay : null
     );
-    console.log(colors)
 
     return (
 

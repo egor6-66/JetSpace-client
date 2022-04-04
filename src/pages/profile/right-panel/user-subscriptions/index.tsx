@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {NavLink, Link, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import wordDeclension from "../../../../assets/functions/word-declension";
 import {useLazyQuery} from "@apollo/client";
 import {GET_ALL_SUBSCRIPTIONS} from "../../../../GRAPHQL/queries/followers-queries";
@@ -13,10 +13,11 @@ import './user-subscriptions.less';
 interface UserSubscriptionsProps {
     subscriptions: string[] | undefined
     currentId: string | undefined
-    myId: string | undefined
+    myId: string | undefined,
+    colors: any
 }
 
-const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId, myId}) => {
+const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId, myId, colors}) => {
 
     const {Title, Text} = Typography;
     const navigate = useNavigate();
@@ -59,6 +60,7 @@ const UserSubscriptions: FC<UserSubscriptionsProps> = ({subscriptions, currentId
         <>
             <div className='user-subscriptions'
                  onClick={clickOnAllSubscriptions}
+                 style={{borderBottom: `2px solid ${colors?.border?.active}`}}
             >
                 {subscriptions?.length} {word}
             </div>

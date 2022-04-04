@@ -13,10 +13,11 @@ interface AllLikesProps {
     likeCounter: number | undefined,
     currentId: string | undefined,
     myId: string | undefined,
+    colors: any
 }
 
 
-const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId,myId}) => {
+const AllLikes: FC<AllLikesProps> = ({likeCounter, currentId,myId, colors}) => {
 
     const {Title, Text} = Typography;
     const height = UseGetContainerHeight(360, 990, 600);
@@ -50,6 +51,7 @@ const getName = (like: any) => {
     return (
         <div>
             <div className='all-likes'
+                 style={{borderBottom: `2px solid ${colors?.border?.active}`}}
                  onClick={clickOnAllLikes}
             >
               {likeCounter || 0} {word}

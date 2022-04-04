@@ -1,5 +1,4 @@
 import React, {FC} from 'react';
-import {Link, NavLink, useNavigate} from "react-router-dom";
 import SocialsNetworksIcons from '../../../../assets/icons/socials-networks';
 import './socials-networks.less';
 
@@ -13,26 +12,26 @@ interface SocialsNetworksProps {
     github: String | undefined,
     soundCloud: String | undefined,
     youTube: String | undefined,
-
+    colors: any,
 }
 
 
 const SocialsNetworks: FC<SocialsNetworksProps> = (props) => {
 
-    const navigate = useNavigate();
-
-    const socialsNetworksArray = []
+    const socialsNetworksArray = [];
 
      for (let [key, value] of Object.entries(props)) {
-        socialsNetworksArray.push({name: key, path: value})
+         key !== 'colors' &&  socialsNetworksArray.push({name: key, path: value})
     }
 
      const iconClick = (path: string) => {
          window.open(path, "_blank")
-     }
+     };
 
     return (
-        <div className='socials-networks'>
+        <div className='socials-networks'
+             style={{border: `2px solid ${props?.colors?.border?.active}`}}
+        >
             {socialsNetworksArray?.map(({name, path}) =>
                 <div className={`socials-networks__link ${path && 'socials-networks__link_present'}`}
                      onClick={() => iconClick(path)}

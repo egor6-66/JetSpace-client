@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import {useLazyQuery} from "@apollo/client";
 import {GET_ALL_USER_IMG} from "../../../../GRAPHQL/queries/img-queries";
@@ -13,7 +13,12 @@ import "swiper/css/thumbs";
 import './all-photos.less';
 
 
-const AllPhotos = () => {
+interface AllPhotosProps {
+    myId: string | undefined,
+    colors: any,
+}
+
+const AllPhotos:FC<AllPhotosProps> = ({myId, colors}) => {
 
     const {id: currentId} = useParams();
     const navigate = useNavigate();

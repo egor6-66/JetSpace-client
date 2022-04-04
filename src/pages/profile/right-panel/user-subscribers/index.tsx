@@ -15,9 +15,10 @@ interface UserSubscribersProps {
     subscribers: string[] | undefined,
     currentId: string | undefined,
     myId:string | undefined,
+    colors: any,
 }
 
-const UserSubscribers:FC<UserSubscribersProps> = ({subscribers, currentId, myId}) => {
+const UserSubscribers:FC<UserSubscribersProps> = ({subscribers, currentId, myId, colors}) => {
 
     const {Title, Text} = Typography;
     const navigate = useNavigate();
@@ -58,6 +59,7 @@ const UserSubscribers:FC<UserSubscribersProps> = ({subscribers, currentId, myId}
         <>
         <div className='user-subscribers'
              onClick={clickOnAllSubscribers}
+             style={{borderBottom: `2px solid ${colors?.border?.active}`}}
         >
             {subscribers?.length} {word}
 

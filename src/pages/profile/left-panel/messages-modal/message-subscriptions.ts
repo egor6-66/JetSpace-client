@@ -9,6 +9,8 @@ const messageSubscriptions = (subscribeToMore :any, refetch: any, userId: any, m
             console.log('prev',prev)
             console.log('subscriptionData',subscriptionData)
             const newMessage = subscriptionData.data.newMessage
+            console.log('tt')
+            console.log(newMessage)
             if (!prev?.getMessages) {
                 //"refetch" должен отработать один раз, только при первом сообщении! когда еще нету "prev"
                 refetch()

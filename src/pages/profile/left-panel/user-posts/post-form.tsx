@@ -3,6 +3,7 @@ import TextArea from "antd/es/input/TextArea";
 import {Button, Popover} from "antd";
 import EmojiPicker from "../../../../components/emoji-picker";
 import {SmileIcon} from "../../../../assets/icons";
+import {UseColor} from "../../../../assets/hooks";
 
 
 interface PostFormProps {
@@ -13,6 +14,7 @@ interface PostFormProps {
 
 const PostForm: FC<PostFormProps> = ({newPost, setNewPost, sendNewPost}) => {
 
+    const colors = UseColor();
     const onEmojiClick = (event: any, emojiObject: any) => setNewPost(newPost + emojiObject.emoji);
 
     return (
@@ -22,7 +24,7 @@ const PostForm: FC<PostFormProps> = ({newPost, setNewPost, sendNewPost}) => {
                           value={newPost}
                           onChange={(e) => setNewPost(e.target.value)}
                           onPressEnter={e => e.code === 'Enter' && !e.ctrlKey && !e.altKey && sendNewPost()}
-
+                          style={{ border: `2px solid ${colors?.border?.active}`}}
                 />
                 <Popover placement={"left"} content={<EmojiPicker onEmojiClick={onEmojiClick}/>}>
                     <div className='emojiPicker'>
@@ -31,8 +33,9 @@ const PostForm: FC<PostFormProps> = ({newPost, setNewPost, sendNewPost}) => {
                 </Popover>
             </div>
             <Button className='posts__form_submit'
+                    style={{ border: `2px solid ${colors?.border?.active}`}}
                     onClick={sendNewPost}>
-                Submit
+                отправить
             </Button>
         </div>
     );

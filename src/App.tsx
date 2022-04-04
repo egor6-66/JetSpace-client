@@ -14,7 +14,7 @@ import Profile from "./pages/profile";
 import UserPosts from "./pages/profile/left-panel/user-posts";
 import DialogsList from "./pages/profile/left-panel/dialogs-list";
 import MessagesModal from "./pages/profile/left-panel/messages-modal";
-import UserFriends from "./pages/profile/left-panel/user-friends";
+import UserNews from "./pages/profile/left-panel/user-news";
 import UserVideos from "./pages/profile/left-panel/user-videos";
 import UserReposts from "./pages/profile/left-panel/user-reposts";
 import AllUsers from "./pages/all-users";
@@ -37,10 +37,10 @@ import {AnimatePresence} from "framer-motion";
 const App = () => {
 
     const {checkAuth} = useActions();
-    const geoLock = UseGeolocation();
 
     const {isAuth} = useTypedSelector(state => state.auth);
     const user = useTypedSelector(state => state.user);
+    const currentUser = useTypedSelector(state => state.currentUser);
     const {isActivated} = useTypedSelector(state => state.voiceAssist);
 
     const location = useLocation()
@@ -48,8 +48,11 @@ const App = () => {
         !!getToken() && checkAuth()
     }, []);
 
+    const geoLock = UseGeolocation();
+    const colors = UseColor();
     UseTheme(user.theme, themes, user.theme);
-    VoiceAssistRoutes(isActivated)
+    VoiceAssistRoutes(isActivated);
+
 
     return (
         isAuth && user.isActivated ?
@@ -57,14 +60,14 @@ const App = () => {
                 <Routes>
                     <Route path="*" element={<Navigate to={`/user/${user.id}/profile/posts`}/>}/>
                     <Route path='user/:id' element={<Wrapper myId={user.id}/>}>
-                        <Route path='profile' element={<Profile myId={user.id}/>}>
-                            <Route path='posts' element={<UserPosts myId={user.id}/>}/>
-                            <Route path='messages' element={<DialogsList myId={user.id}/>}/>
-                            <Route path='message/:userId' element={<MessagesModal myId={user.id}/>}/>
-                            <Route path='videos' element={<UserVideos myId={user.id}/>}/>
-                            <Route path='reposts' element={<UserReposts/>}/>
-                            <Route path='news' element={<UserFriends/>}/>
-                            <Route path='allPhotos/:userId' element={<AllPhotos/>}/>
+                        <Route path='profile' element={<Profile myId={user.id} colors={colors}/>}>
+                            <Route path='posts' element={<UserPosts myId={user.id} colors={colors}/>}/>
+                            <Route path='messages' element={<DialogsList myId={user.id} colors={colors}/>}/>
+                            <Route path='message/:userId' element={<MessagesModal myId={user.id} colors={colors}/>}/>
+                            <Route path='videos' element={<UserVideos myId={user.id} colors={colors}/>}/>
+                            <Route path='reposts' element={<UserReposts myId={user.id} colors={colors}/>}/>
+                            <Route path='news' element={<UserNews myId={user.id} colors={colors}/>}/>
+                            <Route path='allPhotos/:userId' element={<AllPhotos myId={user.id} colors={colors}/>}/>
                         </Route>
                         <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>
                         <Route path='allUsers' element={<AllUsers/>}/>
