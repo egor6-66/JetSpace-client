@@ -9,30 +9,30 @@ import {useTypedSelector} from "../../../../store";
 
 interface RightPanelMenuProps {
     currentId: string | undefined,
+    colors: any
 }
 
-const RightPanelMenu: FC<RightPanelMenuProps> = ({currentId}) => {
+const RightPanelMenu: FC<RightPanelMenuProps> = ({currentId, colors}) => {
 
     const user = useTypedSelector(state => state.user);
     const currentUser = useTypedSelector(state => state.currentUser);
-    const colors = UseTextColor();
     const [activeItem, setActiveItem] = useState<number>(0);
     const [focus, setFocus] = useState<boolean>(false)
 
     const animateVariant = {
         hidden:{
-            color: colors.disabled
+            color: colors?.text?.disabled
         },
         initial: (item : any)=> ({
-            color: activeItem === item.id && setFocus ? colors.active : colors.disabled
+            color: activeItem === item.id && setFocus ? colors?.text?.active : colors?.text?.disabled
         })
     }
     const animateVariant2 = {
         hidden:{
-            color: colors.disabled
+            color: colors?.text?.disabled
         },
         initial: (item : any)=> ({
-            color: colors.disabled
+            color: colors?.text?.disabled
         })
     }
 
@@ -52,6 +52,7 @@ const RightPanelMenu: FC<RightPanelMenuProps> = ({currentId}) => {
                                 animate='initial'
                     >
                         <item.component
+                            colors={colors}
                             myId={user.id}
                             likeCounter={+currentUser.likeCounter}
                             dislikeCounter={+currentUser.dislikeCounter}

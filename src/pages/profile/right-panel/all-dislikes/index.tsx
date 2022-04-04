@@ -1,21 +1,22 @@
 import React, {FC, useState} from 'react';
 import wordDeclension from "../../../../assets/functions/word-declension";
-import {Avatar, Button, Modal, Typography} from "antd";
-import './all-dislikes.less';
 import {useLazyQuery} from "@apollo/client";
 import {GET_ALL_DISLIKES} from "../../../../GRAPHQL/queries/dislike-queries";
-import moment from "moment";
 import {UseAnimate, UseGetContainerHeight} from "../../../../assets/hooks";
+import moment from "moment";
+import {Avatar, Button, Modal, Typography} from "antd";
 import {motion} from "framer-motion";
+import './all-dislikes.less';
 
 
 interface AllDislikesProps {
     dislikeCounter: number,
     currentId: string | undefined
+    colors: any
 }
 
 
-const AllDislikes: FC<AllDislikesProps> = ({dislikeCounter, currentId}) => {
+const AllDislikes: FC<AllDislikesProps> = ({dislikeCounter, currentId, colors}) => {
 
     const {Title, Text} = Typography;
     const height = UseGetContainerHeight(360, 990, 600)
@@ -45,6 +46,7 @@ const AllDislikes: FC<AllDislikesProps> = ({dislikeCounter, currentId}) => {
     return (
         <>
             <div className='all-dislikes'
+                 style={{borderBottom: `2px solid ${colors?.border?.active}`}}
                  onClick={clickOnAllLikes}
             >
                 {dislikeCounter || 0} {word}

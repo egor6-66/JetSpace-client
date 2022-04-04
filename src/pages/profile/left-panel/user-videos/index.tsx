@@ -11,9 +11,10 @@ import './user-videos.less';
 
 interface UserVideosProps {
     myId: string | undefined,
+    colors: any,
 }
 
-const UserVideos: FC<UserVideosProps> = ({myId}) => {
+const UserVideos: FC<UserVideosProps> = ({myId, colors}) => {
 
     const {id: currentId} = useParams();
     const {Title} = Typography;

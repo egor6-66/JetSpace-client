@@ -1,9 +1,10 @@
 import React, {FC, useState} from 'react';
-import {Collapse, Typography} from "antd";
-import moment from "moment";
 import {CommentsIcon, DislikeIcon, LikeIcon} from "../../../../assets/icons";
 import AllComments from "../../../../components/comment/all-comments";
 import {ICurrentUser} from "../../../../models/current-user";
+import {UseColor} from "../../../../assets/hooks";
+import {Collapse, Typography} from "antd";
+import moment from "moment";
 
 
 interface PostsListProps {
@@ -20,13 +21,11 @@ interface PostsListProps {
     scrollTop: any,
 }
 
-const PostsList: FC<PostsListProps> = ({
-                                           myId, data, currentUser, postRef, likeClick, dislikeClick,
-                                           isActive, commentsRef, currentId, scrollBottom, scrollTop
-                                       }) => {
+const PostsList: FC<PostsListProps> = ({myId, data, currentUser, postRef, likeClick, dislikeClick, isActive, commentsRef, currentId, scrollBottom, scrollTop}) => {
 
     const {Title, Text} = Typography;
     const {Panel} = Collapse;
+    const colors = UseColor();
 
     const [activePostId, setActivePostId] = useState<any>(null);
 
@@ -39,7 +38,10 @@ const PostsList: FC<PostsListProps> = ({
             >
                 {data?.getUserPosts?.posts?.map(({id, date, content, likes, dislikes, comments}: any, index: number) =>
                     <Panel key={id} showArrow={false} header={
-                        <div ref={id === activePostId ? postRef : null} className='posts__list_item post-item'>
+                        <div ref={id === activePostId ? postRef : null}
+                             className='posts__list_item post-item'
+                             style={{border: `2px solid ${colors?.border?.active}`}}
+                        >
                             <div className='post-item__top-block'>
                                 <img className='post-item__top-block_avatar' src={currentUser.avatar} alt=""/>
                                 <div className='post-item__top-block_userNameAndData'>

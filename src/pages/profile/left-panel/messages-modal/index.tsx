@@ -18,9 +18,10 @@ import Spinner1 from "../../../../components/spinners/spinner-1";
 
 interface MessagesModalProps {
     myId: string | undefined,
+    colors: any,
 }
 
-const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
+const MessagesModal: FC<MessagesModalProps> = ({myId, colors}) => {
 
     const navigate = useNavigate();
     const {id: currentId, userId} = useParams();
@@ -46,12 +47,12 @@ const MessagesModal: FC<MessagesModalProps> = ({myId}) => {
         userTyping({variables: {myId: myId, userId: userId, userName: startTyping ? `${user.name}_${user.lastName}` : ''}}).then()
     };
     const submit = async () => {
-        await addMessage({variables: {myId: myId, recipientId: currentId, userId: userId, type: 'text', content: newMessage,},});
+        await addMessage({variables: {myId: myId, recipientId: currentId, userId: userId, type: 'text', content: newMessage,}});
         setNewMessage('')
     };
 
     useEffect(() => messageSubscriptions(subscribeToMore, refetch, userId, myId), []);
-    useEffect(() => subTyping(), [startTyping])
+    useEffect(() => subTyping(), [startTyping]);
     useEffect(() => newMessage.length >= 1 ? setStartTyping(true) : setStartTyping(false), [newMessage]);
     useEffect(() => !loading && messageRef?.current?.scrollIntoView({block: "end"}), [data]);
 

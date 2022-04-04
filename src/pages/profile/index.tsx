@@ -7,16 +7,17 @@ import UserInfo from "./top-panel/user-info";
 import RightPanelMenu from "./right-panel/menu";
 import NavMenu from "./left-panel/nav-menu";
 import SocialsNetworks from "./right-panel/socials-networts";
-import {motion,AnimatePresence} from "framer-motion";
+import {motion} from "framer-motion";
 import './profile.less';
-import navMenuList from "./left-panel/nav-menu/list";
 
 
 interface ProfileProps {
-    myId: string | undefined,
+        myId: string | undefined,
+        colors: any,
 }
 
-const Profile: FC<ProfileProps> = ({myId}) => {
+const Profile: FC<ProfileProps> = ({myId, colors}) => {
+
 
     const {getUser} = useActions();
     const {id: currentId} = useParams();
@@ -30,12 +31,11 @@ const Profile: FC<ProfileProps> = ({myId}) => {
 
     useEffect(() => {
         getUser(data?.getUser)
-
     }, [data, currentId])
 
     return (
         <motion.div className='profile'
-                    initial={{opacity:0}} animate={{opacity: 1}} exit={{opacity:0}}
+                    initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}
         >
             <UserInfo
                 myId={myId}
@@ -57,6 +57,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                     </div>
                     <div className='profile__content_right-panel'>
                         <SocialsNetworks
+                            colors={colors}
                             instagram={data?.getUser.instagram}
                             facebook={data?.getUser.facebook}
                             twitter={data?.getUser.twitter}
@@ -68,6 +69,7 @@ const Profile: FC<ProfileProps> = ({myId}) => {
                         />
                         <RightPanelMenu
                             currentId={currentId}
+                            colors={colors}
                         />
                     </div>
                 </div>

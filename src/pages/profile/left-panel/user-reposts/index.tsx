@@ -1,6 +1,12 @@
-import React from 'react';
+import React, {FC} from 'react';
 
-const UserReposts = () => {
+
+interface UserRepostsProps{
+    myId: string | undefined,
+    colors: any,
+}
+
+const UserReposts:FC<UserRepostsProps> = ({myId, colors}) => {
     return (
         <div>
             UserReposts
