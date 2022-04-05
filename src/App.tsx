@@ -67,7 +67,7 @@ const App = () => {
                             <Route path='videos' element={<UserVideos myId={user.id} colors={colors}/>}/>
                             <Route path='reposts' element={<UserReposts myId={user.id} colors={colors}/>}/>
                             <Route path='news' element={<UserNews myId={user.id} colors={colors}/>}/>
-                            <Route path='allPhotos/:userId' element={<AllPhotos myId={user.id} colors={colors}/>}/>
+                            <Route path='allPhotos/:userId' element={<AllPhotos currentUser={currentUser} myId={user.id} colors={colors}/>}/>
                         </Route>
                         <Route path='editProfile' element={<EditProfile myId={user.id}/>}/>
                         <Route path='allUsers' element={<AllUsers/>}/>

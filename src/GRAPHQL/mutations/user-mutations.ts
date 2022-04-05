@@ -44,3 +44,13 @@ export const EDIT_STATUS = gql`
         }
     }
 `
+
+export const EDIT_AVATAR = gql`
+    mutation editAvatar($id: ID, $avatar: String){
+        editAvatar(id: $id, avatar: $avatar){
+            id
+            avatar
+        }
+    }
+`
+

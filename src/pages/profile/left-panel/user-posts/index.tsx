@@ -77,6 +77,7 @@ const UserPosts: FC<UserPostsProps> = ({myId, colors}) => {
                         currentId={currentId}
                         scrollBottom={scrollBottom}
                         scrollTop={scrollTop}
+                        colors={colors}
                     />
             }
         </div>

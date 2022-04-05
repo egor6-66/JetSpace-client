@@ -40,7 +40,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
         console.log(payload)
     };
 
-    const {data, loading, subscribeToMore} = useQuery( GET_NOTIFICATIONS_SUB, {variables: {myId: myId}});
+    const {data, refetch, loading, subscribeToMore} = useQuery( GET_NOTIFICATIONS_SUB, {variables: {myId: myId}});
 
     const getActiveItem = () => {
         const rout = headerList(myId).find(item => location === item.path.split('/').pop() )
@@ -48,7 +48,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
         rout ? setActiveItem(rout.id) : childRout ? setActiveItem(1) : setActiveItem(null)
         myId !== currentId && setActiveItem(null)
     };
-
+    console.log()
     useEffect(() => {
         notificationsSubscriptions(subscribeToMore, myId)
     },[]);
@@ -110,6 +110,7 @@ const Header: FC<HeaderProps> = ({myId}) => {
                         <Notifications
                             myId={myId}
                             currentId={currentId}
+                            refetch={refetch}
                         />
                     } trigger='click' destroyTooltipOnHide={true}>
                         <div className='header__right-block_icon'>

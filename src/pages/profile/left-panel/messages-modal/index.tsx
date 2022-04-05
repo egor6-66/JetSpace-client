@@ -1,15 +1,15 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
-import {useNavigate, useParams} from "react-router-dom";
+import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation, useQuery, useSubscription} from "@apollo/client";
 import {GET_MESSAGES} from "../../../../GRAPHQL/queries/message-queries";
-import {ADD_MESSAGE, USER_TYPING} from "../../../../GRAPHQL/mutations/message-mutations";
+import {ADD_MESSAGE, SET_MESSAGE_LOCATION, USER_TYPING} from "../../../../GRAPHQL/mutations/message-mutations";
 import {USER_TYPING_SUB} from '../../../../GRAPHQL/subscriptions/message-subscriptions'
 import {UseGetContainerHeight, UseGetContainerWidth} from "../../../../assets/hooks";
 import messageSubscriptions from "./message-subscriptions";
 import {useTypedSelector} from "../../../../store";
 import MessagesModalFooter from "./messages-modal-footer";
 import MessagesBody from "./messages-body";
-import MessageFooter from "./message-footer";
+import MessageModalHeader from "./message-modal-header";
 import {Modal} from "antd";
 import './messages-modal.less'
 import Spinner2 from "../../../../components/spinners/spinner-2";
@@ -24,6 +24,7 @@ interface MessagesModalProps {
 const MessagesModal: FC<MessagesModalProps> = ({myId, colors}) => {
 
     const navigate = useNavigate();
+    const location = useLocation().pathname.split('/').pop();
     const {id: currentId, userId} = useParams();
     const messageRef: any = useRef(null);
     const width = UseGetContainerWidth(120, 1280, 900);
@@ -35,6 +36,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId, colors}) => {
 
     const [addMessage] = useMutation(ADD_MESSAGE);
     const [userTyping] = useMutation(USER_TYPING);
+    const [setMessageLocation] = useMutation(SET_MESSAGE_LOCATION);
     const {data: typingSub} = useSubscription(USER_TYPING_SUB, {variables: {myId: myId, userId: userId}});
 
     const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_MESSAGES, {
@@ -51,13 +53,17 @@ const MessagesModal: FC<MessagesModalProps> = ({myId, colors}) => {
         setNewMessage('')
     };
 
-    useEffect(() => messageSubscriptions(subscribeToMore, refetch, userId, myId), []);
+    useEffect(() => {
+        setMessageLocation({variables: {myId: myId, location: location}})
+        messageSubscriptions(subscribeToMore, refetch, userId, myId)
+    }, []);
     useEffect(() => subTyping(), [startTyping]);
     useEffect(() => newMessage.length >= 1 ? setStartTyping(true) : setStartTyping(false), [newMessage]);
     useEffect(() => !loading && messageRef?.current?.scrollIntoView({block: "end"}), [data]);
 
 
-    const onCancelModal = () => {
+    const onCancelModal = async () => {
+        await setMessageLocation({variables: {myId: myId, location: null}})
         setStartTyping(false)
         subTyping()
         navigate(-1,)
@@ -69,7 +75,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId, colors}) => {
                onCancel={onCancelModal}
                width={width}
                destroyOnClose={true}
-               title={<MessageFooter data={data}/>}
+               title={<MessageModalHeader data={data}/>}
                bodyStyle={{padding: '24px 24px 0 24px', overflowY: "scroll", height: height, position: "relative"}}
                footer={
                    <MessagesModalFooter

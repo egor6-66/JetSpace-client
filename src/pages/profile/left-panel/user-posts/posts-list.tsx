@@ -3,7 +3,7 @@ import {CommentsIcon, DislikeIcon, LikeIcon} from "../../../../assets/icons";
 import AllComments from "../../../../components/comment/all-comments";
 import {ICurrentUser} from "../../../../models/current-user";
 import {UseColor} from "../../../../assets/hooks";
-import {Collapse, Typography} from "antd";
+import {Avatar, Collapse, Typography} from "antd";
 import moment from "moment";
 
 
@@ -19,13 +19,16 @@ interface PostsListProps {
     currentId: string | undefined
     scrollBottom: any,
     scrollTop: any,
+    colors: any,
 }
 
-const PostsList: FC<PostsListProps> = ({myId, data, currentUser, postRef, likeClick, dislikeClick, isActive, commentsRef, currentId, scrollBottom, scrollTop}) => {
+const PostsList: FC<PostsListProps> = ({
+                                           myId, data, currentUser, postRef, likeClick, dislikeClick,
+                                           isActive, commentsRef, currentId, scrollBottom, scrollTop, colors
+                                       }) => {
 
     const {Title, Text} = Typography;
     const {Panel} = Collapse;
-    const colors = UseColor();
 
     const [activePostId, setActivePostId] = useState<any>(null);
 
@@ -43,7 +46,7 @@ const PostsList: FC<PostsListProps> = ({myId, data, currentUser, postRef, likeCl
                              style={{border: `2px solid ${colors?.border?.active}`}}
                         >
                             <div className='post-item__top-block'>
-                                <img className='post-item__top-block_avatar' src={currentUser.avatar} alt=""/>
+                                <Avatar size={50} src={currentUser.avatar}/>
                                 <div className='post-item__top-block_userNameAndData'>
                                     <Title level={4}>{currentUser?.name} {currentUser.lastName}</Title>
                                     <Text>{moment.unix(date).calendar()}</Text>
@@ -57,7 +60,7 @@ const PostsList: FC<PostsListProps> = ({myId, data, currentUser, postRef, likeCl
                                     <div className={`like-icon ${isActive(likes) && 'like-icon__active'}`}
                                          onClick={() => likeClick(id, likes)}
                                     >
-                                        <LikeIcon/>
+                                        <LikeIcon colors={colors}/>
                                     </div>
                                     <Title level={4}>{likes && likes.length}</Title>
                                 </div>

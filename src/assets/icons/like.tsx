@@ -1,12 +1,9 @@
 import React from 'react';
 import {motion} from "framer-motion";
-import {UseColor, UseSvgColor} from "../hooks";
 import Defs from "./DEFS";
 
 
-const LikeIcon = () => {
-
-    const colors = UseColor()
+const LikeIcon = ({colors}: any) => {
 
     const heartVariants = {
         hover: {
