@@ -81,7 +81,7 @@ const AudioPlayer: FC<AudioPlayerProps> = ({myId, currentId, url, type, soundId}
                 <div className='audio-player__icons'>
                     {myId === currentId ?
                         <Popover content={`удалить ${type === 'soundTracks'? 'трек' : 'плэйлист'}`} placement='left'>
-                            <div onClick={deleteSound}><DeleteIcon/></div>
+                            <div onClick={deleteSound}><DeleteIcon colors={colors}/></div>
                         </Popover>
                         :
                         <Popover content={'добавить себе'} placement='left'>

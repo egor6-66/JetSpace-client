@@ -23,7 +23,7 @@ const Profile: FC<ProfileProps> = ({myId, colors}) => {
     const {id: currentId} = useParams();
     const location = useLocation().pathname.split('/').pop();
 
-    const {data, loading, error, subscribeToMore} = useQuery(GET_USER, {
+    const {data, refetch, loading, error, subscribeToMore} = useQuery(GET_USER, {
         fetchPolicy: `${myId === currentId ? 'cache-and-network' : 'network-only'}`,
         nextFetchPolicy: 'cache-only',
         variables: {userId: currentId}
@@ -48,6 +48,7 @@ const Profile: FC<ProfileProps> = ({myId, colors}) => {
                 headerAvatar={data?.getUser.headerAvatar}
                 subscribers={data?.getUser.subscribers}
                 subscriptions={data?.getUser.subscriptions}
+                refetch={refetch}
             />
             <div className='profile__content-wrapper'>
                 <NavMenu myId={myId} currentId={currentId}/>

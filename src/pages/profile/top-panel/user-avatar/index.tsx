@@ -10,38 +10,32 @@ import './user-avatar.less';
 interface UserAvatarProps {
     avatar: string | undefined | null,
     currentId: string | undefined,
+    refetch: any,
 }
 
-const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
+const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId, refetch}) => {
 
     const {Text} = Typography;
     const navigate = useNavigate();
 
-    const [newAvatar, setNewAvatar] = useState<any>(null);
-    const [isLoading, setIsLoading] = useState<boolean>(false);
     const [error, setError] = useState<string>('');
     const [isVisibleImgMenu, setIsVisibleImgMenu] = useState<boolean>(false);
 
-
     const customRequest = async ({file}: any) => {
         try {
-            setIsLoading(true)
-            const imgUrl = await getBase64(file)
             const bodyFormData = new FormData();
             bodyFormData.append('avatar', file);
-            const response = await $axios.post(`${API_URL}/fileUpload`, bodyFormData)
-            setNewAvatar(imgUrl)
+            await $axios.post(`${API_URL}/fileUpload`, bodyFormData)
+            setTimeout(() => refetch(), 600)
         } catch (e) {
             setError('Не удалось загрузить аватар')
-        } finally {
-            setIsLoading(false)
         }
     };
 
     const clickToAvatar = (e: any) => {
         e.stopPropagation()
         navigate(`allPhotos/${currentId}`)
-    }
+    };
 
     return (
         <>
@@ -49,17 +43,13 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
                  onMouseEnter={() => setIsVisibleImgMenu(true)}
                  onMouseLeave={() => setIsVisibleImgMenu(false)}
             >
-                {isLoading ?
-                    <div>loading...</div>
-                    :
-                    <div className='user-avatar__img'
-                        onClick={(e) => clickToAvatar(e)}>
-                        <Avatar
-                            src={newAvatar ? newAvatar : avatar}
-                            size={200}
-                        />
-                    </div>
-                }
+                <div className='user-avatar__img'
+                     onClick={(e) => clickToAvatar(e)}>
+                    <Avatar
+                        src={avatar}
+                        size={200}
+                    />
+                </div>
                 <Upload
                     accept={'image/*'}
                     name="avatar"
@@ -67,7 +57,7 @@ const UserAvatar: FC<UserAvatarProps> = ({avatar, currentId}) => {
                     showUploadList={false}
                     customRequest={customRequest}
                 >
-                    {isVisibleImgMenu && <Text className='user-avatar__upload'>Изменить фото</Text>}
+                    {isVisibleImgMenu && <Text className='user-avatar__upload'>Изменить аватар</Text>}
                 </Upload>
             </div>
         </>

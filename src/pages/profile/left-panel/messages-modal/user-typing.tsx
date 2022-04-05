@@ -43,8 +43,8 @@ const UserTyping: FC<UserTypingProps> = ({userName}) => {
                         width: 'auto',
                         alignItems: 'center',
                         justifyContent: "center",
-                        position: 'absolute',
-                        bottom: '58px',
+                        position: 'fixed',
+                        bottom: '158px',
                         left: '50%',
                         transform: 'translate(-50%, -50%)',
                     }}>

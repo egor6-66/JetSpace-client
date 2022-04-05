@@ -9,7 +9,7 @@ import messageSubscriptions from "./message-subscriptions";
 import {useTypedSelector} from "../../../../store";
 import MessagesModalFooter from "./messages-modal-footer";
 import MessagesBody from "./messages-body";
-import MessageFooter from "./message-footer";
+import MessageModalHeader from "./message-modal-header";
 import {Modal} from "antd";
 import './messages-modal.less'
 import Spinner2 from "../../../../components/spinners/spinner-2";
@@ -29,7 +29,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId, colors}) => {
     const messageRef: any = useRef(null);
     const width = UseGetContainerWidth(120, 1280, 900);
     const height = UseGetContainerHeight(360, 990, 600);
-    console.log(location)
+
     const user = useTypedSelector(state => state.user);
     const [newMessage, setNewMessage] = useState<string>('');
     const [startTyping, setStartTyping] = useState<boolean>(false);
@@ -75,7 +75,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId, colors}) => {
                onCancel={onCancelModal}
                width={width}
                destroyOnClose={true}
-               title={<MessageFooter data={data}/>}
+               title={<MessageModalHeader data={data}/>}
                bodyStyle={{padding: '24px 24px 0 24px', overflowY: "scroll", height: height, position: "relative"}}
                footer={
                    <MessagesModalFooter

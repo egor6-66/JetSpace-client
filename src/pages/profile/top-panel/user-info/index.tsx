@@ -21,9 +21,10 @@ interface UserInfoProps {
     headerAvatar: string | undefined,
     subscribers: any[],
     subscriptions: any[],
+    refetch:any
 }
 
-const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName, status, avatar, headerAvatar, subscribers, subscriptions}) => {
+const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName, status, avatar, headerAvatar, subscribers, refetch}) => {
 
     const {Title,} = Typography;
     const color = UseTextColor()
@@ -68,6 +69,7 @@ const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName,
     return (
         <div className='user-info' style={{backgroundImage: `url(${headerAvatar})`}}>
             <UserAvatar
+                refetch={refetch}
                 avatar={avatar}
                 currentId={currentId}
             />
@@ -84,15 +86,16 @@ const UserInfo: FC<UserInfoProps> = ({myId, currentId, isOnline, name, lastName,
             <Title level={3} className='user-info__isOnline'>
                 {isOnline ? 'Online' : 'Offline'}
             </Title>
-            {myId !== currentId && <motion.div className='user-info__follow-btn'
-                                               onClick={clickFollowBtn}
-                                               variants={UseAnimate('rotateY')}
-                                               initial='visible'
-                                               animate='hidden'
-                                               whileTap='click'
+            {myId !== currentId &&
+            <motion.div className='user-info__follow-btn'
+                        onClick={clickFollowBtn}
+                        variants={UseAnimate('rotateY')}
+                        initial='visible'
+                        animate='hidden'
+                        whileTap='click'
             >
                 <div className='user-info__follow-btn_title'
-                style={{color: color.active}}
+                     style={{color: color.active}}
                 >
                     {isFollow ? 'отписаться' : 'подписаться'}
                 </div>

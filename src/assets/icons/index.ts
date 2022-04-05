@@ -22,6 +22,7 @@ import SoundCloudIcon from './sound-cloud-icon';
 import SaveIcon from './save-icon';
 import DeleteIcon from './delete-icon';
 import YouTubeIcon from './youTube-icon';
+import AvatarIcon from "./avatar-icon";
 
 export {
     LogoProjectIcon,
@@ -47,5 +48,6 @@ export {
     SoundCloudIcon,
     SaveIcon,
     DeleteIcon,
-    YouTubeIcon
+    YouTubeIcon,
+    AvatarIcon
 }

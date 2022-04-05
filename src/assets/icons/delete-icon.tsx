@@ -1,9 +1,7 @@
 import React from 'react';
 import {UseColor} from "../hooks";
 
-const DeleteIcon = () => {
-
-    const colors = UseColor()
+const DeleteIcon = ({colors}:any) => {
 
     return (
         <svg
