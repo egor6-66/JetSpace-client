@@ -1,17 +1,19 @@
 import React, {FC} from 'react';
-import {useQuery} from "@apollo/client";
+import {useMutation, useQuery} from "@apollo/client";
 import {GET_NOTIFICATIONS} from "../../GRAPHQL/queries/notification-queries";
+import {CLEAR_NOTIFICATIONS} from "../../GRAPHQL/mutations/notification";
 import moment from "moment";
-import {Avatar, Typography} from "antd";
+import {Avatar, Button, Typography} from "antd";
 import './notifications.less';
 
 
 interface NotificationsProps {
     myId: string | undefined,
     currentId: string | undefined,
+    refetch: any,
 }
 
-const Notifications: FC<NotificationsProps> = ({myId, currentId}) => {
+const Notifications: FC<NotificationsProps> = ({myId, currentId, refetch}) => {
 
     const {Title, Text} = Typography;
 
@@ -20,10 +22,20 @@ const Notifications: FC<NotificationsProps> = ({myId, currentId}) => {
         nextFetchPolicy: 'network-only',
         variables: {myId: myId}
     });
+    const [clearNotifications] = useMutation(CLEAR_NOTIFICATIONS);
 
-    const getActionType = (action: string, ) => {
+    const getActionType = (action: string,) => {
         if (action === 'add-like-post') return `оценил ваш пост`
-        if (action === 'add-dislike-post')  return `не понравился ваш пост`
+        if (action === 'add-dislike-post') return `не понравился ваш пост`
+    };
+
+    const clearNotification = async () => {
+        await clearNotifications({
+            variables: {
+                myId: myId
+            }
+        })
+        refetch()
     };
 
     return (
@@ -31,6 +43,11 @@ const Notifications: FC<NotificationsProps> = ({myId, currentId}) => {
             <div className='notifications__body'>
                 <div className='notifications__body_header'>
                     <Title level={3}>уведомления</Title>
+                </div>
+                <div className='notifications__body_header-btn'>
+                    <Button onClick={clearNotification}>
+                        очистить
+                    </Button>
                 </div>
                 <div className='notifications__body_list'>
                     {data?.getNotifications?.notifications.map((item: any) =>

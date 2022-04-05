@@ -3,7 +3,6 @@ import {NavLink} from "react-router-dom";
 import {useLazyQuery} from "@apollo/client";
 import {GET_ALL_DIALOGS} from "../../../../GRAPHQL/queries/dialogs-queries";
 import {MessageIcon} from '../../../../assets/icons';
-import {UseColor} from "../../../../assets/hooks";
 import {Typography, Avatar} from 'antd';
 import './dialogs-list.less';
 
@@ -24,16 +23,16 @@ const DialogsList: FC<DialogsListProps> = ({myId, colors}) => {
             id: myId,
         }
     });
-
+    console.log(data)
     useEffect(() => {
         getAllDialogs()
     }, [])
 
     return (
         <div className='dialogs-list'>
-            {data && data?.getAllDialogs?.dialogs.map(({userName, userLastName, userAvatar, userId}: any) =>
+            {data && data?.getAllDialogs?.dialogs.map(({userName, userLastName, userAvatar, userId, newMessages}: any) =>
                 <div key={userId} className='dialogs-list__item'
-                     style={{ border: `2px solid ${colors?.border?.active}`}}
+                     style={{border: `2px solid ${colors?.border?.active}`}}
                 >
                     <div className='dialogs-list__item_left-block'>
                         <Avatar src={userAvatar} size={90}/>
@@ -47,9 +46,9 @@ const DialogsList: FC<DialogsListProps> = ({myId, colors}) => {
                             перейти на страницу пользователя
                         </NavLink>
                     </div>
-                    <div className='dialogs-list__item_message-icon'>
-                        <MessageIcon/>
-                    </div>
+                    {newMessages && <div className='dialogs-list__item_message-icon'>
+                        <MessageIcon colors={colors}/>
+                    </div>}
                 </div>
             )}
         </div>

@@ -2,19 +2,8 @@ import React from 'react';
 import useSvgColor from "../hooks/useSvgColor";
 import {motion} from "framer-motion";
 
-const MessageIcon = () => {
+const MessageIcon = ({colors}: any) => {
 
-    const color = useSvgColor()
-
-    const circleVariants = {
-        hidden: {},
-        visible: {
-
-            transition: {
-                duration: 1
-            }
-        }
-    };
     const pathVariants = {
         hidden: {
             rotate: -90,
@@ -30,7 +19,6 @@ const MessageIcon = () => {
             }
         }
     };
-
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -41,11 +29,10 @@ const MessageIcon = () => {
             <g fill="none" fillRule="evenodd" stroke="none" strokeWidth="1">
                 <g>
                     <path
-                        fill="url(#radialGradient-1)"
                         d="M30 60c16.569 0 30-13.431 30-30C60 13.431 46.569 0 30 0 13.431 0 0 13.431 0 30c0 16.569 13.431 30 30 30z"
                    />
                     <motion.path
-                        fill={color.active}
+                        fill={colors.svg.svg}
                         variants={pathVariants}
                         initial='hidden'
                         animate='visible'

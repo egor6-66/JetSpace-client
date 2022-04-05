@@ -16,3 +16,12 @@ export const USER_TYPING = gql`
         }
     }
 `
+
+
+export const SET_MESSAGE_LOCATION = gql`
+    mutation setMessageLocation($myId: ID, $location: String){
+        setMessageLocation(myId: $myId, location: $location){
+            userId
+        }
+    }
+`
