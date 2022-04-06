@@ -1,5 +1,5 @@
 import React from 'react';
-import {UseColor} from "../hooks";
+
 
 const DeleteIcon = ({colors}:any) => {
 

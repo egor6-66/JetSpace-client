@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {CommentsIcon, DislikeIcon, LikeIcon} from "../../../../assets/icons";
+import {CommentsIcon, DeleteIcon, DislikeIcon, LikeIcon} from "../../../../assets/icons";
 import AllComments from "../../../../components/comment/all-comments";
 import {ICurrentUser} from "../../../../models/current-user";
 import {UseColor} from "../../../../assets/hooks";
@@ -20,11 +20,12 @@ interface PostsListProps {
     scrollBottom: any,
     scrollTop: any,
     colors: any,
+    removePostClick: any,
 }
 
 const PostsList: FC<PostsListProps> = ({
                                            myId, data, currentUser, postRef, likeClick, dislikeClick,
-                                           isActive, commentsRef, currentId, scrollBottom, scrollTop, colors
+                                           isActive, commentsRef, currentId, scrollBottom, scrollTop, colors,removePostClick
                                        }) => {
 
     const {Title, Text} = Typography;
@@ -79,6 +80,13 @@ const PostsList: FC<PostsListProps> = ({
                                         <CommentsIcon/>
                                     </div>
                                     <Title level={4}>{comments.length}</Title>
+                                </div>
+                                <div className='post-item__bottom-block_delete'>
+                                    <div className='delete-icon'
+                                         onClick={() => removePostClick(id)}
+                                    >
+                                        <DeleteIcon colors={colors}/>
+                                    </div>
                                 </div>
                             </div>
                         </div>

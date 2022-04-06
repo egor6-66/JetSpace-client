@@ -10,6 +10,14 @@ export const ADD_POST = gql`
     }
 `
 
+export const REMOVE_POST = gql`
+    mutation removePost($userId: ID, $postId: ID){
+        removePost(userId: $userId,  postId: $postId){
+            ${postsModel}
+        }
+    }
+`
+
 export const ADD_COMMENT = gql`
     mutation addCommentPost($ownerId: ID, $userId: ID, $postId: ID, $content: String){
         addCommentPost(ownerId: $ownerId, userId: $userId, postId: $postId,  content: $content){

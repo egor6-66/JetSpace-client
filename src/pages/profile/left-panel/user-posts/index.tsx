@@ -3,7 +3,7 @@ import {useTypedSelector} from "../../../../store";
 import {useParams} from "react-router-dom";
 import {useMutation, useQuery} from "@apollo/client";
 import {GET_USER_POSTS} from "../../../../GRAPHQL/queries/post-queries";
-import {ADD_POST, SEND_DISLIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
+import {ADD_POST, REMOVE_POST, SEND_DISLIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import {SEND_LIKE_POST} from "../../../../GRAPHQL/mutations/post-mutations";
 import postSubscriptions from "./post-subscriptions";
 import Spinner1 from "../../../../components/spinners/spinner-1";
@@ -30,6 +30,7 @@ const UserPosts: FC<UserPostsProps> = ({myId, colors}) => {
 
 
     const [addPost] = useMutation(ADD_POST);
+    const [removePost] = useMutation(  REMOVE_POST);
     const [sendLikePost] = useMutation(SEND_LIKE_POST);
     const [sendDislikePost] = useMutation(SEND_DISLIKE_POST);
 
@@ -46,6 +47,7 @@ const UserPosts: FC<UserPostsProps> = ({myId, colors}) => {
 
     const likeClick = async (id: string) => await sendLikePost({variables: {ownerId: currentId, postId: id, userId: myId,}});
     const dislikeClick = async (id: string) => await sendDislikePost({variables: {ownerId: currentId, postId: id, userId: myId,}});
+    const removePostClick = async (id: string) => await removePost({variables: {postId: id, userId: myId,}});
 
     const scrollBottom = () => commentsRef?.current?.scrollIntoView({behavior: "smooth", block: "end"});
     const scrollTop = () => postRef?.current?.scrollIntoView({behavior: "smooth", block: "start"});
@@ -78,6 +80,7 @@ const UserPosts: FC<UserPostsProps> = ({myId, colors}) => {
                         scrollBottom={scrollBottom}
                         scrollTop={scrollTop}
                         colors={colors}
+                        removePostClick={removePostClick}
                     />
             }
         </div>
