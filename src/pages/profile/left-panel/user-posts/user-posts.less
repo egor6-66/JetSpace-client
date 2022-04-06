@@ -4,6 +4,7 @@
 .posts {
   width: 100%;
   position: relative;
+
   &__form {
     display: flex;
 
@@ -67,14 +68,24 @@
 
       &__bottom-block {
         position: relative;
-        width: 200px;
+        width: 100%;
         display: flex;
-        justify-content: space-between;
+        justify-content: start;
+        gap: 26px;
+
+        &_delete {
+          position: absolute;
+          right: 0;
+          .delete-icon {
+            .like-dislike-template;
+          }
+        }
+
 
         &_like, &_dislike, &_comments {
           z-index: 15;
           position: relative;
-          flex: 1;
+          //flex: 1;
           display: flex;
           align-items: center;
           gap: 4px;
