@@ -1,5 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
-import {UseAnimate, UseColor} from '../../../../assets/hooks'
+import {UseAnimate, UseColor} from '../../../assets/hooks'
 import {useInterval} from 'react-use';
 import {AnimatePresence, motion} from "framer-motion";
 

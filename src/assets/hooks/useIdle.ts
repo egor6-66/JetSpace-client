@@ -2,8 +2,7 @@ import {useIdle} from "react-use";
 
 const UseIdle = (time: number) => {
 
-    const isIdle = useIdle(time);
-    return
+    return !useIdle(time);
 };
 
 export default UseIdle;

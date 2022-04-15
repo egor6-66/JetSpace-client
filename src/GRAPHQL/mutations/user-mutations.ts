@@ -36,11 +36,21 @@ export const EDIT_PROFILE = gql`
     }
 `
 
+
+
 export const EDIT_STATUS = gql`
     mutation editStatus($id: ID, $status: String){
         editStatus(id: $id, status: $status){
             id
             status
+        }
+    }
+`
+
+export const EDIT_ONLINE = gql`
+    mutation editOnline($id: ID, $isOnline: Boolean){
+        editOnline(id: $id, isOnline: $isOnline){
+            id
         }
     }
 `

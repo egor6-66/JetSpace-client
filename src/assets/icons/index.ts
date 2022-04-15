@@ -23,6 +23,7 @@ import SaveIcon from './save-icon';
 import DeleteIcon from './delete-icon';
 import YouTubeIcon from './youTube-icon';
 import AvatarIcon from "./avatar-icon";
+import AllUsersIcons from "./all-users-icons";
 
 export {
     LogoProjectIcon,
@@ -49,5 +50,6 @@ export {
     SaveIcon,
     DeleteIcon,
     YouTubeIcon,
-    AvatarIcon
+    AvatarIcon,
+    AllUsersIcons
 }

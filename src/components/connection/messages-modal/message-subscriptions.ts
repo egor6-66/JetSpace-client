@@ -1,4 +1,4 @@
-import {MESSAGE_SUB} from "../../../../GRAPHQL/subscriptions/message-subscriptions";
+import {MESSAGE_SUB} from "../../../GRAPHQL/subscriptions/message-subscriptions";
 
 
 const messageSubscriptions = (subscribeToMore :any, refetch: any, userId: any, myId: any) => {

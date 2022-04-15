@@ -1,4 +1,7 @@
 import React, {FC} from 'react';
+import Spinner1 from "../../../../components/spinners/spinner-1";
+import {Typography} from "antd";
+import './user-news.less';
 
 
 interface UserNewsProps {
@@ -7,12 +10,13 @@ interface UserNewsProps {
 }
 
 const UserNews: FC<UserNewsProps> = ({myId, colors}) => {
-    return (
-        <div className='my-friends'>
-            <div className='left-block'>
 
-            </div>
-            Friends
+    const {Title} = Typography;
+
+    return (
+        <div className='user-news'>
+            <Title style={{color: colors?.text?.active, textAlign: "center", lineHeight: '150px'}}>Функционал в разработке</Title>
+            <Spinner1 size={230}/>
         </div>
     );
 };
