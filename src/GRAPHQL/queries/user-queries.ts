@@ -9,6 +9,13 @@ export const GET_ALL_USERS = gql`
             lastName
             email
             avatar
+            isOnline
+            subscribers{
+                userId
+            }
+            subscriptions{
+                userId
+            }
         }
     }
 `

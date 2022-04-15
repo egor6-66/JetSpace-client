@@ -32,7 +32,7 @@ const MessageIcon = ({colors}: any) => {
                         d="M30 60c16.569 0 30-13.431 30-30C60 13.431 46.569 0 30 0 13.431 0 0 13.431 0 30c0 16.569 13.431 30 30 30z"
                    />
                     <motion.path
-                        fill={colors.svg.svg}
+                        fill={colors?.svg.svg}
                         variants={pathVariants}
                         initial='hidden'
                         animate='visible'

@@ -2,10 +2,10 @@ import React, {FC, useState} from 'react';
 import TextArea from "antd/es/input/TextArea";
 import VoiceMessages from "./voice-messages";
 import {Button, Popover, Slider} from "antd";
-import {MicrophoneIcon, PlayerIcons, SmileIcon} from "../../../../assets/icons";
-import EmojiPicker from "../../../../components/emoji-picker";
-import {useActions} from "../../../../store/actions";
-import {useTypedSelector} from "../../../../store";
+import {MicrophoneIcon, PlayerIcons, SmileIcon} from "../../../assets/icons";
+import EmojiPicker from "../../emoji-picker";
+import {useActions} from "../../../store/actions";
+import {useTypedSelector} from "../../../store";
 
 
 interface MessagesModalFooterProps {

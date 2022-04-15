@@ -14,7 +14,7 @@ const UseColor = () => {
                 svg: {svg: "url(#svg-bc-dark-theme)", path:'#262626',}
             }
 
-        default: return {active: '#6666', disabled: '#000'}
+        default: return null
     }
 
 }

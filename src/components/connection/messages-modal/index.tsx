@@ -1,19 +1,19 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {useLocation, useNavigate, useParams} from "react-router-dom";
 import {useMutation, useQuery, useSubscription} from "@apollo/client";
-import {GET_MESSAGES} from "../../../../GRAPHQL/queries/message-queries";
-import {ADD_MESSAGE, SET_MESSAGE_LOCATION, USER_TYPING} from "../../../../GRAPHQL/mutations/message-mutations";
-import {USER_TYPING_SUB} from '../../../../GRAPHQL/subscriptions/message-subscriptions'
-import {UseGetContainerHeight, UseGetContainerWidth} from "../../../../assets/hooks";
+import {GET_MESSAGES} from "../../../GRAPHQL/queries/message-queries";
+import {ADD_MESSAGE, SET_MESSAGE_LOCATION, USER_TYPING} from "../../../GRAPHQL/mutations/message-mutations";
+import {USER_TYPING_SUB} from '../../../GRAPHQL/subscriptions/message-subscriptions'
+import {UseGetContainerHeight, UseGetContainerWidth} from "../../../assets/hooks";
 import messageSubscriptions from "./message-subscriptions";
-import {useTypedSelector} from "../../../../store";
+import {useTypedSelector} from "../../../store";
 import MessagesModalFooter from "./messages-modal-footer";
 import MessagesBody from "./messages-body";
 import MessageModalHeader from "./message-modal-header";
 import {Modal} from "antd";
 import './messages-modal.less'
-import Spinner2 from "../../../../components/spinners/spinner-2";
-import Spinner1 from "../../../../components/spinners/spinner-1";
+import Spinner2 from "../../spinners/spinner-2";
+import Spinner1 from "../../spinners/spinner-1";
 
 
 interface MessagesModalProps {
@@ -29,7 +29,6 @@ const MessagesModal: FC<MessagesModalProps> = ({myId, colors}) => {
     const messageRef: any = useRef(null);
     const width = UseGetContainerWidth(120, 1280, 900);
     const height = UseGetContainerHeight(360, 990, 600);
-
     const user = useTypedSelector(state => state.user);
     const [newMessage, setNewMessage] = useState<string>('');
     const [startTyping, setStartTyping] = useState<boolean>(false);
@@ -66,7 +65,7 @@ const MessagesModal: FC<MessagesModalProps> = ({myId, colors}) => {
         await setMessageLocation({variables: {myId: myId, location: null}})
         setStartTyping(false)
         subTyping()
-        navigate(-1,)
+        navigate(-1)
     };
 
     return (

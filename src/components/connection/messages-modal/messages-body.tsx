@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import VoicePlayer from "../../../../components/players/voice-player/voice-player";
+import VoicePlayer from "../../players/voice-player/voice-player";
 import UserTyping from "./user-typing";
 import moment from "moment";
 import {motion} from "framer-motion";

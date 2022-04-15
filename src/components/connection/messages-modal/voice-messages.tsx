@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import {ReactMic} from 'react-mic';
-import $axios from "../../../../services/axios-customs";
-import {API_URL} from "../../../../constants";
+import $axios from "../../../services/axios-customs";
+import {API_URL} from "../../../constants";
 
 
 interface VoiceMessagesProps {

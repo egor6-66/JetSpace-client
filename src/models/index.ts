@@ -4,6 +4,7 @@ import * as LikeModels from './like-model'
 import * as DislikeModels from './dislike-model'
 import * as NotificationModels from './notification-model'
 import * as PlayerModels from './player-model'
+import * as ColorsModel from './colors-model'
 
 
 export {
@@ -13,6 +14,7 @@ export {
     DislikeModels,
     NotificationModels,
     PlayerModels,
+    ColorsModel
 }
 
 
